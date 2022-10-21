@@ -6,6 +6,6 @@ services:
       dockerfile: Dockerfile
     container_name: php-apache
     volumes:
-      - ./scripts:/var/www/html/
+      - ./scripts/serverside:/var/www/html/
     ports:
       - 8000:80
