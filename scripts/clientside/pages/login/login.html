@@ -1,0 +1,45 @@
+<!DOCTYPE html5>
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#000000" />
+        <link rel="apple-touch-icon" />
+        <link rel="icon" href="./assets/Spotify_LogoOnly_RGB_White.png" />
+        <link rel="stylesheet" href="login.css">
+        <link rel="stylesheet" href="../../globals.css">
+        <title>Spotify - Web Player</title>
+    </head>
+    <body>
+        <div class="loginCt">
+            <div class="header">
+                <img class="headerImg" src="../../assets/Spotify_Logo_RGB_Black.png"/>
+                <hr/>
+            </div>
+            <div class="login">
+                <div class="loginPrompt">To continue, log in to Spotify.</div>
+                <div class="loginPhone">CONTINUE WITH PHONE NUMBER</div>
+                <div class="loginOr">
+                    <hr/>
+                    <div class="loginOrText">OR</div>
+                    <hr/>
+                </div>
+                <div class="loginFormCt">
+                    <form action="../../../serverside/login.php">
+                        <label class="loginFormLabel" for="emailid">Email address or username</label><br>
+                        <input class="loginFormInput" type="text" id="fname" name="emailid" placeholder="Email address or username"><br>
+                        <label class="loginFormLabel" for="password">Password</label><br>
+                        <input class="loginFormInput" type="text" id="lname" name="password" placeholder="Password"><br><br>
+                        <a class="loginFormForgot" href="">Forgot your password?</a><br><br>
+                        <input class="loginFormBt" type="submit" value="LOG IN">
+                    </form> 
+                </div>
+                <hr/>
+                <div class="loginSignup">
+                    <div class="loginSignupText">Don't have an account?</div>
+                    <div class="loginSignupBt">SIGN UP FOR SPOTIFY</div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

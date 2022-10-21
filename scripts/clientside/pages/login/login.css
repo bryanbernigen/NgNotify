@@ -1,0 +1,137 @@
+.loginCt {
+    background: #fff;
+    margin: 0;
+    padding: 10px 0px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.headerImg {
+    width: 182px;
+    height: 56px;
+    display: block;
+    margin: 10px auto;
+    padding-bottom: 10px;
+}
+
+.header hr {
+    background: #8C8C8C;
+    width: 100vw;
+    height: 0.5px;
+    margin-bottom: 25px;
+}
+
+.login {
+    width: 450px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    row-gap: 10px;
+    font-family: "CircularStd-Black";
+    font-size: 14px;
+}
+
+.loginPhone, .loginSignupBt {
+    letter-spacing: 1px;
+    color: #6A6A6A;
+    padding: 13px 0;
+    width: 100%;
+    border: 0.5px solid #8C8C8C;
+    border-radius: 25px;
+    text-align: center;
+}
+
+.loginPhone:hover, .loginSignupBt:hover {
+    border: 0.5px solid black;
+}
+
+.loginOr {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.loginOrText {
+    font-size: 12px;
+    margin: 0 15px;
+}
+
+.loginFormCt {
+    width: 100%;
+}
+
+input {
+    width: 100%;
+    border: 1px solid #8C8C8C;
+    border-radius: 5px;
+    padding: 14px;
+    margin: 10px 0;
+    font-size: 16px;
+    font-family: "CircularStd-Medium";
+    font-size: 14px;
+    color: #6A6A6A;
+}
+
+input:focus {
+    outline: none;
+    border: 1px solid black;
+}
+
+.loginFormForgot {
+    font-family: "CircularStd-Book";
+    font-size: 16px;
+    margin: 0;
+    color: black
+}
+
+a:link { 
+    text-decoration: none;
+}
+
+a:visited { 
+    text-decoration: none; 
+}
+
+a:hover { 
+    text-decoration: underline; 
+}
+
+a:active { 
+    text-decoration: underline; 
+}
+
+.loginFormBt {
+    width: 124px;
+    height: 48px;
+    background: #1ED760;
+    letter-spacing: 1px;
+    border: none;
+    border-radius: 25px;
+    font-family: "CircularStd-Black";
+    font-size: 14px;
+    color: black;
+    float: right;
+    margin: 0;
+}
+
+.login hr {
+    width: 100%;
+}
+
+.loginSignup {
+    width: 100%;
+    text-align: center;
+}
+
+.loginSignupText {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
