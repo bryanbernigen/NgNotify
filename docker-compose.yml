@@ -1,6 +1,11 @@
-version: '3.3'
+version: '3.8'
 services:
-  web:
-    image: tubes-1:latest
+  backend:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: php-apache
+    volumes:
+      - ./scripts:/var/www/html/
     ports:
-      - 8008:80
+      - 8000:80
