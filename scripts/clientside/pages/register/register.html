@@ -19,7 +19,12 @@
             <div class="registerFormCt">
                 <form action="../../../serverside/register.php">
                     <label class="registerFormLabel" for="email">What's your email?</label><br>
-                    <input class="registerFormInput" type="text" id="email" name="email" placeholder="Enter your email."><br>
+                    <input class="invalidRegisterFormInput" type="text" id="email" name="email" placeholder="Enter your email."><br>
+                    <!-- <input class="registerFormInput" type="text" id="email" name="email" placeholder="Enter your email."><br> -->
+                    <div class="invalidInput">
+                        <img src="../../assets/icons8-warning-67-red.png" />
+                        <div class="incorrectUnamePass">Incorrect username or password.</div>
+                    </div>
                     <a class="registerFormLink" href="">Use phone number instead.</a><br><br><br>
 
                     <label class="registerFormLabel" for="emailconfirm">Confirm your email</label><br>
