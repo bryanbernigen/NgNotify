@@ -1,14 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../constants/base.php';
-
 class Database{
-    
-    private $server = DB_SERVER;
-    private $username = DB_USERNAME;
-    private $pass = DB_PASSWORD;
-    private $dbname = DB_DATABASE;
-
 
     private $dbh;
     private $stmt;

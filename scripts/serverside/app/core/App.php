@@ -1,5 +1,6 @@
 <?php
 
+
 class App {
     protected $params = [];
     public function __construct() {
@@ -8,7 +9,8 @@ class App {
             $this->controller = $url[0];
         }
         else{
-            echo json_encode(Array('status' => false, 'message' => 'Api Not Found'));
+            echo json_encode(Array('status' => false, 'message' => API_NOT_FOUND));
+            return;
         }
 
         require_once __DIR__ . '/../controllers/' . $this->controller . '.php';
