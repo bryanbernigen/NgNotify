@@ -1,6 +1,7 @@
 .loginCt {
     background: #fff;
     margin: 0;
+    margin-bottom: 10px;
     padding: 10px 0px;
     width: 100%;
     display: flex;
@@ -45,6 +46,7 @@
     border: 0.5px solid #8C8C8C;
     border-radius: 25px;
     text-align: center;
+    text-decoration: none;
 }
 
 .loginPhone:hover, .loginSignupBt:hover {
@@ -97,19 +99,19 @@ input:focus {
     color: black
 }
 
-a:link { 
+.loginFormForgot:link { 
     text-decoration: none;
 }
 
-a:visited { 
+.loginFormForgot:visited { 
     text-decoration: none; 
 }
 
-a:hover { 
+.loginFormForgot:hover { 
     text-decoration: underline; 
 }
 
-a:active { 
+.loginFormForgot:active { 
     text-decoration: underline; 
 }
 
@@ -137,14 +139,9 @@ a:active {
     margin: 20px 0;
 }
 
-.loginSignup {
-    width: 100%;
-    text-align: center;
-}
-
 .loginSignupText {
     font-size: 18px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 @media only screen and (max-width: 768px){
