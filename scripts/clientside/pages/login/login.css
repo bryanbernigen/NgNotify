@@ -19,9 +19,9 @@
 }
 
 .header hr {
-    background: #8C8C8C;
+    background: lightgrey;
     width: 100vw;
-    height: 0.5px;
+    height: 0.01px;
     margin-bottom: 25px;
 }
 
@@ -49,6 +49,11 @@
 
 .loginPhone:hover, .loginSignupBt:hover {
     border: 0.5px solid black;
+}
+
+.loginPhone:active, .loginSignupBt:active {
+    border: 0.5px solid #8C8C8C;
+    outline: 2px solid black;
 }
 
 .loginOr {
@@ -122,8 +127,14 @@ a:active {
     margin: 0;
 }
 
+.loginFormBt:hover {
+    cursor: pointer;
+    outline: 2px solid #1ED760;
+}
+
 .login hr {
     width: 100%;
+    margin: 20px 0;
 }
 
 .loginSignup {
@@ -134,4 +145,29 @@ a:active {
 .loginSignupText {
     font-size: 18px;
     margin-bottom: 20px;
+}
+
+@media only screen and (max-width: 768px){
+    .headerImg {
+        width: 136.5px;
+        height: 42px;
+    }
+
+    .loginFormBt {
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 480px){
+    .login {
+        width: 100%;
+    }
+
+    .loginPrompt,
+    .loginPhone,
+    .loginOr,
+    .loginFormCt,
+    .loginSignup {
+        width: 90%;
+    }
 }

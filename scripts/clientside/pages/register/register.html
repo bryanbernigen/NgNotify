@@ -1,0 +1,95 @@
+<!DOCTYPE html5>
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#000000" />
+        <link rel="apple-touch-icon" />
+        <link rel="icon" href="./assets/Spotify_LogoOnly_RGB_White.png" />
+        <link rel="stylesheet" href="register.css">
+        <link rel="stylesheet" href="../../globals.css">
+        <title>Sign up - Spotify</title>
+    </head>
+    <body>
+        <div class="registerCt">
+            <div class="header">
+                <img class="headerImg" src="../../assets/Spotify_Logo_RGB_Black.png"/>
+            </div>
+            <div class="registerPrompt">Sign up for free to start listening.</div>
+            <div class="registerFormCt">
+                <form action="../../../serverside/register.php">
+                    <label class="registerFormLabel" for="email">What's your email?</label><br>
+                    <input class="registerFormInput" type="text" id="email" name="email" placeholder="Enter your email."><br>
+                    <a class="registerFormLink" href="">Use phone number instead.</a><br><br><br>
+
+                    <label class="registerFormLabel" for="emailconfirm">Confirm your email</label><br>
+                    <input class="registerFormInput" type="text" id="emailconfirm" name="emailconfirm" placeholder="Enter your email again."><br><br>
+                    
+                    <label class="registerFormLabel" for="password">Create a Password</label><br>
+                    <input class="registerFormInput" type="text" id="password" name="password" placeholder="Create a Password."><br><br>
+
+                    <label class="registerFormLabel" for="uname">What should we call you?</label><br>
+                    <input class="registerFormInput" type="text" id="uname" name="uname" placeholder="Enter a profile name."><br>
+                    <div class="registerFormLink">This appears on your profile.</div><br><br><br>
+
+                    <label class="registerFormLabel" for="DOB">What's your date of birth</label><br>
+                    <input class="registerFormInput" type="date" id="DOB" name="DOB" placeholder="MM/DD/YYYY"><br><br>
+
+                    <label class="registerFormLabel" for="gender">What's your gender?</label><br>
+                    <div class="registerFormRadioMenu">
+                        <div>
+                            <input class="registerFormRadio" type="radio" id="Male" name="gender" value="Male">
+                            <label class="registerFormInputLabel" for="Male">Male</label>
+                        </div>
+                        <div>
+                            <input class="registerFormRadio" type="radio" id="Female" name="gender" value="Female">
+                            <label class="registerFormInputLabel" for="Female">Female</label>
+                        </div>
+                        <div>
+                            <input class="registerFormRadio" type="radio" id="Non-binary" name="gender" value="Non-binary">
+                            <label class="registerFormInputLabel" for="Non-binary">Non-binary</label>
+                        </div>
+                        <div>
+                            <input class="registerFormRadio" type="radio" id="Other" name="gender" value="Other">
+                            <label class="registerFormInputLabel" for="Other">Other</label>
+                        </div>
+                        <div>
+                            <input class="registerFormRadio" type="radio" id="Prefer not to say" name="gender" value="Prefer not to say">
+                            <label class="registerFormInputLabel" for="Prefer not to say">Prefer not to say</label>
+                        </div>
+                    </div>
+                    
+                    <br>
+                    <br>
+
+                    <input class="registerFormCheckBox" type="checkbox" id="marketingmsg" name="marketingmsg" value="receive">
+                    <span class="geekmark"></span>
+                    <label class="registerFormInputLabel" for="marketingmsg"> I would prefer not to receive marketing messages from Spotify</label><br>
+                    <br>
+                    <input class="registerFormCheckBox" type="checkbox" id="sharedata" name="sharedata" value="notshare">
+                    <span class="geekmark"></span>
+                    <label class="registerFormInputLabel" for="sharedata"> Share my registration data with Spotify's content providers for marketing purposes.</label><br><br><br>
+                    
+                    <div class="registerText">
+                        By clicking on sign-up, you agree to Spotify's 
+                        <a class="registerTextLink" href="">Terms and Conditions of Use</a>.
+                    </div>
+
+                    <div class="registerText">
+                        To learn more about how Spotify collects, uses, shares and protects your personal data, please see 
+                        <a class="registerTextLink" href="">Spotify's Privacy Policy</a>.
+                        <br><br>
+                    </div>
+
+                    <input class="registerFormBt" type="submit" value="Sign up">
+
+                    <div class="registerText">
+                        <br>
+                        Have an account?
+                        <a class="registerTextLink" href="">Log in</a>.
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
