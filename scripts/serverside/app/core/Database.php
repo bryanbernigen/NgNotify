@@ -7,6 +7,7 @@ class Database{
 
     public function __construct()
     {
+        require_once __DIR__ . '/../constants/base.php';
         $option = [
             PDO::ATTR_PERSISTENT => true,
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
