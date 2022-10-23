@@ -4,6 +4,7 @@
 class App {
     protected $params = [];
     public function __construct() {
+        session_start();
         $url = $this->parseUrl();
         if(file_exists(__DIR__ . '/../controllers/' . $url[0] . '.php')) {
             $this->controller = $url[0];
