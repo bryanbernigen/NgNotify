@@ -6,7 +6,7 @@ class App {
     public function __construct() {
         session_start();
         $url = $this->parseUrl();
-        if(file_exists(__DIR__ . '/../controllers/' . $url[0] . '.php')) {
+        if(isset($url[0]) && file_exists(__DIR__ . '/../controllers/' . $url[0] . '.php')) {
             $this->controller = $url[0];
         }
         else{
