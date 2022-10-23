@@ -8,11 +8,11 @@ class Auth extends Controller {
                 json_response_fail(ALREADY_LOGIN);
                 return;
             }
-            if (!(isset($_POST['username']) && isset($_POST['password']))) {
+            if (!(isset($_POST['email']) && isset($_POST['password']))) {
                 json_response_fail(WRONG_API_CALL);
                 return;
             }
-            $res = $this->model('User')->login($_POST['username'], $_POST['password']);
+            $res = $this->model('User')->login($_POST['email'], $_POST['password']);
             if ($res) {
                 $data = array('username' => $res['username'], "user_id" => $res['user_id'], 'isAdmin' => $res['isAdmin']);
                 $_SESSION["user"] = array('username' => $res['username'], "user_id" => $res['user_id'], 'isAdmin' => $res['isAdmin'], 'email' => $res['email']);
