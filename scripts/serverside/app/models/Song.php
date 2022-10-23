@@ -138,6 +138,12 @@ class Song
                 }
             }
         }
+        try {
+            $this->db->execute();
+            return $this->db->resultSet();
+        } catch (PDOException $e) {
+            return  false;
+        }
     }
 
     public function sortSong($ascending)
