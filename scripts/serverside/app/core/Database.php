@@ -13,9 +13,9 @@ class Database{
         ];
 
         try {
-            $this->dbh = new PDO('mysql:host=' . DB_SERVER . ';dbname=' . DB_DATABASE, DB_USERNAME, DB_PASSWORD, $option);
+            $this->dbh = new PDO('pgsql:host=' . DB_SERVER . ';dbname=' . DB_DATABASE, DB_USERNAME, DB_PASSWORD, $option);
         } catch (PDOException $e) {
-             die($e -> getMessage());
+            die($e -> getMessage());
         }
     }
 
