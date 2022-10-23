@@ -78,12 +78,74 @@ class Song
         }
     }
 
+    /*
+    $orderByYear - NULL jika tidak terurut berdasarkan tahun, ASC/DESC jika terurut berdasarkan tahun
+    $orderByJudul - ASC atau DESC tidak boleh NULL karena secara otomatis akan terutur berdasarkan judul jika tahun kosong
+    */
+    public function selectSong($query, $orderByYear, $orderByJudul, $filterGenre){
+        //select * from songs where ((judul like '%zzz%' OR penyanyi like '%zzz%' 
+        //OR DATE_PART('YEAR',tanggal_terbit) = 2000) AND genre like '%a%') 
+        //ORDER BY DATE_PART('YEAR',tanggal_terbit) ASC
+        if(isset($query)){
+            if(isset($filterGenre)){
+                if(isset($orderByYear)){
+                    $this->db->query("SELECT * FROM " . $this->table . " WHERE ((judul LIKE '%:query%' OR penyanyi LIKE '%:query%' OR DATE_PART('YEAR',tanggal_terbit) = :query) AND genre LIKE '%:filterGenre%') ORDER BY DATE_PART('YEAR',tanggal_terbit) :orderByYear");
+                    $this->db->bind(':query', $query);
+                    $this->db->bind(':filterGenre', $filterGenre);
+                    $this->db->bind(':orderByYear', $orderByYear);
+                }
+                else{
+                    $this->db->query("SELECT * FROM " . $this->table . " WHERE ((judul LIKE '%:query%' OR penyanyi LIKE '%:query%' OR DATE_PART('YEAR',tanggal_terbit) = :query) AND genre LIKE '%:filterGenre%') ORDER BY judul :orderByJudul");
+                    $this->db->bind(':query', $query);
+                    $this->db->bind(':filterGenre', $filterGenre);
+                    $this->db->bind(':orderByJudul', $orderByJudul);
+                }
+            }
+            else{
+                if(isset($orderByYear)){
+                    $this->db->query("SELECT * FROM " . $this->table . " WHERE (judul LIKE '%:query%' OR penyanyi LIKE '%:query%' OR DATE_PART('YEAR',tanggal_terbit) = :query) ORDER BY DATE_PART('YEAR',tanggal_terbit) :orderByYear");
+                    $this->db->bind(':query', $query);
+                    $this->db->bind(':orderByYear', $orderByYear);
+                }
+                else{
+                    $this->db->query("SELECT * FROM " . $this->table . " WHERE (judul LIKE '%:query%' OR penyanyi LIKE '%:query%' OR DATE_PART('YEAR',tanggal_terbit) = :query) ORDER BY judul :orderByJudul");
+                    $this->db->bind(':query', $query);
+                    $this->db->bind(':orderByJudul', $orderByJudul);
+                }
+            }
+        }
+        else{
+            if(isset($filterGenre)){
+                if(isset($orderByYear)){
+                    $this->db->query("SELECT * FROM " . $this->table . " WHERE genre LIKE '%:filterGenre%' ORDER BY DATE_PART('YEAR',tanggal_terbit) :orderByYear");
+                    $this->db->bind(':filterGenre', $filterGenre);
+                    $this->db->bind(':orderByYear', $orderByYear);
+                }
+                else{
+                    $this->db->query("SELECT * FROM " . $this->table . " WHERE genre LIKE '%:filterGenre%' ORDER BY judul :orderByJudul");
+                    $this->db->bind(':filterGenre', $filterGenre);
+                    $this->db->bind(':orderByJudul', $orderByJudul);
+                }
+            }
+            else{
+                if(isset($orderByYear)){
+                    $this->db->query("SELECT * FROM " . $this->table . " ORDER BY DATE_PART('YEAR',tanggal_terbit) :orderByYear");
+                    $this->db->bind(':orderByYear', $orderByYear);
+                }
+                else{
+                    $this->db->query("SELECT * FROM " . $this->table . " ORDER BY judul :orderByJudul");
+                    $this->db->bind(':orderByJudul', $orderByJudul);
+                }
+            }
+        }
+    }
+
     public function sortSong($ascending)
     {
         if ($ascending) {
-            $this->db->query('SELECT * FROM ' . $this->table . "ORDER BY DATE_PART('YEAR',tanggal_terbit) ASC");
+            $this->db->query('SELECT * FROM ' . $this->table . " ORDER BY DATE_PART('YEAR',tanggal_terbit) ASC");
         } else {
-            $this->db->query('SELECT * FROM ' . $this->table . "ORDER BY DATE_PART('YEAR',tanggal_terbit) DESC");
+            $this->db->query('SELECT * FROM ' . $this->table . " ORDER BY DATE_PART('YEAR',tanggal_terbit) DESC");
         }
         try {
             return $this->db->resultSet();
@@ -94,7 +156,7 @@ class Song
 
     public function filterSong($genre)
     {
-        $this->db->query('SELECT * FROM ' . $this->table . "WHERE genre LIKE '%:genre%'");
+        $this->db->query('SELECT * FROM ' . $this->table . " WHERE genre LIKE '%:genre%'");
         $this->db->bind(':genre', $genre);
         try {
             return $this->db->resultSet();
