@@ -12,6 +12,13 @@ const login = async () => {
     });
     if (!response.ok){
         console.log('fail');// login fail
+        var mainContainer = document.getElementById("albumCards");
+        let div = document.createElement("div");
+        div.innerHTML +=    '<div class="loginFail"> \
+                                <img src="../../assets/icons8-warning-67.png" /> \
+                                <div class="incorrectUnamePass">Incorrect username or password.</div> \
+                            </div>';
+        mainContainer.appendChild(div);
         return;
     }
     else {
