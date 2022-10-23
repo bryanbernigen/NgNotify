@@ -31,10 +31,10 @@ class Register extends Controller {
             $res = $this->model('User')->checkUnique('email',$_GET['email']);
             if ($res) {
                 json_response_success("success");
-                return
+                return;
             } else {
                 json_response_fail(EMAIL_REGISTERED);
-                return
+                return;
             }
         }
         else{
@@ -51,10 +51,10 @@ class Register extends Controller {
             $res = $this->model('User')->checkUnique('username',$_GET['username']);
             if ($res) {
                 json_response_success("success");
-                return
+                return;
             } else {
                 json_response_fail(USERNAME_REGISTERED);
-                return
+                return;
             }
         }
         else{
