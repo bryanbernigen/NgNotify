@@ -1,0 +1,257 @@
+body {
+    background-color: black;
+    background-image: linear-gradient(135deg, rgba(58, 13, 58, 1) 0.5%, rgba(0,0,0, 0.8) 95.53%);
+    background-attachment: fixed;
+}
+
+.navCt {
+    background-color: black;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    padding: 10px 20px;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+.navLeft {
+    float: left;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    column-gap: 10vw;
+}
+
+.navLogo {
+    width: 131px;
+    height: 40px;
+}
+
+.navSearch {
+    background-color: white;
+    border: 1px solid #6c6c6c;
+    border-radius: 25px;
+    width: 364px;
+    height: 40px;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+
+.navSearch input {
+    border: none;
+    font-size: 14px;
+    font-family: "CircularStd-Light";
+    text-align: left;
+    color: #888888;
+    width: 85%;
+}
+
+.navSearch input:focus {
+    outline: none;
+}
+
+.navSearchIcon {
+    width: 30px;
+    height: 30px;
+    margin-left: 10px;
+}
+
+.navRight {
+    float: right;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    color: #B3B3B3;
+    column-gap: 20px;
+}
+
+.navItems {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-start;
+    column-gap: 5px;
+    border-radius: 25px;
+    padding: 5px;
+}
+
+.navItems:hover {
+    background-color: #535353;
+}
+
+.navIcon {
+    width: 20px;
+    height: 20px;
+    margin-left: 5px;
+}
+
+.navText {
+    font-family: "CircularStd-Black";
+    font-size: 14px;
+}
+
+.navCollapse {
+    float: right;
+    overflow: hidden;
+}
+
+.navCollapse, .navItems {
+    font-size: 14px;
+    border: none;
+    outline: none;
+    color: white;
+    background-color: inherit;
+    font-family: inherit;
+    margin: 0;
+}
+
+.navDrop {
+    font-family: "CircularStd-Medium";
+    display: none;
+    position: absolute;
+    background-color: black;
+    outline: 5px solid black;
+    min-width: 100px;
+    box-shadow: 0px 8px 16px 0px rgba(255, 255, 255,0.2);
+    z-index: 1;
+
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    text-align: left;
+}
+
+.navDrop:hover {
+    background-color: #282828;
+    display: block;
+}
+
+.navCollapse:hover .navDrop {
+    display: block;
+}
+
+.homeCt {
+    color: white;
+    padding: 20px
+}
+
+.card {
+    background-color: #121212;
+    border-radius: 10px;
+    padding: 12.5px;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    width: 12.5vw;
+    font-family: "CircularStd-Light";
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.card:hover {
+    background-color: #1a1a1a;
+    scale: 1.05;
+}
+
+.card:active {
+    background-color: #000;
+}
+
+.cardImage {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.songTitle {
+    font-family: "CircularStd-Bold";
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.singer {
+    margin-bottom: 2.5px;
+}
+
+.dateGenre {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+@media only screen and (max-width: 1024px) {
+    .navItems {
+        width: auto;
+        background-color: #535353;
+        border-radius: 20px;
+        padding: 5px;
+    }
+    .navIcon {
+        margin-left: 0;
+    }
+    .navRight {
+        column-gap: 10px;
+    }
+    .navText {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .navLeft {
+        column-gap: 5vw;
+    }
+    .navSearch {
+        width: 50vw;
+    }
+    .navSearch input {
+        width: 80%;
+    }
+    .navSearchIcon {
+        margin-left: 5px;
+    }
+    .navItems {
+        column-gap: 5px;
+    }
+    .navLogo {
+        width: 100px;
+        height: 30px;
+    }
+    .navRight {
+        column-gap: 5px;
+    }
+    .card {
+        width: 30vw;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .navLeft {
+        column-gap: 2.5vw;
+    }
+    .navSearch {
+        max-width: 45vw;
+    }
+    .navSearchIcon {
+        margin-left: 2.5px;
+    }
+    .navLogo {
+        width: 75px;
+        height: 25px;
+    }
+    .navRight {
+        column-gap: 2px;
+    }
+}
