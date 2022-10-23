@@ -9,3 +9,10 @@ services:
       - ./scripts/serverside:/var/www/html/
     ports:
       - 8000:80
+  composer:
+    image: composer
+    container_name: composer
+    volumes:
+      - ./scripts/serverside:/var/www/html/
+    working_dir: /var/www/html/
+    command: install
