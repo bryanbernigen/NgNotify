@@ -67,4 +67,14 @@ class User
             return false;
         }
     }
+
+    public function showAllUser(){
+        $this->db->query('SELECT * FROM ' . $this->table);
+        try{
+            $this->db->execute();
+            return $this->db->resultSet();
+        }catch(\Throwable $th){
+            return false;
+        }
+    }
 }
