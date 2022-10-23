@@ -6,7 +6,6 @@ const login = async () => {
     const response = await fetch("http://localhost:8000/api/auth/login", {
     method: 'POST',
     headers: {
-        
         'Content-Type': 'application/json'
     },
     body: JSON.stringify({"email": email, "password": password}),
@@ -15,8 +14,9 @@ const login = async () => {
         console.log('fail');// login fail
         return;
     }
-    console.log('success');// login success
-    const result = await response.json();
-    console.log(result);
-    
+    else {
+        console.log('success'); // login success
+        console.log(response);
+        window.location = "http://localhost:8080/pages/home/home.html";
+    }
 };
