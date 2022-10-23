@@ -8,7 +8,7 @@ class Login extends Controller {
                 echo WRONG_API_CALL;
                 return;
             }
-            $res = $this->model('User')->getLogin($_POST['username'], $_POST['password']);
+            $res = $this->model('User')->login($_POST['username'], $_POST['password']);
             if ($res) {
                 $data = array('status' => true, 'data' => array('username' => $res['username'], 'isAdmin' => $res['isAdmin']));
             } else {
