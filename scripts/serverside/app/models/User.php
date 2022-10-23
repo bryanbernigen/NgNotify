@@ -52,9 +52,23 @@ class User
         return true;
     }
 
-    public function checkUnique($column, $data){
-        $this->db->query('SELECT * FROM ' . $this->table . ' WHERE :column = :data');
-        $this->db->bind(':column', $column);
+    public function checkUniqueEmail($data){
+        $this->db->query('SELECT * FROM ' . $this->table . ' WHERE email = :data');
+        $this->db->bind(':data',$data);
+        try {
+            $this->db->execute();
+            $row = $this->db->single();
+            if($row){
+                return false;
+            }
+            return true;
+        } catch (\Throwable $th) {
+            return false;
+        }
+    }
+
+    public function checkUniqueUsername($data){
+        $this->db->query('SELECT * FROM ' . $this->table . ' WHERE username = :data');
         $this->db->bind(':data',$data);
         try {
             $this->db->execute();
