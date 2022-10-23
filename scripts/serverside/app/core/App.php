@@ -34,7 +34,7 @@ class App {
         
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if ($_POST == null){
-                $_POST = array_merge($_POST, json_decode(file_get_contents('php://input'), true));
+                $_POST = json_decode(file_get_contents('php://input'), true);
             }            
         }
         call_user_func_array([$this->controller, $this->method], $this->params);
