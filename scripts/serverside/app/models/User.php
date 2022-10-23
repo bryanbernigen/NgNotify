@@ -51,4 +51,20 @@ class User
         $this->db->execute();
         return true;
     }
+
+    public function checkUnique($column, $data){
+        $this->db->query('SELECT * FROM ' . $this->table . ' WHERE :column = :data');
+        $this->db->bind(':column', $column);
+        $this->db->bind(':data',$data);
+        try {
+            $this->db->execute();
+            $row = $this->db->single();
+            if($row){
+                return false;
+            }
+            return true;
+        } catch (\Throwable $th) {
+            return false;
+        }
+    }
 }
