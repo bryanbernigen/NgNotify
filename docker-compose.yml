@@ -3,8 +3,8 @@ services:
   backend:
     build:
       context: ./
-      dockerfile: Dockerfile
-    container_name: php-apache
+      dockerfile: backend.Dockerfile
+    container_name: backend
     volumes:
       - ./scripts/serverside:/var/www/html/
     ports:
@@ -16,3 +16,12 @@ services:
       - ./scripts/serverside:/var/www/html/
     working_dir: /var/www/html/
     command: install
+  frontend:
+    build:
+      context: ./
+      dockerfile: frontend.Dockerfile
+    container_name: frontend
+    volumes:
+      - ./scripts/clientside:/var/www/html/
+    ports:
+      - 8080:80
