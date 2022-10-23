@@ -8,7 +8,7 @@ body {
 body {
     -ms-overflow-style: none;
     scrollbar-width: none;
-    overflow-y: scroll; 
+    overflow-y: scroll;
 }
   
 body::-webkit-scrollbar {
@@ -17,6 +17,28 @@ body::-webkit-scrollbar {
 
 a {
     cursor: pointer;
+}
+
+.indexCt {
+    background-color: black;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    row-gap: 30px;
+    margin: auto;
+}
+
+.bigText img {
+    width: 80vw;
+}
+
+.redirect {
+    color: white;
+    font-family: "CircularStd-Black";
+    font-size: 16px;
 }
 
 /* Fonts */
