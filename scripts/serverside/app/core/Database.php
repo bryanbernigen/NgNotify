@@ -49,7 +49,11 @@ class Database{
 
     public function execute()
     {
-        $this->stmt->execute();
+        try {
+            $this->stmt->execute();
+        } catch (\Throwable $th) {
+            echo $th->getMessage();
+        }
     }
 
     public function resultSet()

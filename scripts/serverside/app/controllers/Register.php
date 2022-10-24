@@ -1,5 +1,5 @@
 <?php
-
+header("Access-Control-Allow-Origin: http://localhost:8080",false);
 class Register extends Controller {
 
     public function register(){
@@ -22,7 +22,7 @@ class Register extends Controller {
         }
     }
 
-    public function checkEmail($email){
+    public function checkEmail(){
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             if (!(isset($_GET['email']))) {
                 json_response_fail(WRONG_API_CALL);
