@@ -16,10 +16,11 @@ class Auth extends Controller {
             if ($res) {
                 $data = array('username' => $res['username'], "user_id" => $res['user_id'], 'isAdmin' => $res['isAdmin']);
                 $_SESSION["user"] = array('username' => $res['username'], "user_id" => $res['user_id'], 'isAdmin' => $res['isAdmin'], 'email' => $res['email']);
+                json_response_success($data);
             } else {
-                $data = array('status' => false, 'msg' => ACCOUNT_NOT_FOUND);
+                json_response_fail(ACCOUNT_NOT_FOUND);
             }
-            json_response_success($data);
+            
             return;
         }
         else{
