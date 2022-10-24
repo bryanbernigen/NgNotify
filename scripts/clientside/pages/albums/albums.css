@@ -76,7 +76,7 @@ hr {
 }
 
 .ct {
-    width: 82vw;
+    width: 81vw;
     float: right;
 }
 
@@ -243,25 +243,36 @@ hr {
 
 @media screen and (max-width: 768px) {
     .sidebar {
-        padding: 15px;
+        padding: 25px 15px;
     }
-
     .sidebarIcon {
         width: 18px;
         height: 18px;
     }
-
     .spc {
         width: 14px;
         height: 14px;
         padding: 2px;
     }
-
     .sidebarItems {
         column-gap: 5px;
     }
-    
     .sidebarBottom {
         font-size: 12px;
+    }
+    .sidebarItems {
+        column-gap: 10px;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .sidebar {
+        padding: 25px 5px;
+    }
+    .sidebarBottom {
+        font-size: 10px;
+    }
+    .sidebarItems {
+        column-gap: 5px;
     }
 }
