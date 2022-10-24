@@ -36,7 +36,7 @@ class User
         if ($row) {
             return false;
         } else {
-            $this->db->query('INSERT INTO ' . $this->table . ' VALUES (default, :email, :password, :username, true)');
+            $this->db->query('INSERT INTO ' . $this->table . ' VALUES (default, :email, :password, :username, false)');
             $this->db->bind(':email', $email);
             $this->db->bind(':username', $username);
             $this->db->bind(':password', password_hash($password, PASSWORD_DEFAULT));

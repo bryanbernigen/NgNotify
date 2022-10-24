@@ -8,6 +8,7 @@
         <link rel="icon" href="../../assets/Spotify_LogoOnly_RGB_White.png" />
         <link rel="stylesheet" href="register.css">
         <link rel="stylesheet" href="../../globals.css">
+        <script type="text/javascript" src="./register.js"></script>
         <title>Sign up - Spotify</title>
     </head>
     <body>
@@ -17,9 +18,9 @@
             </div>
             <div class="registerPrompt">Sign up for free to start listening.</div>
             <div class="registerFormCt">
-                <form action="../../../serverside/register.php">
+                <form method="POST">
                     <label class="registerFormLabel" for="email">What's your email?</label><br>
-                    <input class="invalidRegisterFormInput" type="text" id="email" name="email" placeholder="Enter your email."><br>
+                    <input class="invalidRegisterFormInput" type="email" id="email" name="email" placeholder="Enter your email." oninput="checkEmail()"><br>
                     <!-- <input class="registerFormInput" type="text" id="email" name="email" placeholder="Enter your email."><br> -->
                     <div class="invalidInput">
                         <img src="../../assets/icons8-warning-67-red.png" />
@@ -28,13 +29,13 @@
                     <a class="registerFormLink" href="">Use phone number instead.</a><br><br><br>
 
                     <label class="registerFormLabel" for="emailconfirm">Confirm your email</label><br>
-                    <input class="registerFormInput" type="text" id="emailconfirm" name="emailconfirm" placeholder="Enter your email again."><br><br>
+                    <input class="registerFormInput" type="email" id="emailconfirm" name="emailconfirm" placeholder="Enter your email again." oninput="revalidateEmail()"><br><br>
                     
                     <label class="registerFormLabel" for="password">Create a Password</label><br>
-                    <input class="registerFormInput" type="text" id="password" name="password" placeholder="Create a Password."><br><br>
+                    <input class="registerFormInput" type="password" id="password" name="password" placeholder="Create a Password." required><br><br>
 
                     <label class="registerFormLabel" for="uname">What should we call you?</label><br>
-                    <input class="registerFormInput" type="text" id="uname" name="uname" placeholder="Enter a profile name."><br>
+                    <input class="registerFormInput" type="text" id="uname" name="uname" placeholder="Enter a profile name." oninput="checkUsername()"><br>
                     <div class="registerFormLink">This appears on your profile.</div><br><br><br>
 
                     <label class="registerFormLabel" for="DOB">What's your date of birth</label><br>
@@ -84,7 +85,7 @@
                         <br><br>
                     </div>
 
-                    <input class="registerFormBt" type="submit" value="Sign up">
+                    <input class="registerFormBt" type="submit" onclick="register()" value="Sign up">
 
                     <div class="registerText">
                         <br>

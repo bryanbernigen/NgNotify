@@ -64,7 +64,7 @@ class Database{
         try {
             $this->stmt->execute();
         } catch (\Throwable $th) {
-            echo $th->getMessage();
+            
         }
     }
 
