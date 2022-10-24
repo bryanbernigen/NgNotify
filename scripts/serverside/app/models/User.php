@@ -17,6 +17,9 @@ class User
         $this->db->bind(':email', $email);
         $this->db->execute();
         $row = $this->db->single();
+        if (!$row){
+            return false;
+        }
         if (password_verify($password, $row['password'])) {
             return $row;
         } else {
