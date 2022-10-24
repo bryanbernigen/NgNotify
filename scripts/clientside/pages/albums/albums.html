@@ -1,0 +1,73 @@
+<!DOCTYPE html5>
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#000000" />
+        <link rel="apple-touch-icon" />
+        <link rel="icon" href="../../assets/Spotify_LogoOnly_RGB_White.png" />
+        <link rel="stylesheet" href="albums.css">
+        <link rel="stylesheet" href="../../globals.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <title>Spotify - Web Player</title>
+        <script src="albums.js"></script>
+    </head>
+    <body onload="appendData(albumList);">
+        <div class="sidebar">
+            <div class="sidebarTop">
+                <img class="sidebarLogo" src="../../assets/Spotify_Logo_RGB_White.png"/>
+            </div>
+            <div class="sidebarMiddleWrap">
+                <div class="sidebarBottom">
+                    <div class="sidebarItems">
+                        <img class="sidebarIcon" src="../../assets/icons8-home-144.png"/>
+                        <span class="sidebarText">Home</span>
+                    </div>
+                    <div class="sidebarItems">
+                        <img class="sidebarIcon" src="../../assets/icons8-music-library-96.png"/>
+                        <span class="sidebarText">Albums</span>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebarBottomWrap">
+                <div class="sidebarBottom">
+                    <div class="sidebarItems">
+                        <img class="sidebarIcon" src="../../assets/icons8-add-new-100.png"/>
+                        <span class="sidebarText">Create Playlist</span>
+                    </div>
+                    <div class="sidebarItems">
+                        <img class="spc" src="../../assets/icons8-love-90.png"/>
+                        <span class="sidebarText">Liked Songs</span>
+                    </div>
+                </div>
+            </div>
+            <hr/>
+        </div>
+        <div class="ct">
+            <nav>
+                <div class="navCt">
+                    <div class="navLeft">
+                        <img src="../../assets/icons8-chevron-left-96.png" />
+                        <img src="../../assets/icons8-chevron-right-96.png" />
+                    </div>
+                    <div class="navRight">
+                        <div class="navCollapse">
+                            <div class="navItems">
+                                <img class="navIcon" src="../../assets/icons8-user-100.png"/>
+                                <span class="navText">Username</span>
+                                <i class="fa fa-caret-down"></i>
+                            </div>
+                            <div class="navDrop">
+                                <div class="navChild">Log out</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <div class="albumCt">
+                <div id="albumCards"></div>
+                
+            </div>
+        </div>
+    </body>
+</html>
