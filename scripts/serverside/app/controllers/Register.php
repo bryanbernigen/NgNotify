@@ -42,18 +42,18 @@ class Register extends Controller {
         }
     }
 
-    public function checkUsername($username){
+    public function checkUsername(){
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             if (!(isset($_GET['username']))) {
                 json_response_fail(WRONG_API_CALL);
                 return;
             }
-            $res = $this->model('User')->checkUnique('username',$_GET['username']);
+            $res = $this->model('User')->checkUniqueUsername($_GET['username']);
             if ($res) {
-                json_response_success("success");
+                json_response_fail(USERNAME_REGISTERED);
                 return;
             } else {
-                json_response_fail(USERNAME_REGISTERED);
+                json_response_success("success");
                 return;
             }
         }
