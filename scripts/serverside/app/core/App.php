@@ -4,9 +4,11 @@
 class App {
     protected $params = [];
     public function __construct() {
-        header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Origin: http://localhost:8080');
         header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
         header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
+        header('Access-Control-Allow-Credentials: true');
+        header('Access-Control-Max-Age: 86400');
         session_start();
         $url = $this->parseUrl();
         if(isset($url[0]) && file_exists(__DIR__ . '/../controllers/' . $url[0] . '.php')) {
