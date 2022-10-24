@@ -12,7 +12,7 @@
         <title>Login - Spotify</title>
         <script src="./login.js"></script>
     </head>
-    <body>
+    <body onload="checklogin()">
         <div class="loginCt">
             <div class="header">
                 <img class="headerImg" src="../../assets/Spotify_Logo_RGB_Black.png"/>
@@ -34,7 +34,7 @@
                         <label class="loginFormLabel" for="password">Password</label><br>
                         <input class="loginFormInput" type="password" id="password" name="password" placeholder="Password" /><br><br>
                         <a class="loginFormForgot" href="">Forgot your password?</a><br><br>
-                        <input class="loginFormBt" type="submit" onclick="login();" value="LOG IN" />
+                        <input class="loginFormBt" type="button" onclick="login();" value="LOG IN" />
                     </form>
                 </div>
                 <hr/>
