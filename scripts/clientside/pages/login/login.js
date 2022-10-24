@@ -1,31 +1,37 @@
-const login = async () => {
-    event.preventDefault();
-    email = document.getElementById("email").value;
-    password = document.getElementById("password").value;
-    const response = await fetch("http://localhost:8000/api/auth/login", {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({"email": email, "password": password}),
-    });
-    if (!response.ok){
-        failInfo();
-        return;
-    }
-    else {
-        result = await response.json();
-        console.log('success'); // login success
-        if (result.status == false){
-            failInfo();
+function login(){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function(){
+        if(this.readyState==4){
+            if(this.status==200){
+                let res = JSON.parse(this.responseText);
+                console.log(res)
+                if(res['status']){
+                    console.log("login success");
+                    window.location = "http://localhost:8080/pages/home/home.html";
+                    //TODO: redirect to home page
+                }
+                else{
+                    console.log("login failed");
+                    failInfo();
+                    //TODO: tell user that they have failed to login
+                }
+            }
+            else{
+                console.log("login failed");
+                failInfo();
+            }
         }
-        else{
-            window.location = "http://localhost:8080/pages/home/home.html";
-            console.log(result.data);
-        }
-        
-    }
-};
+    };
+    let data = {
+        "email": document.getElementById("email").value,
+        "password": document.getElementById("password").value,
+    };
+    xhttp.open("POST","http://localhost:8000/api/auth/login",true);
+    xhttp.setRequestHeader("Accept", "application/json");
+    xhttp.setRequestHeader("Content-Type", "application/json");
+    xhttp.withCredentials = true;
+    xhttp.send(JSON.stringify(data));
+}
 
 function failInfo(){
     var mainContainer = document.getElementById("failprompt");
@@ -36,3 +42,20 @@ function failInfo(){
                         </div>';
     mainContainer.appendChild(div);
 };
+
+function checklogin(){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function(){
+        if(this.readyState==4 && this.status==200){
+            let res = JSON.parse(this.responseText);
+            if(res['status']){
+                console.log("login success");
+                window.location = "http://localhost:8080/pages/home/home.html";
+            }
+        }
+    };
+    xhttp.open("GET","http://localhost:8000/api/auth/info",true);
+    xhttp.setRequestHeader("Accept", "application/json");
+    xhttp.withCredentials = true;
+    xhttp.send();
+}
