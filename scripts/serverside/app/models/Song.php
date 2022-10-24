@@ -8,11 +8,13 @@ class Song
     public function __construct()
     {
         require_once __DIR__ . '/../core/Database.php';
+        require_once __DIR__ . '/../models/Album.php';
         $this->db = new Database;
     }
 
     public function addSong($judul, $penyanyi, $tanggal_terbit, $genre, $duration, $audio_path, $image_path, $album_id)
     {
+        $this->db->startTransaction();
         $this->db->query('INSERT INTO ' . $this->table . ' VALUES (default, :judul, :penyanyi, :tanggal_terbit, :genre, :duration, :audio_path, :image_path, :album_id)');
         $this->db->bind(':judul', $judul);
         $this->db->bind(':penyanyi', $penyanyi);
@@ -24,14 +26,26 @@ class Song
         $this->db->bind(':album_id', $album_id);
         try {
             $this->db->execute();
-            return true;
+            $album = new Album();
+            $res = $album->editAlbumTime($album_id, $duration);
+            if($res){
+                $this->db->commit();
+                return true;
+            }else{
+                $this->db->rollback();
+                return false;
+            }
         } catch (PDOException $e) {
+            $this->db->rollback();
             return  false;
         }
     }
 
     public function editSong($song_id, $judul, $penyanyi, $tanggal_terbit, $genre, $duration, $audio_path, $image_path, $album_id)
     {
+        $this->db->startTransaction();
+        $old_duration = $this->getSong($song_id)['duration'];
+        $new_duration = $old_duration - $duration;
         $this->db->query('UPDATE ' . $this->table . ' SET judul = :judul, penyanyi = :penyanyi, tanggal_terbit = :tanggal_terbit, genre = :genre, duration = :duration, audio_path = :audio_path, image_path = :image_path, album_id = :album_id WHERE song_id = :song_id');
         $this->db->bind(':song_id', $song_id);
         $this->db->bind(':judul', $judul);
@@ -44,20 +58,45 @@ class Song
         $this->db->bind(':album_id', $album_id);
         try {
             $this->db->execute();
-            return true;
+            $album = new Album();
+            $res = $album->editAlbumTime($album_id, $new_duration);
+            if($res){
+                $this->db->commit();
+                return true;
+            }else{
+                $this->db->rollback();
+                return false;
+            }
         } catch (PDOException $e) {
+            $this->db->rollback();
             return  false;
         }
     }
 
     public function deleteSong($songId)
     {
+        $this->db->startTransaction();
+        $song = $this->getSong($songId);
+        if(!$song){
+            return false;
+        }
+        $album_id = $song['album_id'];
+        $duration = $song['duration'];
         $this->db->query('DELETE FROM ' . $this->table . ' WHERE song_id = :songId');
         $this->db->bind(':songId', $songId);
         try {
             $this->db->execute();
-            return true;
+            $album = new Album();
+            $res = $album->editAlbumTime($album_id, -$duration);
+            if($res){
+                $this->db->commit();
+                return true;
+            }else{
+                $this->db->rollback();
+                return false;
+            }
         } catch (PDOException $e) {
+            $this->db->rollback();
             return  false;
         }
     }
