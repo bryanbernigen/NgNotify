@@ -11,20 +11,33 @@ class User
         $this->db = new Database;
     }
 
-    public function login($email, $password)
+    public function login($emailOrUsername, $password)
     {
         $this->db->query('SELECT * FROM ' . $this->table . ' WHERE email = :email');
-        $this->db->bind(':email', $email);
+        $this->db->bind(':email', $emailOrUsername);
         $this->db->execute();
         $row = $this->db->single();
-        if (!$row){
+        if ($row) {
+            if (password_verify($password, $row['password'])) {
+                return $row;
+            }
+        }
+        $this->db->query('SELECT * FROM ' . $this->table . ' WHERE username = :username');
+        $this->db->bind(':username', $emailOrUsername);
+        $this->db->execute();
+        $row = $this->db->single();
+        if($row) {
+            if (password_verify($password, $row['password'])) {
+                return $row;
+            }
+            else{
+                return false;
+            }
+        }else{
             return false;
         }
-        if (password_verify($password, $row['password'])) {
-            return $row;
-        } else {
-            return false;
-        }
+
+
     }
 
     public function register($email, $password, $username)
