@@ -1,0 +1,267 @@
+body {
+    background-color: black;
+    background-image: linear-gradient(135deg, rgba(58, 13, 58, 1) 0.5%, rgba(0,0,0, 0.8) 95.53%);
+    background-attachment: fixed;
+}
+
+.sidebar {
+    width: 15vw;
+    height: 100vh;
+    display: block;
+    position: fixed;
+    padding: 25px;
+    float: left;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    color: #B3B3B3;
+    overflow: hidden;
+}
+
+.sidebarTop, .sidebarMiddleWrap {
+    margin-bottom: 40px;
+}
+
+.sidebarBottomWrap {
+    margin-bottom: 20px;
+}
+
+.sidebarLogo {
+    width: 15vw;
+}
+
+.sidebarBottom {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    row-gap: 15px;
+    font-family: "CircularStd-Black";
+    font-size: 14px;
+}
+
+.sidebarIcon {
+    width: 24px;
+    height: 24px;
+}
+
+.sidebarItems {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    column-gap: 15px;
+}
+
+.spc {
+    width: 18px;
+    height: 18px;
+    padding: 3px;
+    background: linear-gradient(135deg,#450af5,#c4efd9);
+    /* background-color: linear-gradient(135deg, rgba(58, 13, 58, 1) 0.5%, rgba(255, 255, 255, 0.8) 95.53%); */
+    border: none;
+    border-radius: 2px;
+}
+
+hr {
+    width: 100%;
+    height: 2px;
+    background-color: #282828;
+    border: none;
+}
+
+.ct {
+    width: 82vw;
+    float: right;
+}
+
+.navCt {
+    background-color: rgba(0,0,0, 0.2);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    padding: 10px 20px;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+.navLeft {
+    float: left;
+}
+
+.navLeft img {
+    padding: 5px;
+    border-radius: 20px;
+    width: 24px;
+    height: 24px;
+}
+
+.navLeft img:hover {
+    background-color: #6c6c6c;
+}
+
+.navRight {
+    float: right;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    color: #B3B3B3;
+    column-gap: 20px;
+}
+
+.navItems {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-start;
+    column-gap: 5px;
+    border-radius: 25px;
+    padding: 5px;
+}
+
+.navItems:hover {
+    background-color: #535353;
+}
+
+.navIcon {
+    width: 18px;
+    height: 18px;
+    padding: 5px;
+    background-color: #B3B3B3;
+    border: none;
+    border-radius: 20px;
+}
+
+.navText {
+    font-family: "CircularStd-Black";
+    font-size: 14px;
+}
+
+.navCollapse {
+    float: right;
+    overflow: hidden;
+}
+
+.navCollapse, .navItems {
+    font-size: 14px;
+    border: none;
+    outline: none;
+    color: white;
+    background-color: inherit;
+    font-family: inherit;
+    margin: 0;
+}
+
+.navDrop {
+    font-family: "CircularStd-Medium";
+    display: none;
+    position: absolute;
+    background-color: black;
+    outline: 5px solid black;
+    min-width: 100px;
+    box-shadow: 0px 8px 16px 0px rgba(255, 255, 255,0.2);
+    z-index: 1;
+
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    text-align: left;
+}
+
+.navDrop:hover {
+    background-color: #282828;
+    display: block;
+}
+
+.navCollapse:hover .navDrop {
+    display: block;
+}
+
+.albumCt {
+    color: white;
+    padding: 20px
+}
+
+.card {
+    background-color: #121212;
+    border-radius: 10px;
+    padding: 12.5px;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    width: 12.5vw;
+    font-family: "CircularStd-Light";
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.card:hover {
+    background-color: #1a1a1a;
+    scale: 1.05;
+}
+
+.card:active {
+    background-color: #000;
+}
+
+.cardImage {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.albumTitle {
+    font-family: "CircularStd-Bold";
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.singer {
+    margin-bottom: 2.5px;
+}
+
+.dateGenre {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+    .sidebar {
+        padding: 15px;
+    }
+
+    .sidebarIcon {
+        width: 18px;
+        height: 18px;
+    }
+
+    .spc {
+        width: 14px;
+        height: 14px;
+        padding: 2px;
+    }
+
+    .sidebarItems {
+        column-gap: 5px;
+    }
+    
+    .sidebarBottom {
+        font-size: 12px;
+    }
+}
