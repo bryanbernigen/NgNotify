@@ -45,6 +45,18 @@ class Album
         }
     }
 
+    public function editAlbumTime($albumId, $time){
+        $this->db->query('UPDATE ' . $this->table . ' SET total_duration = total_duration + :time WHERE album_id = :album_id');
+        $this->db->bind(':album_id', $albumId);
+        $this->db->bind(':time', $time);
+        try {
+            $this->db->execute();
+            return true;
+        } catch (PDOException $e) {
+            return  false;
+        }
+    }
+
     public function deleteAlbum($albumId){
         $this->db->query('DELETE FROM ' . $this->table . ' WHERE album_id = :albumId');
         $this->db->bind(':AlbumId', $albumId);

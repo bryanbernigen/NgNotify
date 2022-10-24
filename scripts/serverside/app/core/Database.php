@@ -21,6 +21,18 @@ class Database{
         }
     }
 
+    public function startTransaction(){
+        $this->dbh->beginTransaction();
+    }
+    
+    public function commit(){
+        $this->dbh->commit();
+    }
+    
+    public function rollback(){
+        $this->dbh->rollBack();
+    }
+
     public function query($query)
     {
         $this->stmt = $this->dbh->prepare($query);
