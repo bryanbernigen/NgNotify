@@ -10,9 +10,10 @@
         <link rel="stylesheet" href="../../globals.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <title>Spotify - Web Player</title>
+        <script src="../navbar.js"></script>
         <script src="home.js"></script>
     </head>
-    <body onload="appendData(musicList);">
+    <body onload="initPage()">
         <nav>
             <div class="navCt">
                 <div class="navLeft">
@@ -25,20 +26,20 @@
                 <div class="navRight">
                     <div class="navItems">
                         <img class="navIcon" src="../../assets/icons8-home-144.png"/>
-                        <span class="navText">Home</span>
+                        <span class="navText" onclick="redirectToHome()">Home</span>
                     </div>
                     <div class="navItems">
                         <img class="navIcon" src="../../assets/icons8-music-library-96.png"/>
-                        <span class="navText">Albums</span>
+                        <span class="navText" onclick="redirectToAlbum()">Albums</span>
                     </div>
                     <div class="navCollapse">
                         <div class="navItems">
                             <img class="navIcon" src="../../assets/icons8-user-100.png"/>
-                            <span class="navText">Username</span>
+                            <span class="navText" id="uname"></span>
                             <i class="fa fa-caret-down"></i>
                         </div>
                         <div class="navDrop">
-                            <div class="navChild">Log out</div>
+                            <div class="navChild" onclick="loginout()" id="loginout">Log out</div>
                         </div>
                     </div>
                 </div>
