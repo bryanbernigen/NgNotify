@@ -7,7 +7,14 @@ function login(){
                 console.log(res)
                 if(res['status']){
                     console.log("login success");
-                    window.location = "http://localhost:8080/pages/home/home.html";
+                    const queryString = window.location.search;
+                    const urlParams = new URLSearchParams(queryString);
+                    let page_type = urlParams.get('page_type')
+                    if(page_type =='albums'){
+                        window.location = "http://localhost:8080/pages/albums/albums.html";
+                    }else{
+                        window.location = "http://localhost:8080/pages/home/home.html";
+                    }
                     //TODO: redirect to home page
                 }
                 else{

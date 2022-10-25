@@ -101,6 +101,7 @@ function register(){
                     console.log(res)
                     if(res['status']){
                         console.log("register success");
+                        window.location.href = "http://localhost:8080/pages/login/login.html";
                         // TODO: tell user that they have successfully registered + redirect to login page
                         // redirect page shows a message saying that they have successfully registered
                     }
