@@ -10,9 +10,10 @@
         <link rel="stylesheet" href="../../globals.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <title>Spotify - Admin</title>
+        <script src="../navbar.js"></script>
         <script src="listuser.js"></script>
     </head>
-    <body onload="appendData(userList);">
+    <body onload="initPage();">
         <div class="sidebar">
             <div class="sidebarTop">
                 <img class="sidebarLogo" src="../../assets/Spotify_Logo_RGB_White.png"/>
@@ -54,11 +55,11 @@
                         <div class="navCollapse">
                             <div class="navItems">
                                 <img class="navIcon" src="../../assets/icons8-user-100.png"/>
-                                <span class="navText">Username</span>
+                                <span class="navText">Guest</span>
                                 <i class="fa fa-caret-down"></i>
                             </div>
                             <div class="navDrop">
-                                <div class="navChild">Log out</div>
+                                <div class="navChild" id="loginout" onclick="loginout()">Log out</div>
                             </div>
                         </div>
                     </div>
