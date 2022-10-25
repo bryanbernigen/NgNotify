@@ -9,15 +9,16 @@ class Database{
     {
         require_once __DIR__ . '/../constants/base.php';
         $option = [
-            PDO::ATTR_PERSISTENT => true,
+            PDO::ATTR_PERSISTENT => 5,
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_TIMEOUT => 600
+            PDO::ATTR_TIMEOUT => 600,
+            PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true,
         ];
 
         try {
             $this->dbh = new PDO('pgsql:host=' . DB_SERVER . ';dbname=' . DB_DATABASE, DB_USERNAME, DB_PASSWORD, $option);
         } catch (PDOException $e) {
-            die($e -> getMessage());
+            die($e->getMessage());
         }
     }
 
@@ -64,9 +65,9 @@ class Database{
         try {
             $this->stmt->execute();
         } catch (\Throwable $th) {
-            
+            return false;
         }
-    }
+    }   
 
     public function resultSet()
     {
@@ -76,7 +77,11 @@ class Database{
 
     public function single()
     {
-        $this->execute();
-        return $this->stmt->fetch(PDO::FETCH_ASSOC);
+        try {
+            $this->execute();
+            return $this->stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (\Throwable $th) {
+            return false;
+        }
     }
 }

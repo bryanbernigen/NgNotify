@@ -1,56 +1,7 @@
 <?php
 
-class Test extends Controller
+class SongAPI extends Controller
 {
-    public function checkUniqueEmail()
-    {
-        if ($_SERVER['REQUEST_METHOD'] != 'GET') {
-            json_response_fail(METHOD_NOT_ALLOWED);
-            return;
-        }
-        if (isset($_GET['email'])) {
-            $result = $this->model('User')->checkUniqueEmail($_GET['email']);
-            if ($result) {
-                json_response_success($result);
-                return;
-            } else {
-                json_response_fail($result);
-                return;
-            }
-        }
-    }
-
-    public function checkUniqueUsername()
-    {
-        if ($_SERVER['REQUEST_METHOD'] != 'GET') {
-            json_response_fail(METHOD_NOT_ALLOWED);
-            return;
-        }
-        if (isset($_GET['username'])) {
-            $result = $this->model('User')->checkUniqueUsername($_GET['username']);
-            if ($result) {
-                json_response_success($result);
-                return;
-            } else {
-                json_response_fail($result);
-                return;
-            }
-        }
-    }
-
-    public function showAllUser()
-    {
-        $res = $this->model('User')->showAllUser();
-        if($res){
-            json_response_success($res);
-        }
-        else{
-            json_response_fail("error");
-        }
-        return;
-    }
-
-    //cara bikin null yang beneran null di db harus kaya gitu
     public function addSong()
     {
         if ($_SERVER['REQUEST_METHOD'] != 'POST') {
@@ -118,7 +69,7 @@ class Test extends Controller
             return json_response_fail(METHOD_NOT_ALLOWED);
         }
         $res = $this->model('Song')->getSong($_POST['song_id']);
-        if(!$res){
+        if (!$res) {
             return json_response_fail('SONG_NOT_FOUND');
         }
         $result = $this->model('Song')->deleteSong($_POST['song_id']);
@@ -129,9 +80,22 @@ class Test extends Controller
         }
     }
 
+    public function showAllSongs()
+    {
+        if ($_SERVER['REQUEST_METHOD'] != 'GET') {
+            return json_response_fail(METHOD_NOT_ALLOWED);
+        }
+        $res = $this->model('Song')->showAllSongs();
+        if ($res) {
+            json_response_success($res);
+        } else {
+            json_response_fail('SONG_NOT_FOUND');
+        }
+    }
+
     public function show10Songs()
     {
-        if($_SERVER['REQUEST_METHOD'] != 'GET'){
+        if ($_SERVER['REQUEST_METHOD'] != 'GET') {
             return json_response_fail(METHOD_NOT_ALLOWED);
         }
         $res = $this->model('Song')->show10Songs();
@@ -181,79 +145,6 @@ class Test extends Controller
             json_response_success($res);
         } else {
             json_response_fail(SONG_NOT_FOUND);
-        }
-    }
-
-    public function addAlbum()
-    {
-        if ($_SERVER['REQUEST_METHOD'] != 'POST') {
-            return json_response_fail(METHOD_NOT_ALLOWED);
-        }
-        $genre = NULL;
-        if (isset($_POST['genre'])) {
-            $genre = $_POST['genre'];
-        }
-        $result = $this->model('Album')->addAlbum($_POST['judul'], $_POST['penyanyi'], $_POST['total_duration'], $_POST['image_path'], $_POST['tanggal_terbit'], $genre);
-        if ($result) {
-            echo json_response_success($result);
-        } else {
-            echo json_response_fail($result);
-        }
-    }
-
-    public function editAlbum()
-    {
-        if ($_SERVER['REQUEST_METHOD'] != 'POST') {
-            return json_response_fail(METHOD_NOT_ALLOWED);
-        }
-        $genre = NULL;
-        if (isset($_POST['genre'])) {
-            $genre = $_POST['genre'];
-        }
-        $result = $this->model('Album')->editAlbum($_POST['album_id'], $_POST['judul'], $_POST['penyanyi'], $_POST['total_duration'], $_POST['image_path'], $_POST['tanggal_terbit'], $genre);
-        if ($result) {
-            echo json_response_success($result);
-        } else {
-            echo json_response_fail($result);
-        }
-    }
-
-    public function deleteAlbum(){
-        if($_SERVER['REQUEST_METHOD'] != 'POST'){
-            return json_response_fail(METHOD_NOT_ALLOWED);
-        }
-        $res = $this->model('Album')->getAlbum($_POST['album_id']);
-        if(!$res){
-            return json_response_fail('ALBUM_NOT_FOUND');
-        }
-        $result = $this->model('Album')->deleteAlbum($_POST['album_id']);
-        if ($result) {
-            echo json_response_success($result);
-        } else {
-            echo json_response_fail($result);
-        }
-    }
-
-    public function getAlbum()
-    {
-        if ($_SERVER['REQUEST_METHOD'] != 'GET') {
-            return json_response_fail(METHOD_NOT_ALLOWED);
-        }
-        $res = $this->model('Album')->getAlbum($_GET['album_id']);
-        if ($res) {
-            json_response_success($res);
-        } else {
-            json_response_fail('ALBUM_NOT_FOUND');
-        }
-    }
-
-    public function showAllAlbum()
-    {
-        $res = $this->model('Album')->showAllAlbum();
-        if ($res) {
-            json_response_success($res);
-        } else {
-            json_response_fail('ALBUM_NOT_FOUND');
         }
     }
 }

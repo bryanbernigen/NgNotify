@@ -113,6 +113,16 @@ class Song
         }
     }
 
+    public function showAllSongs(){
+        $this->db->query('SELECT * FROM ' . $this->table);
+        try {
+            $this->db->execute();
+            return $this->db->resultSet();
+        } catch (PDOException $e) {
+            return  false;
+        }
+    }
+
     public function show10Songs()
     {
         $this->db->query('SELECT * FROM ' . $this->table . ' ORDER BY judul LIMIT 10');
