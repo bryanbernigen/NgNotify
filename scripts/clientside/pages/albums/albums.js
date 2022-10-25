@@ -1,3 +1,43 @@
+function initPage(){
+    getAlbums();
+    infoNavbar();
+}
+
+function getAlbums(){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function(){
+        if(this.readyState==4 && this.status==200){
+            albums = JSON.parse(this.responseText);
+            appendData(albums['data']);
+        }
+    };
+    xhttp.open("GET","http://localhost:8000/api/test/showallalbum",true);
+    xhttp.setRequestHeader("Accept", "application/json");
+    xhttp.withCredentials = true;
+    xhttp.send();
+}
+
+
+function loginout() {
+    if (document.getElementById("loginout").innerHTML == "Login") {
+      window.location.href = "http://localhost:8080/pages/login/login.html?page_type=albums";
+    } else {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          let res = JSON.parse(this.responseText);
+          if (res["status"]) {
+            window.location.href = "http://localhost:8080/pages/albums/albums.html";
+          }
+        }
+      };
+      xhttp.open("POST", "http://localhost:8000/api/auth/logout", true);
+      xhttp.setRequestHeader("Accept", "application/json");
+      xhttp.withCredentials = true;
+      xhttp.send();
+    }
+  }
+
 albumList = [
     {
         "album_id": "1",
@@ -68,13 +108,16 @@ function appendData(data) {
     var mainContainer = document.getElementById("albumCards");
     let div = document.createElement("div");
     for (var i = 0; i < data.length; i++) {
+        if(data[i]['genre'] == null){
+            data[i]['genre'] = "-";
+        }
         div.innerHTML += '<div class="card"> \
-                    <img src="' + data[i].Image_path + '" class="cardImage"> \
-                    <div class="albumTitle">' + data[i].Judul + '</div> \
-                    <div class="singer">' + data[i].Penyanyi + '</div> \
+                    <img src="' + data[i].image_path + '" class="cardImage"> \
+                    <div class="albumTitle">' + data[i].judul + '</div> \
+                    <div class="singer">' + data[i].penyanyi + '</div> \
                     <div class="dateGenre"> \
-                        <div class="date">' + data[i].Tanggal_terbit + '</div> \
-                        <div class="genre">' + data[i].Genre + '</div> \
+                        <div class="date">' + data[i].tanggal_terbit + '</div> \
+                        <div class="genre">' + data[i].genre + '</div> \
                     </div> \
                 </div>';
         console.log(data[i]);
