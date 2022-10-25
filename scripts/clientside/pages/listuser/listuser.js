@@ -1,3 +1,64 @@
+function initPage(){
+    info();
+}
+
+function info(){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function(){
+        if(this.readyState==4 && this.status==200){
+            let res = JSON.parse(this.responseText);
+            username = document.getElementById("uname");
+            if(res['status']){
+                if(res['data']['isAdmin']){
+                    getUsers();
+                }
+            }
+            else {
+                window.location = "http://localhost:8080/pages/home/home.html";
+            }
+        }
+    };
+    xhttp.open("GET","http://localhost:8000/api/auth/info",true);
+    xhttp.setRequestHeader("Accept", "application/json");
+    xhttp.withCredentials = true;
+    xhttp.send();
+}
+
+function getUsers(){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function(){
+        if(this.readyState==4 && this.status==200){
+            users = JSON.parse(this.responseText);
+            // console.log(users["data"]);
+            appendData(users['data']);
+        }
+    };
+    xhttp.open("GET","http://localhost:8000/api/test/showalluser",true);
+    xhttp.setRequestHeader("Accept", "application/json");
+    xhttp.withCredentials = true;
+    xhttp.send();
+}
+
+function loginout(){
+    if (document.getElementById("loginout").innerHTML == "Login"){
+        window.location.href = "http://localhost:8080/pages/login/login.html";
+    }
+    else{
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function(){
+            if(this.readyState==4 && this.status==200){
+                let res = JSON.parse(this.responseText);
+                if(res['status']){
+                    window.location.href = "http://localhost:8080/pages/home/home.html";
+                }
+            }
+        };
+        xhttp.open("POST","http://localhost:8000/api/auth/logout",true);
+        xhttp.setRequestHeader("Accept", "application/json");
+        xhttp.withCredentials = true;
+        xhttp.send();
+    }
+}
 userList = [
     {
         "user_id": 1,

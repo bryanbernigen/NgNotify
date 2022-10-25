@@ -41,7 +41,12 @@ class Test extends Controller
     public function showAllUser()
     {
         $res = $this->model('User')->showAllUser();
-        json_response_success($res);
+        if($res){
+            json_response_success($res);
+        }
+        else{
+            json_response_fail("error");
+        }
         return;
     }
 
