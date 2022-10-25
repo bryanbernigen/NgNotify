@@ -33,7 +33,7 @@ function getUsers(){
             appendData(users['data']);
         }
     };
-    xhttp.open("GET","http://localhost:8000/api/test/showalluser",true);
+    xhttp.open("GET","http://localhost:8000/api/userapi/showalluser",true);
     xhttp.setRequestHeader("Accept", "application/json");
     xhttp.withCredentials = true;
     xhttp.send();

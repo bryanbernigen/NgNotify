@@ -35,7 +35,7 @@ function getSongs(){
             appendData(songs['data']);
         }
     };
-    xhttp.open("GET","http://localhost:8000/api/test/show10songs",true);
+    xhttp.open("GET","http://localhost:8000/api/songapi/showallsongs",true);
     xhttp.setRequestHeader("Accept", "application/json");
     xhttp.withCredentials = true;
     xhttp.send();
@@ -50,14 +50,10 @@ function searchSong(){
             appendData(songs['data']);
         }
     };
-    xhttp.open("GET","http://localhost:8000/api/test/show10songs",true);
+    xhttp.open("GET","http://localhost:8000/api/songapi/show10songs",true);
     xhttp.setRequestHeader("Accept", "application/json");
     xhttp.withCredentials = true;
     xhttp.send();
-}
-
-function redirectToAlbum(){
-    window.location.href = "http://localhost:8080/pages/albums/albums.html";
 }
 
 musicList = [

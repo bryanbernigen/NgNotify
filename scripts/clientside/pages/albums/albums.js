@@ -11,7 +11,7 @@ function getAlbums(){
             appendData(albums['data']);
         }
     };
-    xhttp.open("GET","http://localhost:8000/api/test/showallalbum",true);
+    xhttp.open("GET","http://localhost:8000/api/albumapi/showallalbum",true);
     xhttp.setRequestHeader("Accept", "application/json");
     xhttp.withCredentials = true;
     xhttp.send();
