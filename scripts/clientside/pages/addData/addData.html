@@ -69,13 +69,13 @@
                 <div class="addData">
                     <div class="addAlbum">
                         <div class="collapsibleCt">
-                            <div class="collapsibleTextWrapper">
+                            <div class="collapsibleTextWrapper" >
                                 <i class="fa fa-caret-down"></i>
                                 <div class="collapsibleText">Edit An Album</div>
                             </div>
                             <form>
                                 <label class="formLabel" for="albumid">Album ID</label><br>
-                                <select class="formInputText albumid" id="albumidea" name="albumid" onchange="autoDataEditAlbum()"></select>
+                                <select class="formInputText albumid" id="albumidea" name="albumid" onclick="autoDataEditAlbum()"></select>
                                 <br><br>
                                 <label class="formLabel" for="albumname">Album Name</label><br>
                                 <input class="formInputText" type="text" id="albumnameea" name="albumname" placeholder="Born Pink"><br>
@@ -96,7 +96,7 @@
                                 <label class="formLabel" for="genre">Genre</label><br>
                                 <input class="formInputText" type="text" id="genreea" name="genre" placeholder="Pop"><br>
                                 <br>
-                                <input class="formBt" type="submit" onclick="editAlbum()" value="Edit Album">
+                                <input class="formBt" type="button" onclick="editAlbum()" value="Edit Album">
                             </form>
                         </div>
                         <div class="collapsibleCt">
