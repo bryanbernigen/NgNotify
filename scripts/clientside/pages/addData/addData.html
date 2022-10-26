@@ -75,28 +75,28 @@
                             </div>
                             <form>
                                 <label class="formLabel" for="albumid">Album ID</label><br>
-                                <select class="formInputText albumid" id="albumid" name="albumid"></select>
+                                <select class="formInputText albumid" id="albumidea" name="albumid" onchange="autoDataEditAlbum()"></select>
                                 <br><br>
                                 <label class="formLabel" for="albumname">Album Name</label><br>
-                                <input class="formInputText" type="text" id="albumname" name="albumname" placeholder="Born Pink"><br>
+                                <input class="formInputText" type="text" id="albumnameea" name="albumname" placeholder="Born Pink"><br>
                                 <br>
                                 <label class="formLabel" for="singer">Singer</label><br>
-                                <input class="formInputText" type="text" id="singer" name="singer" placeholder="Blackpink"><br>
+                                <input class="formInputText" type="text" id="singerea" name="singer" placeholder="Blackpink"><br>
                                 <br>
                                 <label class="formLabel" for="totalduration">Total Duration</label><br>
-                                <input class="formInputText" type="number" id="totalduration" name="totalduration" placeholder="0"><br>
+                                <input class="formInputText" type="number" id="totaldurationea" name="totalduration" placeholder="0" disabled><br>
                                 <br>
-                                <label class="formLabel formInputImage" for="imageupload0">Image Path<br>
-                                <input class="imageupload" type="file" id="imageupload0" name="imagepath" accept="image/jpeg, image/png, image/jpg"></label><br><br><br>
+                                <label class="formLabel" for="imageupload0">Image Path<br></label>
+                                <input class="formInputText" type="text" id="imageuploadea" name="imagepath" onchange="loadImage('ea','0')"><br><br><br>
                                 <img id="displayImage0"></img>
                                 <br><br><br>
                                 <label class="formLabel" for="tanggalterbit">Date Released</label><br>
-                                <input class="formInputText" type="date" id="tanggalterbit" name="tanggalterbit" placeholder="YYYY-MM-DD"><br>
+                                <input class="formInputText" type="date" id="tanggalterbitea" name="tanggalterbit" placeholder="YYYY-MM-DD"><br>
                                 <br>
                                 <label class="formLabel" for="genre">Genre</label><br>
-                                <input class="formInputText" type="text" id="genre" name="genre" placeholder="Pop"><br>
+                                <input class="formInputText" type="text" id="genreea" name="genre" placeholder="Pop"><br>
                                 <br>
-                                <input class="formBt" type="submit" onclick="editAlbum()" placeholder="Edit Album">
+                                <input class="formBt" type="submit" onclick="editAlbum()" value="Edit Album">
                             </form>
                         </div>
                         <div class="collapsibleCt">
@@ -127,7 +127,7 @@
                                 <label class="formLabel" for="genre">Genre</label><br>
                                 <input class="formInputText" type="text" id="genre" name="genre" placeholder="DD/MM/YYYY"><br>
                                 <br>
-                                <input class="formBt" type="submit" onclick="addAlbum()" placeholder="Add Album">
+                                <input class="formBt" type="submit" onclick="addAlbum()" value="Add Album">
                             </form>
                         </div>
                         <div class="collapsibleCt">
@@ -137,9 +137,27 @@
                             </div>
                             <form>
                                 <label class="formLabel" for="albumid">Album ID</label><br>
-                                <select class="formInputText albumid" id="albumid" name="albumid"></select>
-                                <br><br>
-                                <input class="formBt" type="submit" onclick="deleteAlbum()" placeholder="Delete Album">
+                                <select class="formInputText albumid" id="albumidda" name="albumid" onchange="autoDataDeleteAlbum()"></select>
+                                <label class="formLabel" for="albumname">Album Name</label><br>
+                                <input class="formInputText" type="text" id="albumnameda" name="albumname" placeholder="Born Pink" disabled><br>
+                                <br>
+                                <label class="formLabel" for="singer">Singer</label><br>
+                                <input class="formInputText" type="text" id="singerda" name="singer" placeholder="Blackpink" disabled><br>
+                                <br>
+                                <label class="formLabel" for="totalduration">Total Duration</label><br>
+                                <input class="formInputText" type="number" id="totaldurationda" name="totalduration" placeholder="0" disabled><br>
+                                <br>
+                                <label class="formLabel" for="imageupload0">Image Path<br>
+                                <input class="formInputText" type="text" id="imageuploadda" name="imagepath" accept="image/jpeg, image/png, image/jpg" disabled></label><br><br><br>
+                                <img id="displayImage0"></img>
+                                <br><br><br>
+                                <label class="formLabel" for="tanggalterbit">Date Released</label><br>
+                                <input class="formInputText" type="date" id="tanggalterbitda" name="tanggalterbit" placeholder="YYYY-MM-DD" disabled><br>
+                                <br>
+                                <label class="formLabel" for="genre">Genre</label><br>
+                                <input class="formInputText" type="text" id="genreda" name="genre" placeholder="Pop" disabled><br>
+                                <br>
+                                <input class="formBt" type="submit" onclick="deleteAlbum()" value="Delete Album">
                             </form>
                         </div>
                     </div>
@@ -150,33 +168,33 @@
                                 <div class="collapsibleText">Edit A Song</div>
                             </div>
                             <form>
+                                <label class="formLabel" for="songid" onchange="autoDataSong()">Song ID</label><br>
+                                <select class="formInputText" id="songid" name="songides"></select>
+                                <br><br>
+                                <label class="formLabel" for="songname">Song Title</label><br>
+                                <input class="formInputText" type="text" id="songnamees" name="songname" placeholder="Born Pink"><br>
+                                <br>
+                                <label class="formLabel" for="singer">Singer</label><br>
+                                <input class="formInputText" type="text" id="singeres" name="singer" placeholder="Blackpink"><br>
+                                <br>
+                                <label class="formLabel" for="tanggalterbit">Date Released</label><br>
+                                <input class="formInputText" type="date" id="tanggalterbites" name="tanggalterbit" placeholder="DD/MM/YYYY"><br>
+                                <br>
+                                <label class="formLabel" for="genre">Genre</label><br>
+                                <input class="formInputText" type="text" id="genrees" name="genre" placeholder="DD/MM/YYYY"><br>
+                                <br>
+                                <label class="formLabel" for="duration">Duration</label><br>
+                                <input class="formInputText" type="number" id="durationes" name="duration" placeholder="0"><br>
+                                <br>
+                                <label class="formLabel formInputAudio" for="audioupload0">Audio Path<br>
+                                <input class="audioupload" type="file" id="audioupload0es" name="audioupload0" accept="audio/*"></label><br><br><br>
+                                <br>
+                                <label class="formLabel formInputImage" for="imageupload2">Image Path<br>
+                                <input class="imageupload" type="file" id="imageupload2es" name="imagepath" accept="image/jpeg, image/png, image/jpg"></label><br><br><br>
+                                <img id="displayImage2"></img>
                                 <label class="formLabel" for="albumid">Album ID</label><br>
                                 <select class="formInputText albumid" id="albumid" name="albumid"></select>
                                 <br><br>
-                                <label class="formLabel" for="songid">Song ID</label><br>
-                                <select class="formInputText" id="songid" name="songid"></select>
-                                <br><br>
-                                <label class="formLabel" for="albumname">Song Title</label><br>
-                                <input class="formInputText" type="text" id="albumname" name="albumname" placeholder="Born Pink"><br>
-                                <br>
-                                <label class="formLabel" for="singer">Singer</label><br>
-                                <input class="formInputText" type="text" id="singer" name="singer" placeholder="Blackpink"><br>
-                                <br>
-                                <label class="formLabel" for="tanggalterbit">Date Released</label><br>
-                                <input class="formInputText" type="date" id="tanggalterbit" name="tanggalterbit" placeholder="DD/MM/YYYY"><br>
-                                <br>
-                                <label class="formLabel" for="genre">Genre</label><br>
-                                <input class="formInputText" type="text" id="genre" name="genre" placeholder="DD/MM/YYYY"><br>
-                                <br>
-                                <label class="formLabel" for="duration">Duration</label><br>
-                                <input class="formInputText" type="number" id="duration" name="duration" placeholder="0"><br>
-                                <br>
-                                <label class="formLabel formInputAudio" for="audioupload0">Audio Path<br>
-                                <input class="audioupload" type="file" id="audioupload0" name="audioupload0" accept="audio/*"></label><br><br><br>
-                                <br>
-                                <label class="formLabel formInputImage" for="imageupload2">Image Path<br>
-                                <input class="imageupload" type="file" id="imageupload2" name="imagepath" accept="image/jpeg, image/png, image/jpg"></label><br><br><br>
-                                <img id="displayImage2"></img>
                                 <br><br><br>
                                 <input class="formBt" type="submit" onclick="editSong()" placeholder="Edit Song">
                             </form>
