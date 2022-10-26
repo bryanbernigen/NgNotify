@@ -78,7 +78,7 @@ class SongAPI extends Controller
         }
         $res = $this->model('Song')->getSong($_POST['song_id']);
         if (!$res) {
-            return json_response_fail('SONG_NOT_FOUND');
+            return json_response_fail(SONG_NOT_FOUND);
         }
         $result = $this->model('Song')->deleteSong($_POST['song_id']);
         if ($result) {
@@ -97,7 +97,7 @@ class SongAPI extends Controller
         if ($res) {
             json_response_success($res);
         } else {
-            json_response_fail('SONG_NOT_FOUND');
+            json_response_fail(SONG_NOT_FOUND);
         }
     }
 
@@ -110,7 +110,7 @@ class SongAPI extends Controller
         if ($res) {
             json_response_success($res);
         } else {
-            json_response_fail('SONG_NOT_FOUND');
+            json_response_fail(SONG_NOT_FOUND);
         }
     }
 
@@ -124,7 +124,27 @@ class SongAPI extends Controller
             $res['lyric'] = unserialize($res['lyric']);
             json_response_success($res);
         } else {
-            json_response_fail('SONG_NOT_FOUND');
+            json_response_fail(SONG_NOT_FOUND);
+        }
+    }
+
+    public function getSongsFromAlbum(){
+        if ($_SERVER['REQUEST_METHOD'] != 'GET') {
+            return json_response_fail(METHOD_NOT_ALLOWED);
+        }
+        if(isset($_GET['album_id'])){
+            $res = $this->model('Song')->getSongsFromAlbum($_GET['album_id']);
+            if($res){
+                json_response_success($res);
+                return;
+            }
+            else{
+                json_response_fail(SONG_NOT_FOUND);
+                return;
+            }
+        }
+        else{
+            json_response_fail(WRONG_API_CALL);
         }
     }
 

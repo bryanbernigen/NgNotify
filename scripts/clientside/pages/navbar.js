@@ -18,10 +18,6 @@ function infoNavbar(){
     xhttp.setRequestHeader("Accept", "application/json");
     xhttp.withCredentials = true;
     xhttp.send();
-
-    if (username.innerHTML == "Guest"){
-        document.getElementById("loginout").innerHTML = "Login";
-    }
 }
 
 function redirectToAlbum(){

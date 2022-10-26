@@ -10,9 +10,11 @@ function login(){
                     const queryString = window.location.search;
                     const urlParams = new URLSearchParams(queryString);
                     let page_type = urlParams.get('page_type')
-                    if(page_type =='albums'){
-                        window.location = "http://localhost:8080/pages/albums/albums.html";
-                    }else{
+                    let album_id = urlParams.get('album_id')
+                    if(page_type){
+                        window.location = "http://localhost:8080/pages/" + page_type+"/" + page_type + ".html?album_id="+album_id;
+                    }
+                    else{
                         window.location = "http://localhost:8080/pages/home/home.html";
                     }
                     //TODO: redirect to home page

@@ -148,6 +148,20 @@ class Song
         }
     }
 
+    public function getSongsFromAlbum($album_id){
+        $this->db->query('SELECT * FROM ' . $this->table . ' WHERE album_id = :album_id');
+        $this->db->bind(':album_id', $album_id);
+        try {
+            $result = $this->db->resultSet();
+            if(!$result){
+                return false;
+            }
+            return $result;
+        } catch (PDOException $e) {
+            return  false;
+        }
+    }
+
     /*
     $orderByYear - NULL jika tidak terurut berdasarkan tahun, ASC/DESC jika terurut berdasarkan tahun
     $orderByJudul - ASC atau DESC tidak boleh NULL karena secara otomatis akan terutur berdasarkan judul jika tahun kosong
