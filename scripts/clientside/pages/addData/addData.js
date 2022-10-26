@@ -153,7 +153,8 @@ function autoDataEditAlbum(){
     document.getElementById("totaldurationea").value = choosen_album.total_duration;
     document.getElementById("genreea").value = choosen_album.genre;
     document.getElementById("tanggalterbitea").value = choosen_album.tanggal_terbit;
-    document.getElementById("imageupload0ea").value = choosen_album.image_path;
+    document.getElementById("imageuploadea").value = choosen_album.image_path;
+    document.getElementById("displayImage0").src = choosen_album.image_path;
 }
 
 function editAlbum() {
@@ -162,8 +163,10 @@ function editAlbum() {
         if(this.readyState==4 && this.status==200){
             let res = JSON.parse(this.responseText);
             if(res['status']){
-                console.log("login success");
-                window.location = "http://localhost:8080/pages/home/home.html";
+                alert("edit  success");
+            }
+            else{
+                alert("edit failed");
             }
         }
     };
@@ -176,7 +179,8 @@ function editAlbum() {
         "tanggal_terbit":document.getElementById("tanggalterbitea").value,
         "genre":document.getElementById("genreea").value,
     };
-    xhttp.open("POST","http://localhost:8000/api/emailapi/email",true);
+    console.log(data);
+    xhttp.open("POST","http://localhost:8000/api/albumapi/editalbum",true);
     xhttp.setRequestHeader("Accept", "application/json");
     xhttp.setRequestHeader("Content-Type", "application/json");
     xhttp.withCredentials = true;
