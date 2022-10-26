@@ -1,0 +1,176 @@
+<!DOCTYPE html5>
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#000000" />
+        <link rel="apple-touch-icon" />
+        <link rel="icon" href="../../assets/Spotify_LogoOnly_RGB_White.png" />
+        <link rel="stylesheet" href="detailAlbum.css">
+        <link rel="stylesheet" href="../../globals.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+        <title>Spotify - Admin</title>
+    </head>
+    <body>
+        <div class="sidebar">
+            <div class="sidebarTop">
+                <img class="sidebarLogo" src="../../assets/Spotify_Logo_RGB_White.png"/>
+            </div>
+            <div class="sidebarMiddleWrap">
+                <div class="sidebarBottom">
+                    <div class="sidebarItems">
+                        <img class="sidebarIcon" src="../../assets/icons8-home-144.png"/>
+                        <span class="sidebarText">Home</span>
+                    </div>
+                    <div class="sidebarItems">
+                        <img class="sidebarIcon" src="../../assets/icons8-music-library-96.png"/>
+                        <span class="sidebarText">Albums</span>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebarBottomWrap">
+                <div class="sidebarBottom">
+                    <div class="sidebarItems">
+                        <img class="sidebarIcon" src="../../assets/icons8-add-new-100.png"/>
+                        <span class="sidebarText">Create Playlist</span>
+                    </div>
+                    <div class="sidebarItems">
+                        <img class="spc" src="../../assets/icons8-love-90.png"/>
+                        <span class="sidebarText">Liked Songs</span>
+                    </div>
+                </div>
+            </div>
+            <hr/>
+        </div>
+        <div class="ct">
+            <nav>
+                <div class="navCt">
+                    <div class="navLeft">
+                        <img src="../../assets/icons8-chevron-left-96.png" />
+                        <img src="../../assets/icons8-chevron-right-96.png" />
+                    </div>
+                    <div class="navRight">
+                        <div class="navCollapse">
+                            <div class="navItems">
+                                <img class="navIcon" src="../../assets/icons8-user-100.png"/>
+                                <span class="navText">Username</span>
+                                <i class="fas fa-caret-down"></i>
+                            </div>
+                            <div class="navDrop">
+                                <div class="navChild">Log out</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <div class="detAlbumCt">
+                <div class="heroCt">
+                    <img class="albumPoster" id="albumPoster"/>
+                    <div class="albumDesc">
+                        <div class="albumText">ALBUM</div>
+                        <div class="albumTitle" id="albumTitle"></div>
+                        <div class="albumInfo">
+                            <span class="albumInfoComp" id="albumSinger"></span>
+                            <i class="fas fa-circle"></i>
+                            <span class="albumInfoComp" id="albumYear"></span>
+                            <i class="fas fa-circle"></i>
+                            <span class="albumInfoComp" id="albumNumSong"></span>
+                            <span class="albumInfoComp" id="albumDuration"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="detAlbumFunc">
+                    <div class="detAlbumFuncMid">
+                        <i class="fas fa-play fa-lg play" id="play"></i>
+                        <i class="far fa-heart fa-lg like"></i>
+                        <i class="fas fa-ellipsis-h fa-lg ellipsis"></i>
+                    </div>
+                </div>
+                <div class="detAlbumList" id="detAlbumList"></div>
+                <div class="footerPage">
+                    <div class="footerTop">
+                        <div class="footerTopLeft">
+                            <div class="footerTopLeftItem">
+                                <div class="footerTopLeftItemTitle">Company</div>
+                                <div class="footerTopLeftItems">About</div>
+                                <div class="footerTopLeftItems">Jobs</div>
+                                <div class="footerTopLeftItems">For the Record</div>
+                            </div>
+                            <div class="footerTopLeftItem">
+                                <div class="footerTopLeftItemTitle">Communities</div>
+                                <div class="footerTopLeftItems">For Artists</div>
+                                <div class="footerTopLeftItems">Developers</div>
+                                <div class="footerTopLeftItems">Advertising</div>
+                                <div class="footerTopLeftItems">Investors</div>
+                                <div class="footerTopLeftItems">Vendors</div>
+                            </div>
+                            <div class="footerTopLeftItem">
+                                <div class="footerTopLeftItemTitle">Useful links</div>
+                                <div class="footerTopLeftItems">Support</div>
+                                <div class="footerTopLeftItems">Free Mobile App</div>
+                            </div>
+                        </div>
+                        <div class="footerTopRight">
+                            <i class="fab fa-instagram"></i>
+                            <i class="fab fa-twitter"></i>
+                            <i class="fab fa-facebook"></i>
+                        </div>
+                    </div>
+                    <hr class="footerHr">
+                    <div class="footerBottom">
+                        <div class="footerBottomLeft">
+                            <a href="" class="footerBottomItem">Legal</a>
+                            <a href="" class="footerBottomItem">Privacy Center</a>
+                            <a href="" class="footerBottomItem">Privacy Policy</a>
+                            <a href="" class="footerBottomItem">Cookies</a>
+                            <a href="" class="footerBottomItem">About Ads</a>
+                        </div>
+                        <div class="footerBottomRight">
+                            <i class="far fa-copyright"></i>
+                            <span class="copyrightText"> 2022 Spotify AB</span>
+                        </div>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="musicPlayer">
+            <div class="musicPlayerLeft">
+                <img id="musicPlayerPoster"/>
+                <div class="musicPlayerLeftDesc">
+                    <div class="musicPlayerTitle" id="musicPlayerTitle"></div>
+                    <div class="musicPlayerSinger" id="musicPlayerSinger"></div>
+                </div>
+                <i class="far fa-heart like"></i>
+            </div>
+            <div class="musicPlayerMid">
+                <audio id="addAudio">
+                    <source id="sourceAudio" src=""></source>
+                </audio>
+                <div class="controls">
+                    <div class="controlsTop">
+                        <i class="fas fa-random random"></i>
+                        <i class="fas fa-step-backward backward"></i>
+                        <i class="fas fa-play playmusic" id="playmusic" onclick="toggleAudioPlay();"></i>
+                        <i class="fas fa-step-forward forward"></i>
+                        <i class="fas fa-redo-alt repeat"></i>
+                    </div>
+                    <div class="controlsBottom">
+                        <div class="passedTime" id="passedTime"></div>
+                        <input type="range" class="timelineAudio" id="timelineAudio" min="0" max="100" value="0">
+                        <div class="remainingTime" id="remainingTime"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="musicPlayerRight">
+                <i class="fas fa-volume-up volume" id="vol"></i>
+                <input type="range" class="timelineVol" id="timelineVol" max="100" value="0">
+            </div>
+        </footer>
+        <script src="detailAlbum.js"></script>
+    </body>
+</html>
