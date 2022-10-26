@@ -136,7 +136,7 @@ function getAlbums(){
 }
 
 function loadImage(from, showWhere){
-    document.getElementById("displayImage"+showWhere).src=document.getElementById("imageuploadea").value;
+    document.getElementById("displayImage"+showWhere).src=document.getElementById("imageupload"+from).value;
 }
 
 function autoDataEditAlbum(){
@@ -168,8 +168,14 @@ function editAlbum() {
             else{
                 alert("edit failed");
             }
+            getSongs();
+            getAlbums();
         }
     };
+    let genre = null;
+    if(document.getElementById("genreea").value != ""){
+        document.getElementById("genreea").value
+    }
     let data = {
         "album_id": document.getElementById("albumidea").value,
         "judul": document.getElementById("albumnameea").value,
@@ -177,7 +183,7 @@ function editAlbum() {
         "total_duration":document.getElementById("totaldurationea").value,
         "image_path":document.getElementById("imageuploadea").value,
         "tanggal_terbit":document.getElementById("tanggalterbitea").value,
-        "genre":document.getElementById("genreea").value,
+        "genre":genre,
     };
     console.log(data);
     xhttp.open("POST","http://localhost:8000/api/albumapi/editalbum",true);
@@ -185,6 +191,43 @@ function editAlbum() {
     xhttp.setRequestHeader("Content-Type", "application/json");
     xhttp.withCredentials = true;
     xhttp.send(JSON.stringify(data)); 
+}
+
+function addAlbum() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function(){
+        if(this.readyState==4 && this.status==200){
+            let res = JSON.parse(this.responseText);
+            if(res['status']){
+                alert("album successfully added");
+            }
+            else{
+                alert("failed to add album");
+            }
+            getSongs();
+            getAlbums();
+        }
+    };
+    let genre = null;
+    if(document.getElementById("genreea").value != ""){
+        document.getElementById("genreea").value
+    }
+    let data = {
+        "album_id": document.getElementById("albumidaa").value,
+        "judul": document.getElementById("albumnameaa").value,
+        "penyanyi":document.getElementById("singeraa").value,
+        "total_duration":document.getElementById("totaldurationaa").value,
+        "image_path":document.getElementById("imageuploadaa").value,
+        "tanggal_terbit":document.getElementById("tanggalterbitaa").value,
+        "genre":genre,
+    };
+    console.log(data);
+    xhttp.open("POST","http://localhost:8000/api/albumapi/addalbum",true);
+    xhttp.setRequestHeader("Accept", "application/json");
+    xhttp.setRequestHeader("Content-Type", "application/json");
+    xhttp.withCredentials = true;
+    xhttp.send(JSON.stringify(data)); 
+
 }
 
 function autoDataDeleteAlbum(){
@@ -220,11 +263,6 @@ function autoDataSong(){
     document.getElementById("durationes").value = choosen_song.duration;
 }
 
-
-
-function addAlbum() {
-
-}
 
 function deleteAlbum() {
 
