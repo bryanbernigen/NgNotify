@@ -166,15 +166,15 @@ class Song
     $orderByYear - NULL jika tidak terurut berdasarkan tahun, ASC/DESC jika terurut berdasarkan tahun
     $orderByJudul - ASC atau DESC tidak boleh NULL karena secara otomatis akan terutur berdasarkan judul jika tahun kosong
     */
-    public function selectSong($query, $orderByYear, $orderByJudul, $filterGenre){
+    public function selectSong($query, $orderByYear, $orderByJudul, $filterByGenre){
         //select * from songs where ((judul like '%zzz%' OR penyanyi like '%zzz%' 
         //OR DATE_PART('YEAR',tanggal_terbit) = 2000) AND genre like '%a%') 
         //ORDER BY DATE_PART('YEAR',tanggal_terbit) ASC
         $likeQuery = '%' . $query . '%';
-        $filterGenre = '%' . $filterGenre . '%';
+        $filterGenre = '%' . $filterByGenre . '%';
         if(isset($query)){
             if(is_numeric($query)){
-                if(isset($filterGenre)){
+                if(isset($filterByGenre)){
                     if(isset($orderByYear)){
                         $this->db->query('SELECT * FROM ' . $this->table . ' WHERE (EXTRACT(YEAR FROM tanggal_terbit) = :query AND genre like :filterGenre) ORDER BY tanggal_terbit ' . $orderByYear);
                         $this->db->bind(':query', $query);
@@ -198,7 +198,7 @@ class Song
                 }
             }
             else{
-                if(isset($filterGenre)){
+                if(isset($filterByGenre)){
                     if(isset($orderByYear)){
                     $this->db->query("SELECT * FROM " . $this->table . " WHERE (judul LIKE :likeQuery OR penyanyi LIKE :likeQuery) AND genre LIKE :filterGenre ORDER BY tanggal_terbit " . $orderByYear);
                     $this->db->bind(':likeQuery', $likeQuery);
@@ -223,7 +223,7 @@ class Song
             }
         }
         else{
-            if(isset($filterGenre)){
+            if(isset($filterByGenre)){
                 if(isset($orderByYear)){
                     $this->db->query('SELECT * FROM ' . $this->table . ' WHERE genre LIKE :filterGenre ORDER BY tanggal_terbit ' . $orderByYear);
                     $this->db->bind(':filterGenre', $filterGenre);
