@@ -12,10 +12,10 @@ class Song
         $this->db = new Database;
     }
 
-    public function addSong($judul, $penyanyi, $tanggal_terbit, $genre, $duration, $audio_path, $image_path, $album_id)
+    public function addSong($judul, $penyanyi, $tanggal_terbit, $genre, $duration, $audio_path, $image_path, $album_id, $lyric)
     {
         $this->db->startTransaction();
-        $this->db->query('INSERT INTO ' . $this->table . ' VALUES (default, :judul, :penyanyi, :tanggal_terbit, :genre, :duration, :audio_path, :image_path, :album_id)');
+        $this->db->query('INSERT INTO ' . $this->table . ' VALUES (default, :judul, :penyanyi, :tanggal_terbit, :genre, :duration, :audio_path, :image_path, :album_id, :lyric)');
         $this->db->bind(':judul', $judul);
         $this->db->bind(':penyanyi', $penyanyi);
         $this->db->bind(':tanggal_terbit', $tanggal_terbit);
@@ -24,6 +24,7 @@ class Song
         $this->db->bind(':audio_path', $audio_path);
         $this->db->bind(':image_path', $image_path);
         $this->db->bind(':album_id', $album_id);
+        $this->db->bind(':lyric', $lyric);
         try {
             $this->db->execute();
             $album = new Album();
@@ -41,12 +42,20 @@ class Song
         }
     }
 
-    public function editSong($song_id, $judul, $penyanyi, $tanggal_terbit, $genre, $duration, $audio_path, $image_path, $album_id)
+    public function editSong($song_id, $judul, $penyanyi, $tanggal_terbit, $genre, $duration, $audio_path, $image_path, $album_id, $lyric)
     {
         $this->db->startTransaction();
-        $old_duration = $this->getSong($song_id)['duration'];
+        try {
+            $old_duration = $this->getSong($song_id);
+            if(!$old_duration){
+                return false;
+            }
+            $old_duration = $old_duration['duration'];
+        } catch (\Throwable $th) {
+            return false;
+        }
         $new_duration = $old_duration - $duration;
-        $this->db->query('UPDATE ' . $this->table . ' SET judul = :judul, penyanyi = :penyanyi, tanggal_terbit = :tanggal_terbit, genre = :genre, duration = :duration, audio_path = :audio_path, image_path = :image_path, album_id = :album_id WHERE song_id = :song_id');
+        $this->db->query('UPDATE ' . $this->table . ' SET judul = :judul, penyanyi = :penyanyi, tanggal_terbit = :tanggal_terbit, genre = :genre, duration = :duration, audio_path = :audio_path, image_path = :image_path, album_id = :album_id, lyric = :lyric WHERE song_id = :song_id');
         $this->db->bind(':song_id', $song_id);
         $this->db->bind(':judul', $judul);
         $this->db->bind(':penyanyi', $penyanyi);
@@ -56,6 +65,7 @@ class Song
         $this->db->bind(':audio_path', $audio_path);
         $this->db->bind(':image_path', $image_path);
         $this->db->bind(':album_id', $album_id);
+        $this->db->bind(':lyric', $lyric);
         try {
             $this->db->execute();
             $album = new Album();
@@ -107,7 +117,12 @@ class Song
         $this->db->bind(':songId', $songId);
         try {
             $this->db->execute();
-            return $this->db->single();
+            try {
+                $resut = $this->db->single();
+                return $resut;
+            } catch (\Throwable $th) {
+                return false;
+            }
         } catch (PDOException $e) {
             return  false;
         }
