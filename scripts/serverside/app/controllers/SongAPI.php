@@ -148,7 +148,7 @@ class SongAPI extends Controller
         }
     }
 
-    public function selectSong()
+    public function selectSong($page = 1, $limit_page = 10)
     {
         if ($_SERVER['REQUEST_METHOD'] != 'POST') {
             return json_response_fail(METHOD_NOT_ALLOWED);
@@ -157,6 +157,7 @@ class SongAPI extends Controller
         $order_by_year = NULL;
         $filter_genre = NULL;
         $order_by_title = 'ASC';
+        $page = (int) $page - 1;
         if (isset($_POST['order_by_year'])) {
             $order_by_year = $_POST['order_by_year'];
         }
@@ -170,8 +171,10 @@ class SongAPI extends Controller
             $order_by_title = $_POST['order_by_title'];
         }
         $res = $this->model('Song')->selectSong($query, $order_by_year, $order_by_title, $filter_genre);
+        $total = count($res);
+        $res = array_slice($res, $page * $limit_page, $limit_page);
         if ($res) {
-            json_response_success($res);
+            json_response_success(array("songs"=>$res, "pages"=>ceil($total/$limit_page)));
         } else {
             json_response_fail(SONG_NOT_FOUND);
         }
