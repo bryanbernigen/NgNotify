@@ -46,13 +46,15 @@ function addOptions(albumIDs, songInAlbum) {
             divDocument[j].appendChild(select);
         }
     }
-    var div = document.getElementById("songid");
-    for (let i = 0; i < songInAlbum.length; i++) {
-        select = document.createElement("option");
-        select.value = songInAlbum[i].song_id;
-        select.innerHTML = songInAlbum[i].song_id + '. ' + songInAlbum[i].judul;
-        select.style.fontFamily = "CircularStd-Light";
-        div.appendChild(select);
+    var div = document.getElementsByClassName("songid");
+    for (let j = 0; j < div.length; j++) {
+        for (let i = 0; i < songInAlbum.length; i++) {
+            select = document.createElement("option");
+            select.value = songInAlbum[i].song_id;
+            select.innerHTML = songInAlbum[i].song_id + '. ' + songInAlbum[i].judul;
+            select.style.fontFamily = "CircularStd-Light";
+            div[j].appendChild(select);
+        }
     }
 }
 
@@ -290,28 +292,86 @@ function deleteAlbum() {
     xhttp.send(JSON.stringify(data)); 
 }
 
-function autoDataSong(){
+function autoDataEditSong(){
+    console.log('masuk auto data edit album');
     song_id = document.getElementById("songides").value;
+    console.log(song_id);
     for (let index = 0; index < songs.length; index++) {
-        if(songs[index].id == song_id){
+        if(songs[index].song_id == song_id){
             choosen_song = songs[index];
             break; 
         }
     }
-    document.getElementById("albumides").value = choosen_song.album_id;
-    document.getElementById("songnamees").values = choosen_song.name;
-    document.getElementById("singeres").value = choosen_song.singer;
-    document.getELementById("tanggalterbites").value = choosen_song.tanggal_terbit;
+    document.getElementById("songnamees").value = choosen_song.judul;
+    document.getElementById("singeres").value = choosen_song.penyanyi;
+    document.getElementById("tanggalterbites").value = choosen_song.tanggal_terbit;
     document.getElementById("genrees").value = choosen_song.genre;
     document.getElementById("durationes").value = choosen_song.duration;
+    document.getElementById("audiouploades").value = choosen_song.audio_path;
+    document.getElementById("imageuploades").value = choosen_song.image_path;
+    document.getElementById("albumides").value = choosen_song.album_id;
+    loadImage('es','3');
 }
-
-
-
 
 function editSong() {
-
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function(){
+        if(this.readyState==4 && this.status==200){
+            let res = JSON.parse(this.responseText);
+            if(res['status']){
+                alert("edit  success");
+            }
+            else{
+                alert("edit failed");
+            }
+            //TODO: Refresh songs and albums after edit
+        }
+    };
+    let penyanyi = null;
+    let genre = null;
+    let image_path = null;
+    let lyrics = null;
+    if(document.getElementById("singeres").value != ""){
+        penyanyi = document.getElementById("singeres").value;
+    }
+    if(document.getElementById("genrees").value != ""){
+        genre = document.getElementById("genrees").value;
+    }
+    if(document.getElementById("imageuploades").value != ""){
+        image_path = document.getElementById("imageuploades").value;
+    }
+    if(document.getElementById("songides").value == "" 
+    || document.getElementById("songnamees").value == "" 
+    || document.getElementById("durationes").value == "" 
+    || document.getElementById("tanggalterbites").value == ""
+    || document.getElementById("audiouploades").value == ""
+    || document.getElementById("albumides").value == ""){
+        alert("Please fill all the fields");
+    }else{
+    let data = {
+            "song_id": document.getElementById("albumidea").value,
+            "judul": document.getElementById("songnamees").value,
+            "penyanyi":penyanyi,
+            "tanggal_terbit":document.getElementById("tanggalterbites").value,
+            "genre":genre,
+            "duration":document.getElementById("durationes").value,
+            "audio_path":document.getElementById("audiouploades").value,
+            "image_path":image_path,
+            "album_id":document.getElementById("albumides").value,
+            "lyrics":lyrics,
+        };
+        console.log(data);
+        xhttp.open("POST","http://localhost:8000/api/songapi/editsong",true);
+        xhttp.setRequestHeader("Accept", "application/json");
+        xhttp.setRequestHeader("Content-Type", "application/json");
+        xhttp.withCredentials = true;
+        xhttp.send(JSON.stringify(data));
+    } 
 }
+
+
+
+
 
 function addSong() {
 
