@@ -69,6 +69,10 @@ class SongAPI extends Controller
                 return;
             }
         }
+        else{
+            json_response_fail(INVALID_PARAMETER);
+            return;
+        }
     }
 
     public function deleteSong()
