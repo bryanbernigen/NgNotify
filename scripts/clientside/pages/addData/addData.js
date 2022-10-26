@@ -168,8 +168,7 @@ function editAlbum() {
             else{
                 alert("edit failed");
             }
-            getSongs();
-            getAlbums();
+            //TODO: Refresh songs and albums after edit
         }
     };
     let genre = null;
@@ -204,8 +203,7 @@ function addAlbum() {
             else{
                 alert("failed to add album");
             }
-            getSongs();
-            getAlbums();
+            //TODO : Refresh songs and albums after add
         }
     };
     let genre = null;
@@ -227,12 +225,11 @@ function addAlbum() {
     xhttp.setRequestHeader("Content-Type", "application/json");
     xhttp.withCredentials = true;
     xhttp.send(JSON.stringify(data)); 
-
 }
 
 function autoDataDeleteAlbum(){
     console.log('masuk auto data delete album');
-    album_id = document.getElementById("albumidea").value;
+    album_id = document.getElementById("albumidda").value;
     for (let index = 0; index < albums.length; index++) {
         if(albums[index].album_id == album_id){
             choosen_album = albums[index];
@@ -244,7 +241,35 @@ function autoDataDeleteAlbum(){
     document.getElementById("totaldurationda").value = choosen_album.total_duration;
     document.getElementById("genreda").value = choosen_album.genre;
     document.getElementById("tanggalterbitda").value = choosen_album.tanggal_terbit;
-    document.getElementById("imageupload0ea").value = choosen_album.image_path;
+    document.getElementById("imageuploadda").value = choosen_album.image_path;
+    loadImage('da','2');
+}
+
+function deleteAlbum() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function(){
+        if(this.readyState==4 && this.status==200){
+            let res = JSON.parse(this.responseText);
+            if(res['status']){
+                alert("album successfully deleted");
+            }
+            else{
+                alert("failed to delete album");
+            }
+            //TODO : Refresh songs and albums after add
+        }
+    };
+    let data = {
+        "album_id": document.getElementById("albumidda").value,
+    };
+    if(data.album_id==3){
+        console.log('album_id 3');
+    }
+    xhttp.open("POST","http://localhost:8000/api/albumapi/deletealbum",true);
+    xhttp.setRequestHeader("Accept", "application/json");
+    xhttp.setRequestHeader("Content-Type", "application/json");
+    xhttp.withCredentials = true;
+    xhttp.send(JSON.stringify(data)); 
 }
 
 function autoDataSong(){
@@ -264,9 +289,7 @@ function autoDataSong(){
 }
 
 
-function deleteAlbum() {
 
-}
 
 function editSong() {
 
@@ -274,8 +297,4 @@ function editSong() {
 
 function addSong() {
 
-}
-
-function deleteAlbum() {
-    
 }

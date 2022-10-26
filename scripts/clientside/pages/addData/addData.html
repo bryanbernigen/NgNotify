@@ -137,7 +137,7 @@
                             </div>
                             <form>
                                 <label class="formLabel" for="albumid">Album ID</label><br>
-                                <select class="formInputText albumid" id="albumidda" name="albumid" onchange="autoDataDeleteAlbum()"></select>
+                                <select class="formInputText albumid" id="albumidda" name="albumid" onclick="autoDataDeleteAlbum()"></select>
                                 <label class="formLabel" for="albumname">Album Name</label><br>
                                 <input class="formInputText" type="text" id="albumnameda" name="albumname" placeholder="Born Pink" disabled><br>
                                 <br>
@@ -147,9 +147,9 @@
                                 <label class="formLabel" for="totalduration">Total Duration</label><br>
                                 <input class="formInputText" type="number" id="totaldurationda" name="totalduration" placeholder="0" disabled><br>
                                 <br>
-                                <label class="formLabel" for="imageupload0">Image Path<br>
-                                <input class="formInputText" type="text" id="imageuploadda" name="imagepath" accept="image/jpeg, image/png, image/jpg" disabled></label><br><br><br>
-                                <img id="displayImage0"></img>
+                                <label class="formLabel" for="imageupload0">Image Path<br></label>
+                                <input class="formInputText" type="text" id="imageuploadda" name="imagepath" disabled><br><br><br>
+                                <img id="displayImage2"></img>
                                 <br><br><br>
                                 <label class="formLabel" for="tanggalterbit">Date Released</label><br>
                                 <input class="formInputText" type="date" id="tanggalterbitda" name="tanggalterbit" placeholder="YYYY-MM-DD" disabled><br>
@@ -157,7 +157,7 @@
                                 <label class="formLabel" for="genre">Genre</label><br>
                                 <input class="formInputText" type="text" id="genreda" name="genre" placeholder="Pop" disabled><br>
                                 <br>
-                                <input class="formBt" type="submit" onclick="deleteAlbum()" value="Delete Album">
+                                <input class="formBt" type="button" onclick="deleteAlbum()" value="Delete Album">
                             </form>
                         </div>
                     </div>
