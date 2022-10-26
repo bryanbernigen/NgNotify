@@ -14,7 +14,7 @@ class Song
 
     public function addSong($judul, $penyanyi, $tanggal_terbit, $genre, $duration, $audio_path, $image_path, $album_id, $lyric)
     {
-        $this->db->startTransaction();
+        return $this->db->startTransaction();
         $this->db->query('INSERT INTO ' . $this->table . ' VALUES (default, :judul, :penyanyi, :tanggal_terbit, :genre, :duration, :audio_path, :image_path, :album_id, :lyric)');
         $this->db->bind(':judul', $judul);
         $this->db->bind(':penyanyi', $penyanyi);
@@ -30,8 +30,7 @@ class Song
             $album = new Album();
             $res = $album->editAlbumTime($album_id, $duration);
             if($res){
-                $this->db->commit();
-                return true;
+                return $this->db->commit();
             }else{
                 $this->db->rollback();
                 return false;
