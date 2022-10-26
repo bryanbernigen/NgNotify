@@ -175,21 +175,30 @@ function editAlbum() {
     if(document.getElementById("genreea").value != ""){
         document.getElementById("genreea").value
     }
+    if(document.getElementById("albumidea").value==""
+    || document.getElementById("albumnameea").value==""
+    || document.getElementById("singerea").value==""
+    || document.getElementById("totaldurationea").value==""
+    || document.getElementById("tanggalterbitea").value==""
+    || document.getElementById("imageuploadea").value==""){
+        alert("Please fill all the fields");
+    }else{
     let data = {
-        "album_id": document.getElementById("albumidea").value,
-        "judul": document.getElementById("albumnameea").value,
-        "penyanyi":document.getElementById("singerea").value,
-        "total_duration":document.getElementById("totaldurationea").value,
-        "image_path":document.getElementById("imageuploadea").value,
-        "tanggal_terbit":document.getElementById("tanggalterbitea").value,
-        "genre":genre,
-    };
-    console.log(data);
-    xhttp.open("POST","http://localhost:8000/api/albumapi/editalbum",true);
-    xhttp.setRequestHeader("Accept", "application/json");
-    xhttp.setRequestHeader("Content-Type", "application/json");
-    xhttp.withCredentials = true;
-    xhttp.send(JSON.stringify(data)); 
+            "album_id": document.getElementById("albumidea").value,
+            "judul": document.getElementById("albumnameea").value,
+            "penyanyi":document.getElementById("singerea").value,
+            "total_duration":document.getElementById("totaldurationea").value,
+            "image_path":document.getElementById("imageuploadea").value,
+            "tanggal_terbit":document.getElementById("tanggalterbitea").value,
+            "genre":genre,
+        };
+        console.log(data);
+        xhttp.open("POST","http://localhost:8000/api/albumapi/editalbum",true);
+        xhttp.setRequestHeader("Accept", "application/json");
+        xhttp.setRequestHeader("Content-Type", "application/json");
+        xhttp.withCredentials = true;
+        xhttp.send(JSON.stringify(data));
+    } 
 }
 
 function addAlbum() {
@@ -210,21 +219,30 @@ function addAlbum() {
     if(document.getElementById("genreea").value != ""){
         document.getElementById("genreea").value
     }
-    let data = {
-        "album_id": document.getElementById("albumidaa").value,
-        "judul": document.getElementById("albumnameaa").value,
-        "penyanyi":document.getElementById("singeraa").value,
-        "total_duration":document.getElementById("totaldurationaa").value,
-        "image_path":document.getElementById("imageuploadaa").value,
-        "tanggal_terbit":document.getElementById("tanggalterbitaa").value,
-        "genre":genre,
-    };
-    console.log(data);
-    xhttp.open("POST","http://localhost:8000/api/albumapi/addalbum",true);
-    xhttp.setRequestHeader("Accept", "application/json");
-    xhttp.setRequestHeader("Content-Type", "application/json");
-    xhttp.withCredentials = true;
-    xhttp.send(JSON.stringify(data)); 
+    if(document.getElementById("albumidaa").value=="" 
+    || document.getElementById("albumnameaa").value=="" 
+    || document.getElementById("singeraa").value=="" 
+    || document.getElementById("totaldurationaa").value=="" 
+    || document.getElementById("imageuploadaa").value=="" 
+    || document.getElementById("tanggalterbitaa").value==""){
+        alert("Please fill all the fields");   
+    }else{
+        let data = {
+            "album_id": document.getElementById("albumidaa").value,
+            "judul": document.getElementById("albumnameaa").value,
+            "penyanyi":document.getElementById("singeraa").value,
+            "total_duration":document.getElementById("totaldurationaa").value,
+            "image_path":document.getElementById("imageuploadaa").value,
+            "tanggal_terbit":document.getElementById("tanggalterbitaa").value,
+            "genre":genre,
+        };
+        console.log(data);
+        xhttp.open("POST","http://localhost:8000/api/albumapi/addalbum",true);
+        xhttp.setRequestHeader("Accept", "application/json");
+        xhttp.setRequestHeader("Content-Type", "application/json");
+        xhttp.withCredentials = true;
+        xhttp.send(JSON.stringify(data)); 
+    }
 }
 
 function autoDataDeleteAlbum(){
