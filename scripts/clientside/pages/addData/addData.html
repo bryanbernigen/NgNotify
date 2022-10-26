@@ -1,0 +1,241 @@
+<!DOCTYPE html5>
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#000000" />
+        <link rel="apple-touch-icon" />
+        <link rel="icon" href="../../assets/Spotify_LogoOnly_RGB_White.png" />
+        <link rel="stylesheet" href="addData.css">
+        <link rel="stylesheet" href="../../globals.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <title>Spotify - Admin</title>
+        <script src="addData.js"></script>
+    </head>
+    <body>
+        <div class="sidebar">
+            <div class="sidebarTop">
+                <img class="sidebarLogo" src="../../assets/Spotify_Logo_RGB_White.png"/>
+            </div>
+            <div class="sidebarMiddleWrap">
+                <div class="sidebarBottom">
+                    <div class="sidebarItems">
+                        <img class="sidebarIcon" src="../../assets/icons8-home-144.png"/>
+                        <span class="sidebarText">Home</span>
+                    </div>
+                    <div class="sidebarItems">
+                        <img class="sidebarIcon" src="../../assets/icons8-music-library-96.png"/>
+                        <span class="sidebarText">Albums</span>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebarBottomWrap">
+                <div class="sidebarBottom">
+                    <div class="sidebarItems">
+                        <img class="sidebarIcon" src="../../assets/icons8-add-new-100.png"/>
+                        <span class="sidebarText">Create Playlist</span>
+                    </div>
+                    <div class="sidebarItems">
+                        <img class="spc" src="../../assets/icons8-love-90.png"/>
+                        <span class="sidebarText">Liked Songs</span>
+                    </div>
+                </div>
+            </div>
+            <hr/>
+        </div>
+        <div class="ct">
+            <nav>
+                <div class="navCt">
+                    <div class="navLeft">
+                        <img src="../../assets/icons8-chevron-left-96.png" />
+                        <img src="../../assets/icons8-chevron-right-96.png" />
+                    </div>
+                    <div class="navRight">
+                        <div class="navCollapse">
+                            <div class="navItems">
+                                <img class="navIcon" src="../../assets/icons8-user-100.png"/>
+                                <span class="navText">Username</span>
+                                <i class="fa fa-caret-down"></i>
+                            </div>
+                            <div class="navDrop">
+                                <div class="navChild">Log out</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <div class="addDataCt">
+                <div class="addDataTitle">Add Album & Song Data</div>
+                <div class="addData">
+                    <div class="addAlbum">
+                        <div class="collapsibleCt">
+                            <div class="collapsibleTextWrapper">
+                                <i class="fa fa-caret-down"></i>
+                                <div class="collapsibleText">Edit An Album</div>
+                            </div>
+                            <form>
+                                <label class="formLabel" for="albumid">Album ID</label><br>
+                                <select class="formInputText albumid" id="albumid" name="albumid"></select>
+                                <br><br>
+                                <label class="formLabel" for="albumname">Album Name</label><br>
+                                <input class="formInputText" type="text" id="albumname" name="albumname" placeholder="Born Pink"><br>
+                                <br>
+                                <label class="formLabel" for="singer">Singer</label><br>
+                                <input class="formInputText" type="text" id="singer" name="singer" placeholder="Blackpink"><br>
+                                <br>
+                                <label class="formLabel" for="totalduration">Total Duration</label><br>
+                                <input class="formInputText" type="number" id="totalduration" name="totalduration" placeholder="0"><br>
+                                <br>
+                                <label class="formLabel formInputImage" for="imageupload0">Image Path<br>
+                                <input class="imageupload" type="file" id="imageupload0" name="imagepath" accept="image/jpeg, image/png, image/jpg"></label><br><br><br>
+                                <img id="displayImage0"></img>
+                                <br><br><br>
+                                <label class="formLabel" for="tanggalterbit">Date Released</label><br>
+                                <input class="formInputText" type="date" id="tanggalterbit" name="tanggalterbit" placeholder="YYYY-MM-DD"><br>
+                                <br>
+                                <label class="formLabel" for="genre">Genre</label><br>
+                                <input class="formInputText" type="text" id="genre" name="genre" placeholder="Pop"><br>
+                                <br>
+                                <input class="formBt" type="submit" onclick="editAlbum()" placeholder="Edit Album">
+                            </form>
+                        </div>
+                        <div class="collapsibleCt">
+                            <div class="collapsibleTextWrapper">
+                                <i class="fa fa-caret-down"></i>
+                                <div class="collapsibleText">Add An Album</div>
+                            </div>
+                            <form>
+                                <label class="formLabel" for="albumidInput">Album ID</label><br>
+                                <input class="formInputText" type="number" id="albumidInput" name="albumidInput" placeholder="0"><br>
+                                <br>
+                                <label class="formLabel" for="albumname">Album Name</label><br>
+                                <input class="formInputText" type="text" id="albumname" name="albumname" placeholder="Born Pink"><br>
+                                <br>
+                                <label class="formLabel" for="singer">Singer</label><br>
+                                <input class="formInputText" type="text" id="singer" name="singer" placeholder="Blackpink"><br>
+                                <br>
+                                <label class="formLabel" for="totalduration">Total Duration</label><br>
+                                <input class="formInputText" type="number" id="totalduration" name="totalduration" placeholder="0"><br>
+                                <br>
+                                <label class="formLabel formInputImage" for="imageupload1">Image Path<br>
+                                <input class="imageupload" type="file" id="imageupload1" name="imagepath" accept="image/jpeg, image/png, image/jpg"></label><br><br><br>
+                                <img id="displayImage1"></img>
+                                <br><br><br>
+                                <label class="formLabel" for="tanggalterbit">Date Released</label><br>
+                                <input class="formInputText" type="date" id="tanggalterbit" name="tanggalterbit" placeholder="DD/MM/YYYY"><br>
+                                <br>
+                                <label class="formLabel" for="genre">Genre</label><br>
+                                <input class="formInputText" type="text" id="genre" name="genre" placeholder="DD/MM/YYYY"><br>
+                                <br>
+                                <input class="formBt" type="submit" onclick="addAlbum()" placeholder="Add Album">
+                            </form>
+                        </div>
+                        <div class="collapsibleCt">
+                            <div class="collapsibleTextWrapper">
+                                <i class="fa fa-caret-down"></i>
+                                <div class="collapsibleText">Delete An Album</div>
+                            </div>
+                            <form>
+                                <label class="formLabel" for="albumid">Album ID</label><br>
+                                <select class="formInputText albumid" id="albumid" name="albumid"></select>
+                                <br><br>
+                                <input class="formBt" type="submit" onclick="deleteAlbum()" placeholder="Delete Album">
+                            </form>
+                        </div>
+                    </div>
+                    <div class="addSong">
+                        <div class="collapsibleCt">
+                            <div class="collapsibleTextWrapper">
+                                <i class="fa fa-caret-down"></i>
+                                <div class="collapsibleText">Edit A Song</div>
+                            </div>
+                            <form>
+                                <label class="formLabel" for="albumid">Album ID</label><br>
+                                <select class="formInputText albumid" id="albumid" name="albumid"></select>
+                                <br><br>
+                                <label class="formLabel" for="songid">Song ID</label><br>
+                                <select class="formInputText" id="songid" name="songid"></select>
+                                <br><br>
+                                <label class="formLabel" for="albumname">Song Title</label><br>
+                                <input class="formInputText" type="text" id="albumname" name="albumname" placeholder="Born Pink"><br>
+                                <br>
+                                <label class="formLabel" for="singer">Singer</label><br>
+                                <input class="formInputText" type="text" id="singer" name="singer" placeholder="Blackpink"><br>
+                                <br>
+                                <label class="formLabel" for="tanggalterbit">Date Released</label><br>
+                                <input class="formInputText" type="date" id="tanggalterbit" name="tanggalterbit" placeholder="DD/MM/YYYY"><br>
+                                <br>
+                                <label class="formLabel" for="genre">Genre</label><br>
+                                <input class="formInputText" type="text" id="genre" name="genre" placeholder="DD/MM/YYYY"><br>
+                                <br>
+                                <label class="formLabel" for="duration">Duration</label><br>
+                                <input class="formInputText" type="number" id="duration" name="duration" placeholder="0"><br>
+                                <br>
+                                <label class="formLabel formInputAudio" for="audioupload0">Audio Path<br>
+                                <input class="audioupload" type="file" id="audioupload0" name="audioupload0" accept="audio/*"></label><br><br><br>
+                                <br>
+                                <label class="formLabel formInputImage" for="imageupload2">Image Path<br>
+                                <input class="imageupload" type="file" id="imageupload2" name="imagepath" accept="image/jpeg, image/png, image/jpg"></label><br><br><br>
+                                <img id="displayImage2"></img>
+                                <br><br><br>
+                                <input class="formBt" type="submit" onclick="editSong()" placeholder="Edit Song">
+                            </form>
+                        </div>
+                        <div class="collapsibleCt">
+                            <div class="collapsibleTextWrapper">
+                                <i class="fa fa-caret-down"></i>
+                                <div class="collapsibleText">Add A Song</div>
+                            </div>
+                            <form>
+                                <label class="formLabel" for="albumid">Album ID</label><br>
+                                <select class="formInputText albumid" id="albumid" name="albumid"></select>
+                                <br><br>
+                                <label class="formLabel" for="songidInput">Song ID</label><br>
+                                <input class="formInputText" type="number" id="songidInput" name="songidInput" placeholder="0"><br>
+                                <br>
+                                <label class="formLabel" for="songtitle">Song Title</label><br>
+                                <input class="formInputText" type="text" id="songtitle" name="songtitle" placeholder="Pink Venom"><br>
+                                <br>
+                                <label class="formLabel" for="singer">Singer</label><br>
+                                <input class="formInputText" type="text" id="singer" name="singer" placeholder="Blackpink"><br>
+                                <br>
+                                <label class="formLabel" for="tanggalterbit">Date Released</label><br>
+                                <input class="formInputText" type="date" id="tanggalterbit" name="tanggalterbit" placeholder="DD/MM/YYYY"><br>
+                                <br>
+                                <label class="formLabel" for="genre">Genre</label><br>
+                                <input class="formInputText" type="text" id="genre" name="genre" placeholder="DD/MM/YYYY"><br>
+                                <br>
+                                <label class="formLabel" for="duration">Duration</label><br>
+                                <input class="formInputText" type="number" id="duration" name="duration" placeholder="0"><br>
+                                <br>
+                                <label class="formLabel formInputAudio" for="audioupload1">Audio Path<br>
+                                <input class="audioupload" type="file" id="audioupload1" name="audioupload1" accept="audio/*"></label><br><br><br>
+                                <br>
+                                <label class="formLabel formInputImage" for="imageupload3">Image Path<br>
+                                <input class="imageupload" type="file" id="imageupload3" name="imagepath" accept="image/jpeg, image/png, image/jpg"></label><br><br><br>
+                                <img id="displayImage3"></img>
+                                <br><br><br>
+                                <input class="formBt" type="submit" onclick="addSong()" placeholder="Add Song">
+                            </form>
+                        </div>
+                        <div class="collapsibleCt">
+                            <div class="collapsibleTextWrapper">
+                                <i class="fa fa-caret-down"></i>
+                                <div class="collapsibleText">Delete A Song</div>
+                            </div>
+                            <form>
+                                <label class="formLabel" for="albumid">Album ID</label><br>
+                                <select class="formInputText albumid" id="albumid" name="albumid"></select>
+                                <br><br>
+                                <label class="formLabel" for="songid">Song ID</label><br>
+                                <select class="formInputText" id="songid" name="songid"></select>
+                                <br><br>
+                                <input class="formBt" type="submit" onclick="deleteAlbum()" placeholder="Delete Song">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
