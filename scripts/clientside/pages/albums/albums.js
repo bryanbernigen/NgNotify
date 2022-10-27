@@ -36,7 +36,7 @@ function loginout() {
       xhttp.withCredentials = true;
       xhttp.send();
     }
-  }
+}
 
 albumList = [
     {
@@ -111,7 +111,7 @@ function appendData(data) {
         if(data[i]['genre'] == null){
             data[i]['genre'] = "-";
         }
-        div.innerHTML += '<div class="card"> \
+        div.innerHTML += '<div class="card" id="'+data[i].album_id+'" onclick="reroute(this.id)"> \
                     <img src="' + data[i].image_path + '" class="cardImage"> \
                     <div class="albumTitle">' + data[i].judul + '</div> \
                     <div class="singer">' + data[i].penyanyi + '</div> \
@@ -120,7 +120,6 @@ function appendData(data) {
                         <div class="genre">' + data[i].genre + '</div> \
                     </div> \
                 </div>';
-        console.log(data[i]);
     }
     div.style.display = "flex";
     div.style.flexDirection = "row";
@@ -129,4 +128,8 @@ function appendData(data) {
     div.style.alignItems = "center";
     mainContainer.appendChild(div);
     return div;
+}
+
+function reroute(albumid){
+    window.location.href = "http://localhost:8080/pages/detailAlbum/detailAlbum.html?album_id="+albumid;
 }

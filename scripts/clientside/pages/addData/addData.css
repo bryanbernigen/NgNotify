@@ -4,6 +4,14 @@ body {
     background-attachment: fixed;
 }
 
+.clippedImage {
+    overflow:hidden;
+    text-align:center;
+    margin: auto;
+    width: 150px;
+    height: 150px;
+}
+
 .sidebar {
     width: 15vw;
     height: 100vh;
