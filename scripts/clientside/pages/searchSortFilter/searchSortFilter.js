@@ -36,7 +36,7 @@ songList = [
         "Genre": "Pop",
         "Duration": "232",
         "Audio_path": "https://www.youtube.com/watch?v=pyf8cbqyfPs",
-        "Image_path": "../../assets/sample-song-image.jpg",
+        "Image_path": "../../assets/Spotify_Logo_CMYK_Green.png",
         "album_id": "1",
     },
     {
@@ -46,7 +46,7 @@ songList = [
         "Genre": "Pop",
         "Duration": "232",
         "Audio_path": "https://www.youtube.com/watch?v=pyf8cbqyfPs",
-        "Image_path": "../../assets/sample-song-image.jpg",
+        "Image_path": "../../assets/Spotify_Logo_CMYK_Green.png",
         "album_id": "1",
     },
     {
@@ -56,7 +56,7 @@ songList = [
         "Genre": "Pop",
         "Duration": "232",
         "Audio_path": "https://www.youtube.com/watch?v=pyf8cbqyfPs",
-        "Image_path": "../../assets/sample-song-image.jpg",
+        "Image_path": "../../assets/Spotify_Logo_CMYK_Green.png",
         "album_id": "1",
     },
     {
@@ -66,7 +66,7 @@ songList = [
         "Genre": "Pop",
         "Duration": "232",
         "Audio_path": "https://www.youtube.com/watch?v=pyf8cbqyfPs",
-        "Image_path": "../../assets/sample-song-image.jpg",
+        "Image_path": "../../assets/Spotify_Logo_CMYK_Green.png",
         "album_id": "1",
     },
 ]
@@ -77,7 +77,7 @@ albumList = [
         "Judul": "Antifragile",
         "Penyanyi": "Le Sserafim",
         "Total_duration": "654",
-        "Image_path": "../../assets/sample-song-image.jpg",
+        "Image_path": "../../assets/Spotify_Logo_CMYK_Green.png",
         "Tanggal_terbit": "10/17/2022",
         "Genre": "Pop",
     },
@@ -86,7 +86,7 @@ albumList = [
         "Judul": "Antifragile",
         "Penyanyi": "Le Sserafim",
         "Total_duration": "654",
-        "Image_path": "../../assets/sample-song-image.jpg",
+        "Image_path": "../../assets/Spotify_Logo_CMYK_Green.png",
         "Tanggal_terbit": "10/17/2022",
         "Genre": "Pop",
     },
@@ -95,7 +95,7 @@ albumList = [
         "Judul": "Antifragile",
         "Penyanyi": "Le Sserafim",
         "Total_duration": "654",
-        "Image_path": "../../assets/sample-song-image.jpg",
+        "Image_path": "../../assets/Spotify_Logo_CMYK_Green.png",
         "Tanggal_terbit": "10/17/2022",
         "Genre": "Pop",
     },
@@ -104,7 +104,7 @@ albumList = [
         "Judul": "Antifragile",
         "Penyanyi": "Le Sserafim",
         "Total_duration": "654",
-        "Image_path": "../../assets/sample-song-image.jpg",
+        "Image_path": "../../assets/Spotify_Logo_CMYK_Green.png",
         "Tanggal_terbit": "10/17/2022",
         "Genre": "Pop",
     },
@@ -158,7 +158,7 @@ function appendData(data, target) {
             data[i].image_path = "../../assets/basicimage.jpg";
         }
         div.innerHTML += '<div class="card"> \
-                    <img src="' + data[i].image_path + '" class="cardImage"> \
+                    <img src="' + data[i].Image_path + '" class="cardImage"> \
                     <div class="songTitle">' + data[i].judul + '</div> \
                     <div class="singer">' + data[i].penyanyi + '</div> \
                     <div class="dateGenre"> \

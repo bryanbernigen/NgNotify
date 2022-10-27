@@ -97,6 +97,23 @@ function getAlbums(){
 
 function loadImage(from, showWhere){
     document.getElementById("displayImage"+showWhere).src=document.getElementById("imageupload"+from).value;
+    document.getElementById("displayImage"+showWhere).style.objectFit = "cover";
+    document.getElementById("displayImage"+showWhere).style.width = "11.5vw";
+    document.getElementById("displayImage"+showWhere).style.height = "11.5vw";
+}
+
+function clearInputsCollapse() {
+    var inputs = document.getElementsByTagName("input");
+    for (let index = 0; index < inputs.length; index++) {
+        inputs[index].value = "";
+    }
+    var coll = document.getElementsByClassName("collapsibleTextWrapper");
+    for (let i = 0; i < coll.length; i++) {
+        var content = this.nextElementSibling;
+        if (content.style.display === "block") {
+            content.style.display = "none";
+        }
+    }
 }
 
 function autoDataEditAlbum(){
@@ -115,6 +132,12 @@ function autoDataEditAlbum(){
     document.getElementById("tanggalterbitea").value = choosen_album.tanggal_terbit;
     document.getElementById("imageuploadea").value = choosen_album.image_path;
     document.getElementById("displayImage0").src = choosen_album.image_path;
+    let imgs = document.getElementsByClassName("clippedImage");
+    for (let index = 0; index < imgs.length; index++) {
+        imgs[index].style.objectFit = "cover";
+        imgs[index].style.width = "11.5vw";
+        imgs[index].style.height = "11.5vw";
+    }
 }
 
 function editAlbum() {
@@ -159,6 +182,7 @@ function editAlbum() {
         xhttp.withCredentials = true;
         xhttp.send(JSON.stringify(data));
     } 
+    clearInputsCollapse();
 }
 
 function addAlbum() {
@@ -203,6 +227,7 @@ function addAlbum() {
         xhttp.withCredentials = true;
         xhttp.send(JSON.stringify(data)); 
     }
+    clearInputsCollapse();
 }
 
 function autoDataDeleteAlbum(){
@@ -248,6 +273,7 @@ function deleteAlbum() {
     xhttp.setRequestHeader("Content-Type", "application/json");
     xhttp.withCredentials = true;
     xhttp.send(JSON.stringify(data)); 
+    clearInputsCollapse();
 }
 
 function autoDataEditSong(){
@@ -298,6 +324,12 @@ function editSong() {
     if(document.getElementById("imageuploades").value != ""){
         image_path = document.getElementById("imageuploades").value;
     }
+    if(document.getElementById("audiouploades").value != "") {
+        let audioSrc = document.getElementById("audiouploades").value;
+        let audio = document.createElement("audio");
+        audio.src = audioSrc;
+        let audioDuration = audio.duration;
+    }
     if(document.getElementById("songides").value == "" 
     || document.getElementById("songnamees").value == "" 
     || document.getElementById("durationes").value == "" 
@@ -312,7 +344,7 @@ function editSong() {
             "penyanyi":penyanyi,
             "tanggal_terbit":document.getElementById("tanggalterbites").value,
             "genre":genre,
-            "duration":document.getElementById("durationes").value,
+            "duration":audioDuration,
             "audio_path":document.getElementById("audiouploades").value,
             "image_path":image_path,
             "album_id":document.getElementById("albumides").value,
@@ -325,6 +357,7 @@ function editSong() {
         xhttp.withCredentials = true;
         xhttp.send(JSON.stringify(data));
     } 
+    clearInputsCollapse();
 }
 
 
@@ -381,6 +414,7 @@ function addsong() {
         xhttp.withCredentials = true;
         xhttp.send(JSON.stringify(data));
     } 
+    clearInputsCollapse();
 }
 
 function autoDataDeleteSong(){
@@ -425,4 +459,5 @@ function deleteSong() {
     xhttp.setRequestHeader("Content-Type", "application/json");
     xhttp.withCredentials = true;
     xhttp.send(JSON.stringify(data)); 
+    clearInputsCollapse();
 }
