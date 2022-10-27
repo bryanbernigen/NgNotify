@@ -30,7 +30,7 @@ body {
 }
 
 .sidebarLogo {
-    width: 15vw;
+    width: 12.5vw;
 }
 
 .sidebarLogo:hover {
@@ -113,6 +113,7 @@ hr {
 
 .navLeft img:hover {
     background-color: #6c6c6c;
+    cursor: pointer;
 }
 
 .navRight {
@@ -138,6 +139,7 @@ hr {
 
 .navItems:hover {
     background-color: #535353;
+    cursor: pointer;
 }
 
 .navIcon {
@@ -188,6 +190,7 @@ hr {
 .navDrop:hover {
     background-color: #282828;
     display: block;
+    cursor: pointer;
 }
 
 .navCollapse:hover .navDrop {

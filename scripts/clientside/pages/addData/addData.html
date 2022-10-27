@@ -52,14 +52,14 @@
         <div class="ct">
             <nav>
                 <div class="navCt" id="navCt">
-                    <div class="navLeft" onclick="history.back()">
+                    <div class="navLeft" >
                         <img src="../../assets/icons8-chevron-left-96.png" />
                     </div>
                     <div class="navRight">
                         <div class="navCollapse">
                             <div class="navItems">
                                 <img class="navIcon" src="../../assets/icons8-user-100.png"/>
-                                <span class="navText" id="uname"></span>
+                                <span class="navText" id="unameuwu"></span>
                                 <i class="fa fa-caret-down"></i>
                             </div>
                             <div class="navDrop">
@@ -69,20 +69,24 @@
                     </div>
                 </div>
                 <div class="navCtAdmin" id="navCtAdmin">
-                    <div class="navLeft" onclick="history.back()"></div>
+                    <div class="navLeft" ></div>
                         <img src="../../assets/icons8-chevron-left-96.png" />
                     <div class="navRight">
-                        <div class="navItems">
+                        <div class="navItems" onclick="redirectToAddSongAlbum()">
                             <img class="navIcon" src="../../assets/icons8-add-song-96.png"/>
-                            <span class="navText" onclick="redirectToAddSongAlbum()">Add Song</span>
+                            <span class="navText">Add Song</span>
                         </div>
-                        <div class="navItems">
+                        <div class="navItems" onclick="redirectToAddSongAlbum()">
                             <img class="navIcon" src="../../assets/icons8-music-library-96.png"/>
-                            <span class="navText" onclick="redirectToAddSongAlbum()">Add Album</span>
+                            <span class="navText">Add Album</span>
                         </div>
-                        <div class="navItems">
+                        <div class="navItems" onclick="redirectToAlbum()">
                             <img class="navIcon" src="../../assets/icons8-playlist-96.png"/>
-                            <span class="navText" onclick="redirectToAlbum()">Albums</span>
+                            <span class="navText">Albums</span>
+                        </div>
+                        <div class="navItems" onclick="redirectToListUsers()">
+                            <img class="navIcon" src="../../assets/icons8-select-users-96.png"/>
+                            <span class="navText">Users</span>
                         </div>
                         <div class="navCollapse">
                             <div class="navItems">
@@ -91,7 +95,7 @@
                                 <i class="fa fa-caret-down"></i>
                             </div>
                             <div class="navDrop">
-                                <div class="navChild" onclick="loginout()" id="loginout">Log out</div>
+                                <div class="navChild" id="loginout" onclick="loginout()">Log out</div>
                             </div>
                         </div>
                     </div>
@@ -114,7 +118,7 @@
                                 <input class="formInputText" type="text" id="albumnameea" name="albumname" placeholder="Born Pink"><br>
                                 <br>
                                 <label class="formLabel" for="singer">Singer</label><br>
-                                <input class="formInputText" type="text" id="singerea" name="singer" placeholder="Blackpink"><br>
+                                <input class="formInputText" type="text" id="singerea" name="singer" placeholder="Blackpink" disabled><br>
                                 <br>
                                 <label class="formLabel" for="totalduration">Total Duration</label><br>
                                 <input class="formInputText" type="number" id="totaldurationea" name="totalduration" placeholder="0" disabled><br>
@@ -209,7 +213,7 @@
                                 <input class="formInputText" type="text" id="songnamees" name="songname" placeholder="Born Pink"><br>
                                 <br>
                                 <label class="formLabel" for="singer">Singer</label><br>
-                                <input class="formInputText" type="text" id="singeres" name="singer" placeholder="Blackpink"><br>
+                                <input class="formInputText" type="text" id="singeres" name="singer" placeholder="Blackpink" disabled><br>
                                 <br>
                                 <label class="formLabel" for="tanggalterbit">Date Released</label><br>
                                 <input class="formInputText" type="date" id="tanggalterbites" name="tanggalterbit" placeholder="DD/MM/YYYY"><br>
@@ -221,7 +225,10 @@
                                 <input class="formInputText" type="number" id="durationes" name="duration" placeholder="0" disabled><br>
                                 <br>
                                 <label class="formLabel" for="audioupload0">Audio Path<br>
-                                <input class="formInputText" type="text" id="audiouploades" name="audioupload0"></label><br><br><br>
+                                <input class="formInputText" type="text" id="audiouploades" name="audioupload0" onchange="autoDataEditDuration('es')"></label><br><br><br>
+                                <audio id="addAudio" preload="metadata">
+                                    <source id="sourceAudio" src=""></source>
+                                </audio>
                                 <br>
                                 <label class="formLabel" for="imageupload0">Image Path</label><br>
                                 <input class="formInputText" type="text" id="imageuploades" name="imagepath"><br>
@@ -261,10 +268,10 @@
                                 <input class="formInputText" type="text" id="genreas" name="genreas" placeholder="Pop"><br>
                                 <br>
                                 <label class="formLabel" for="duration">Duration</label><br>
-                                <input class="formInputText" type="number" id="durationas" name="duration" value="100" disabled><br>
+                                <input class="formInputText" type="number" id="durationas" name="duration" placeholder="0" disabled><br>
                                 <br>
                                 <label class="formLabel" for="audioupload1">Audio Path<br></label>
-                                <input class="formInputText" type="text" id="audiouploadas" name="audiopath"><br>
+                                <input class="formInputText" type="text" id="audiouploadas" name="audiopath" onchange="autoDataEditDuration('as')"><br>
                                 <br>
                                 <label class="formLabel" for="imageupload3">Image Path<br></label>
                                 <input class="formInputText" type="text" id="imageuploadas" name="imagepath" onchange="loadImage('as','4')"><br><br><br>

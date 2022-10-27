@@ -7,11 +7,12 @@ function infoNavbar(){
             let res = JSON.parse(this.responseText);
             uname = document.getElementById("uname");
             if(res['status']){
-                echos = res['data'];
-                uname.innerHTML = res['data']['username'];
-                username = res['data'].isAdmin;
-                console.log(username);
-                putNavbar(username);
+                if(res['data'].isAdmin){
+                    document.getElementById("uname").innerHTML = res['data'].username;
+                }else{
+                    document.getElementById("unameuwu").innerHTML = res['data'].username;
+                }
+                putNavbar(res['data'].isAdmin);
             }
             else {
                 uname.innerHTML = "Guest";
@@ -51,4 +52,8 @@ function redirectToAddSongAlbum() {
 
 function redirectToSearchSortFilter() {
     window.location.href = "http://localhost:8080/pages/searchSortFilter/searchSortFilter.html";
+}
+
+function redirectToListUsers() {
+    window.location.href = "http://localhost:8080/pages/listuser/listuser.html";
 }

@@ -1,10 +1,13 @@
 var album_id;
+var updated = false;
+var restricted = true;
+var musicData;
+
 function getAlbum(){
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function(){
         if(this.readyState==4 && this.status==200){
             albumDetail = JSON.parse(this.responseText);
-            // console.log(songs["data"]);
             getSongsFromAlbum(album_id, albumDetail['data']);
         }
     };
@@ -17,25 +20,65 @@ function getAlbum(){
     xhttp.send();
 }
 
+function infoNavbarAdded(){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function(){
+        if(this.readyState==4 && this.status==200){
+            let res = JSON.parse(this.responseText);
+            uname = document.getElementById("uname");
+            if(res['status']){
+                console.log(res['data']['username']);
+                uname.innerHTML = 'pasp';
+                username = res['data'].isAdmin;
+                restricted = false;
+                putNavbar(username);
+            }
+            else {
+                uname.innerHTML = "Haha";
+                document.getElementById("loginout").innerHTML = "Login";
+                checkRestricted();
+                putNavbar(false);
+            }
+        }
+    };
+    xhttp.open("GET","http://localhost:8000/api/auth/info",true);
+    xhttp.setRequestHeader("Accept", "application/json");
+    xhttp.withCredentials = true;
+    xhttp.send();
+}
+
+function putNavbar(isAdmin) {
+    if (isAdmin) {
+        document.getElementById("navCtAdmin").style.display = "block";
+        document.getElementById("navCt").style.display = "none";
+    }
+    else {
+        document.getElementById("navCtAdmin").style.display = "none";
+        document.getElementById("navCt").style.display = "block";
+    }
+}
+
 function getSongsFromAlbum(album_id, albumDetail){
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function(){
         if(this.readyState==4 && this.status==200){
-            let musicData = JSON.parse(this.responseText);
-            if(musicData['status'])
-            {
-                appendData(albumDetail,musicData['data']);
+            let musicDatas = JSON.parse(this.responseText);
+            if(musicDatas['status'] && albumDetail != "MUSIC_NOT_FOUND")
+            {   
+                musicData = musicDatas['data'];
+                appendData(albumDetail);
             }
             else{
-            songNotFound=[
+                musicData=[
                 {
                     "judul": "No Songs Found",
                     "penyanyi": "Unknown",
                     "duration": "0",
                     "audio_path": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
                 }]
-            appendData(albumDetail,songNotFound);
+                appendData(albumDetail);
             }
+            playMusic(0);
         }
     };
     xhttp.open("GET","http://localhost:8000/api/songapi/getsongsfromalbum?album_id="+album_id,true);
@@ -54,7 +97,7 @@ soundButton = document.getElementById("vol");
 soundVolume = document.getElementById("timelineVol");
 repeatButton = document.getElementById("repeat");
 
-function appendData(albumDetail, musicData) {
+function appendData(albumDetail) {
     var div1 = document.getElementById("albumPoster");
     div1.src = albumDetail.image_path;
     div1.style.width = "15vw";
@@ -180,7 +223,7 @@ function playMusic(num) {
     }
     var div8 = document.getElementById("addAudio");
     var div9 = document.getElementById("sourceAudio");
-    div9.src = "https://docs.google.com/uc?export=download&id=" + musicData[num]["audio_path"];
+    div9.src = "https://docs.google.com/uc?export=download&id=" + musicData[num]["audio_path"].match(/(\/d\/)([-a-zA-Z0-9]+)(\/)/)[2];
     div8.load();
 
     timelinePassed.innerHTML = "0:00";
@@ -195,18 +238,20 @@ function playMusic(num) {
     soundVolume.value = 20;
 
     var div10 = document.getElementById("musicPlayerPoster");
-    div10.src = albumDetail[num].Image_path;
+    div10.src = albumDetail["data"].image_path;
     div10.style.width = "5vw";
+    div10.style.height = "5vw";
+    div10.style.objectFit = "cover";
 
     var div11 = document.getElementById("musicPlayerTitle");
-    div11.innerHTML += musicData[num]["title"];
+    div11.innerHTML = musicData[num]["judul"];
     div11.style.fontFamily = "CircularStd-Bold";
     div11.style.fontSize = "14px";
     div11.style.color = "#FFFFFF";
     div11.style.width = "max-content";
 
     var div12 = document.getElementById("musicPlayerSinger");
-    div12.innerHTML += musicData[num]["singer"];
+    div12.innerHTML = musicData[num]["penyanyi"];
     div12.style.fontFamily = "CircularStd-Light";
     div12.style.fontSize = "11px";
     div12.style.color = "#FFFFFF";
@@ -214,6 +259,14 @@ function playMusic(num) {
 }
 
 function toggleAudioPlay () {
+    console.log(restricted);
+    if (restricted){
+        alert("Daily Free Trial Limit Reached, Login to Continue Listening");
+        return;
+    }
+    if (!updated){
+        updatePlayRestrict();
+    }
     if (audio.paused || audio.played == undefined) {
         audio.play();
         playmusicBt1.className = "fas fa-pause play";
@@ -281,10 +334,8 @@ soundVolume.addEventListener('change', rangeSoundVol);
 repeatButton.addEventListener('click', toggleRepeat);
 
 window.onload = function() {
-    infoNavbar();
+    infoNavbarAdded();
     getAlbum();
-    playMusic(0);
-    console.log("udah masuk");
 }
 
 function loginout() {
@@ -314,5 +365,51 @@ function nextAlbum() {
 function prevAlbum() {
     if (album_id > 1) {
         window.location.href = "http://localhost:8080/pages/detailalbum/detailalbum.html?album_id="+(parseInt(album_id)-1);
+    }
+}
+
+function checkRestricted(){
+    // current is guest
+    
+    let lastPlayed = localStorage.getItem("lastPlayed");
+    let today = new Date();
+    let daily = localStorage.getItem("dailyPlay");
+    today.setHours(0,0,0,0);
+    // resets if new day
+    if (lastPlayed == null || new Date(lastPlayed) < today){
+        localStorage.setItem("lastPlayed", today);
+        localStorage.setItem("dailyPlay", 0);
+        daily = 0;
+    }
+    if (daily == null || daily < 3){
+        restricted = false;
+    }
+}
+
+function updatePlayRestrict(){
+    updated = true;
+    // current is guest
+    if (document.getElementById("loginout").innerHTML == "Login"){
+        let daily = localStorage.getItem("dailyPlay");
+        let lastPlayed = localStorage.getItem("lastPlayed");
+        let today = new Date(); 
+        daily = parseInt(daily);
+        today.setHours(0,0,0,0);
+        if (lastPlayed == null) {
+            localStorage.setItem("lastPlayed", today);
+        }
+        else if (lastPlayed != today) {
+            localStorage.setItem("lastPlayed", today);
+            localStorage.setItem("dailyPlay", 0);
+            daily = 0;
+        }
+        if(isNaN(daily)) {
+            localStorage.setItem("dailyPlay", 1);
+        } else if (daily < 3) {
+            localStorage.setItem("dailyPlay", daily + 1);
+        } else {
+            alert("You have reached your daily play limit");
+            return;
+        }
     }
 }

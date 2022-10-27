@@ -38,7 +38,7 @@
     font-size: 14px;
 }
 
-.failPrompt, .loginFail {
+.loginFail {
     font-family: "CircularStd-Book";
     font-size: 14px;
     color: white;
