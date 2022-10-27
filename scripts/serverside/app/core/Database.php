@@ -1,6 +1,7 @@
 <?php
 
-class Database{
+class Database
+{
 
     private $dbh;
     private $stmt;
@@ -22,16 +23,31 @@ class Database{
         }
     }
 
-    public function startTransaction(){
-        return $this->dbh->beginTransaction();
+    public function startTransaction()
+    {
+        try {
+            $this->dbh->beginTransaction();
+        } catch (PDOException $e) {
+            return false;
+        }
     }
-    
-    public function commit(){
-        return $this->dbh->commit();
+
+    public function commit()
+    {
+        try {
+            $this->dbh->beginTransaction();
+        } catch (PDOException $e) {
+            return $this->dbh->commit();
+        }
     }
-    
-    public function rollback(){
-        $this->dbh->rollBack();
+
+    public function rollback()
+    {
+        try {
+            $this->dbh->beginTransaction();
+        } catch (PDOException $e) {
+            return $this->dbh->rollBack();
+        }
     }
 
     public function query($query)
@@ -67,7 +83,7 @@ class Database{
         } catch (\Throwable $th) {
             return false;
         }
-    }   
+    }
 
     public function resultSet()
     {
