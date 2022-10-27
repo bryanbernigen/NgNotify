@@ -125,8 +125,14 @@ class SongAPI extends Controller
         }
         $res = $this->model('Song')->getSong($_GET['song_id']);
         if ($res) {
-            $res['lyric'] = unserialize($res['lyric']);
-            json_response_success($res);
+            $album = $this->model('Album')->getAlbum($res['album_id']);
+            if ($album){
+                $res['album'] = $album;
+                $res['lyric'] = unserialize($res['lyric']);
+                json_response_success($res);
+                return;
+            }
+            json_response_fail(ALBUM_NOT_FOUND);
         } else {
             json_response_fail(SONG_NOT_FOUND);
         }
