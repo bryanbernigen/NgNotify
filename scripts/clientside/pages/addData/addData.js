@@ -370,7 +370,7 @@ function addsong() {
             "genre":genre,
             "duration":document.getElementById("durationas").value,
             "audio_path":document.getElementById("audiouploadas").value,
-            "image_path":"image_path",
+            "image_path":image_path,
             "album_id":document.getElementById("albumidas").value,
             "lyrics":lyrics,
         };
@@ -401,4 +401,28 @@ function autoDataDeleteSong(){
     document.getElementById("imageuploadds").value = choosen_song.image_path;
     document.getElementById("albumidds").value = choosen_song.album_id;
     loadImage('ds','5');
+}
+
+function deleteSong() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function(){
+        if(this.readyState==4 && this.status==200){
+            let res = JSON.parse(this.responseText);
+            if(res['status']){
+                alert("song successfully deleted");
+            }
+            else{
+                alert("failed to delete song");
+            }
+            //TODO : Refresh songs and albums after add
+        }
+    };
+    let data = {
+        "song_id": document.getElementById("songidds").value,
+    };
+    xhttp.open("POST","http://localhost:8000/api/songapi/deletesong",true);
+    xhttp.setRequestHeader("Accept", "application/json");
+    xhttp.setRequestHeader("Content-Type", "application/json");
+    xhttp.withCredentials = true;
+    xhttp.send(JSON.stringify(data)); 
 }
