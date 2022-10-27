@@ -1,0 +1,150 @@
+<!DOCTYPE html5>
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#000000" />
+        <link rel="apple-touch-icon" />
+        <link rel="icon" href="../../assets/Spotify_LogoOnly_RGB_White.png" />
+        <link rel="stylesheet" href="searchSortFilter.css">
+        <link rel="stylesheet" href="../../globals.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+        <title>Spotify - Admin</title>
+    </head>
+    <body>
+        <div class="sidebar">
+            <div class="sidebarTop">
+                <img class="sidebarLogo" src="../../assets/Spotify_Logo_RGB_White.png"/>
+            </div>
+            <div class="sidebarMiddleWrap">
+                <div class="sidebarBottom">
+                    <div class="sidebarItems">
+                        <img class="sidebarIcon" src="../../assets/icons8-home-144.png"/>
+                        <span class="sidebarText">Home</span>
+                    </div>
+                    <div class="sidebarItems">
+                        <img class="sidebarIcon" src="../../assets/icons8-music-library-96.png"/>
+                        <span class="sidebarText">Albums</span>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebarBottomWrap">
+                <div class="sidebarBottom">
+                    <div class="sidebarItems">
+                        <img class="sidebarIcon" src="../../assets/icons8-add-new-100.png"/>
+                        <span class="sidebarText">Create Playlist</span>
+                    </div>
+                    <div class="sidebarItems">
+                        <img class="spc" src="../../assets/icons8-love-90.png"/>
+                        <span class="sidebarText">Liked Songs</span>
+                    </div>
+                </div>
+            </div>
+            <hr/>
+        </div>
+        <div class="ct">
+            <nav>
+                <div class="navCt">
+                    <div class="navLeft">
+                        <img src="../../assets/icons8-chevron-left-96.png" />
+                        <img src="../../assets/icons8-chevron-right-96.png" />
+                        <form class="navSearch">
+                            <button type="submit" name="searchInput">
+                                <img class="navSearchIcon" src="../../assets/icons8-search-120-black.png"/>
+                            </button>
+                            <input class="navSearchInput" id="searchInput" name="searchInput" type="text" onkeyup="searchFilter()" placeholder="Search for artists, songs, or release year">
+                        </form>
+                    </div>
+                    <div class="navRight">
+                        <div class="navCollapse">
+                            <div class="navItems">
+                                <img class="navIcon" src="../../assets/icons8-user-100.png"/>
+                                <span class="navText">Username</span>
+                                <i class="fa fa-caret-down"></i>
+                            </div>
+                            <div class="navDrop">
+                                <div class="navChild">Log out</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <div class="queryCt">
+                <div class="queryMenu">
+                    <div class="filterCollapse">
+                        <div class="filterParent">Filter</div>
+                        <div class="filterDrop">
+                            <div class="filterChild" id="filterPop">Pop</div>
+                            <div class="filterChild" id="filterRock">Rock</div>
+                            <div class="filterChild" id="filterJazz">Jazz</div>
+                            <div class="filterChild" id="filterRnB">RnB</div>
+                        </div>
+                    </div>
+                    <div class="filterCollapse">
+                        <div class="filterParent">Sort</div>
+                        <div class="filterDrop">
+                            <div class="filterChild" id="sortAtoZ">A to Z</div>
+                            <div class="filterChild" id="sortZtoA">Z to A</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="recentTitle">Recent Searches</div>
+                <hr>
+                <div class="recentTitle">Albums</div><br>
+                <div id="queryResultAlbum" class="queryResultAlbum"></div>
+                <div class="recentTitle">Songs</div><br>
+                <div id="queryResultSong" class="queryResultSong"></div>
+                <div class="footerPage">
+                    <div class="footerTop">
+                        <div class="footerTopLeft">
+                            <div class="footerTopLeftItem">
+                                <div class="footerTopLeftItemTitle">Company</div>
+                                <div class="footerTopLeftItems">About</div>
+                                <div class="footerTopLeftItems">Jobs</div>
+                                <div class="footerTopLeftItems">For the Record</div>
+                            </div>
+                            <div class="footerTopLeftItem">
+                                <div class="footerTopLeftItemTitle">Communities</div>
+                                <div class="footerTopLeftItems">For Artists</div>
+                                <div class="footerTopLeftItems">Developers</div>
+                                <div class="footerTopLeftItems">Advertising</div>
+                                <div class="footerTopLeftItems">Investors</div>
+                                <div class="footerTopLeftItems">Vendors</div>
+                            </div>
+                            <div class="footerTopLeftItem">
+                                <div class="footerTopLeftItemTitle">Useful links</div>
+                                <div class="footerTopLeftItems">Support</div>
+                                <div class="footerTopLeftItems">Free Mobile App</div>
+                            </div>
+                        </div>
+                        <div class="footerTopRight">
+                            <i class="fab fa-instagram"></i>
+                            <i class="fab fa-twitter"></i>
+                            <i class="fab fa-facebook"></i>
+                        </div>
+                    </div>
+                    <hr class="footerHr">
+                    <div class="footerBottom">
+                        <div class="footerBottomLeft">
+                            <a href="" class="footerBottomItem">Legal</a>
+                            <a href="" class="footerBottomItem">Privacy Center</a>
+                            <a href="" class="footerBottomItem">Privacy Policy</a>
+                            <a href="" class="footerBottomItem">Cookies</a>
+                            <a href="" class="footerBottomItem">About Ads</a>
+                        </div>
+                        <div class="footerBottomRight">
+                            <i class="far fa-copyright"></i>
+                            <span class="copyrightText"> 2022 Spotify AB</span>
+                        </div>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="searchSortFilter.js"></script>
+    </body>
+</html>
