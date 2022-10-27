@@ -79,7 +79,7 @@ hr {
     float: right;
 }
 
-.navCt {
+.navCt, .navCtAdmin {
     background-color: rgba(0,0,0, 0.2);
     display: flex;
     flex-direction: row;
@@ -115,11 +115,11 @@ hr {
     border: 1px solid #6c6c6c;
     border-radius: 25px;
     width: 364px;
-    height: 40px;
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
     margin-left: 2vw;
+    margin-bottom: 0;
 }
 
 .navSearch input {
@@ -262,6 +262,10 @@ input {
     overflow: hidden;
 }
 
+.queryMenu:hover {
+    cursor: pointer;
+}
+
 .filterChild {
     float: left;
     font-size: 16px;
@@ -276,12 +280,10 @@ input {
     overflow: hidden;
 }
 
-/* .filterCollapse:hover {
+.filterCollapse:hover .filterParent {
     border: 1px solid white;
-    border-radius: 20px;
     color: white;
-    padding: 10px;
-} */
+}
 
 .filterParent {
     font-size: 14px;
@@ -379,6 +381,31 @@ input {
     align-items: center;
     justify-content: space-between;
     width: 100%;
+}
+
+.pagination {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    column-gap: 10px;
+    margin: 5vh 0;
+}
+
+.page {
+    font-family: "CircularStd-Medium";
+    font-size: 16px;
+    color: #6C6C6C;
+    padding: 2px;
+    width: 24px;
+    text-align: center;
+    border: 1px solid #6C6C6C;
+    border-radius: 20px;;
+}
+
+.page:hover {
+    cursor: pointer;
 }
 
 .footerPage {

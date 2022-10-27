@@ -1,16 +1,22 @@
+var username = undefined;
+
 function infoNavbar(){
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function(){
         if(this.readyState==4 && this.status==200){
             let res = JSON.parse(this.responseText);
-            username = document.getElementById("uname");
+            uname = document.getElementById("uname");
             if(res['status']){
                 echos = res['data'];
-                username.innerHTML = res['data']['username'];
+                uname.innerHTML = res['data']['username'];
+                username = res['data'].isAdmin;
+                console.log(username);
+                putNavbar(username);
             }
             else {
-                username.innerHTML = "Guest";
+                uname.innerHTML = "Guest";
                 document.getElementById("loginout").innerHTML = "Login";
+                putNavbar(false);
             }
         }
     };
@@ -20,9 +26,8 @@ function infoNavbar(){
     xhttp.send();
 }
 
-function putNavbar() {
-    let username = document.getElementById("uname").innerHTML;
-    if (username == 'admin') {
+function putNavbar(isAdmin) {
+    if (isAdmin) {
         document.getElementById("navCtAdmin").style.display = "block";
         document.getElementById("navCt").style.display = "none";
     }
@@ -42,4 +47,8 @@ function redirectToHome(){
 
 function redirectToAddSongAlbum() {
     window.location.href = "http://localhost:8080/pages/addData/addData.html";
+}
+
+function redirectToSearchSortFilter() {
+    window.location.href = "http://localhost:8080/pages/searchSortFilter/searchSortFilter.html";
 }

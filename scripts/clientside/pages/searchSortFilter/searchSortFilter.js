@@ -11,10 +11,11 @@ var songs = null;
 function test(){
     console.log('aa');
 }
+
 window.onload = function() {
     document.getElementById("searchInput").value = query;
-    selectSong();
-    selectAlbum();
+    selectSong(1);
+    selectAlbum(1);
     if(urlParams.get('filter_genre')==null){
         setGenre('None');
     }else{
@@ -49,13 +50,20 @@ function querySong(){
     window.location.href = "http://localhost:8080/pages/searchsortfilter/searchsortfilter.html?" + param;
 }
 
-function selectAlbum(){
+var totalPageAlbum = 1;
+var totalPageSong = 1;
+
+function selectAlbum(numPage){
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function(){
         if(this.readyState==4 && this.status==200){
             let res = JSON.parse(this.responseText);
             if(res['status']){
                 albums = res['data'];
+                totalPageAlbum = res['pages'];
+                if (numPage > 1) {
+                    clearCol();
+                }
                 appendData(albums['albums'], "queryResultAlbum");
             }
             else{
@@ -70,20 +78,24 @@ function selectAlbum(){
         "filter_genre": filter_genre,
         "order_by_title": order_by_title,
     };
-    xhttp.open("POST","http://localhost:8000/api/albumapi/queryalbum/1",true);
+    xhttp.open("POST","http://localhost:8000/api/albumapi/queryalbum/"+numPage,true);
     xhttp.setRequestHeader("Accept", "application/json");
     xhttp.setRequestHeader("Content-Type", "application/json");
     xhttp.withCredentials = true;
     xhttp.send(JSON.stringify(data)); 
 }
 
-function selectSong(){
+function selectSong(numPage){
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function(){
         if(this.readyState==4 && this.status==200){
             let res = JSON.parse(this.responseText);
             if(res['status']){
                 songs = res['data'];
+                totalPageSong = res['pages'];
+                if (numPage > 1) {
+                    clearCol();
+                }
                 appendData(songs['songs'], "queryResultSong");
             }
             else{
@@ -97,7 +109,7 @@ function selectSong(){
         "filter_genre": filter_genre,
         "order_by_title": order_by_title,
     };
-    xhttp.open("POST","http://localhost:8000/api/songapi/querysong/1",true);
+    xhttp.open("POST","http://localhost:8000/api/songapi/querysong/"+numPage,true);
     xhttp.setRequestHeader("Accept", "application/json");
     xhttp.setRequestHeader("Content-Type", "application/json");
     xhttp.withCredentials = true;
@@ -133,6 +145,11 @@ filterRnB = document.getElementById("filterRnB");
 sortAtoZ = document.getElementById("sortAtoZ");
 sortZtoA = document.getElementById("sortZtoA");
 
+function clearCol() {
+    document.getElementById("queryResultSong").innerHTML = "";
+    document.getElementById("queryResultAlbum").innerHTML = "";
+}
+
 function appendData(data, target) {
     var mainContainer = document.getElementById(target);
     let div = document.createElement("div");
@@ -163,6 +180,17 @@ function appendData(data, target) {
     div.style.alignItems = "center";
     div.style.color = "white";
     mainContainer.appendChild(div);
+
+    var pageAlbumContainer = document.getElementById("pagenumAlbum");
+    for (i = 0; i < totalPageAlbum; i++) {
+        pageAlbumContainer.innerHTML += '<div class="page" onclick="selectAlbum(' + (i + 1) + ')">' + (i + 1) + '</div>';
+    }
+
+    var pageSongContainer = document.getElementById("pagenumSong");
+    for (i = 0; i < totalPageSong; i++) {
+        pageSongContainer.innerHTML += '<div class="page" onclick="selectSong(' + (i + 1) + ')">' + (i + 1) + '</div>';
+    }
+
     return div;
 }
 
@@ -256,8 +284,7 @@ document.getElementById("searchInput")
       // Trigger the button element with a click
       document.getElementById("searchInputImg").click();
     }
-  });
-
+});
 
 // function searchFilter() {
 //     event.preventDefault();
