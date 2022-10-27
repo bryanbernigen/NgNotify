@@ -1,13 +1,52 @@
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 var query = urlParams.get('query');
-var order_by_title = null;
-var order_by_year = null;
+var order_by_title = urlParams.get('order_by_title');
+var order_by_year = urlParams.get('order_by_year');
+var order_by = null;
+var order_type = null;
 var filter_genre = null;
+var songs = null;
 
+function test(){
+    console.log('aa');
+}
 window.onload = function() {
+    document.getElementById("searchInput").value = query;
     selectSong();
     selectAlbum();
+    if(urlParams.get('filter_genre')==null){
+        setGenre('None');
+    }else{
+        setGenre(urlParams.get('filter_genre'));
+    }
+    if(order_by_title != null){
+        setOrder('title', order_by_title);
+    }
+    else if(order_by_year != null){
+        setOrder('tahun', order_by_year);
+    }
+    else{
+        setOrder("title", "ASC");
+    }
+}
+
+function querySong(){
+    param = '';
+    query = document.getElementById("searchInput").value;
+    if(query != null){
+        param += 'query='+query+'&';
+    }
+    if(order_by_title != null){
+        param += 'order_by_title='+order_by_title+'&';
+    }
+    if(order_by_year != null){
+        param += 'order_by_year='+order_by_year+'&';
+    }
+    if(filter_genre != null || filter_genre != 'None'){
+        param += 'filter_genre='+filter_genre+'&';
+    }
+    window.location.href = "http://localhost:8080/pages/searchsortfilter/searchsortfilter.html?" + param;
 }
 
 function selectAlbum(){
@@ -16,11 +55,8 @@ function selectAlbum(){
         if(this.readyState==4 && this.status==200){
             let res = JSON.parse(this.responseText);
             if(res['status']){
-
-                appendData(res['data']['albums'], "queryResultAlbum");
-            }
-            else{
-                alert("failed to add album");
+                albums = res['data'];
+                appendData(albums['albums'], "queryResultAlbum");
             }
         }
     };
@@ -44,7 +80,8 @@ function selectSong(){
         if(this.readyState==4 && this.status==200){
             let res = JSON.parse(this.responseText);
             if(res['status']){
-                appendData(res['data']['songs'], "queryResultSong");
+                songs = res['data'];
+                appendData(songs['songs'], "queryResultSong");
             }
         }
     };
@@ -241,37 +278,97 @@ function appendData(data, target) {
     return div;
 }
 
-filterPop.addEventListener("click", function () {
-    // Get the data (Album & Song)
-    appendData(dataAlbum, "queryResultAlbum");
-    appendData(dataSong, "queryResultSong");
-});
-filterRock.addEventListener("click", function () {
-    // Get the data (Album & Song)
-    appendData(dataAlbum, "queryResultAlbum");
-    appendData(dataSong, "queryResultSong");
-});
-filterJazz.addEventListener("click", function () {
-    // Get the data (Album & Song)
-    appendData(dataAlbum, "queryResultAlbum");
-    appendData(dataSong, "queryResultSong");
-});
-filterRnB.addEventListener("click", function () {
-    // Get the data (Album & Song)
-    appendData(dataAlbum, "queryResultAlbum");
-    appendData(dataSong, "queryResultSong");
-});
-sortAtoZ.addEventListener("click", function () {
-    // Get the data (Album & Song)
-    appendData(dataAlbum, "queryResultAlbum");
-    appendData(dataSong, "queryResultSong");
-});
-sortZtoA.addEventListener("click", function () {
-    // Get the data (Album & Song)
-    appendData(dataAlbum, "queryResultAlbum");
-    appendData(dataSong, "queryResultSong");
-});
+function setGenre(inputGenre){
+    if(inputGenre == filter_genre){
+        filter_genre = null;
+        document.getElementById("filter"+inputGenre).style.backgroundColor = "#282828";
+        document.getElementById("filterNone").style.backgroundColor = "green";
 
+    }else{
+        if(filter_genre != null){
+            document.getElementById("filter"+filter_genre).style.backgroundColor = "#282828";
+        }
+        document.getElementById("filterNone").style.backgroundColor = "#282828";
+        document.getElementById("filter"+inputGenre).style.backgroundColor = "green";
+        filter_genre = inputGenre;
+    }
+}
+
+function setOrder(type,order){
+    if(order_by_year!=null){
+        if(type=="judul"){
+            document.getElementById("sorttahun"+order_by_year).style.backgroundColor = "#282828";
+            document.getElementById("sortjudul"+order).style.backgroundColor = "green";
+            order_by_year = null;
+            order_by_title = order;
+        }else{
+            document.getElementById("sorttahun"+order_by_year).style.backgroundColor = "#282828";
+            document.getElementById("sorttahun"+order).style.backgroundColor = "green";
+            order_by_year = order;
+        }
+    }
+    else if(order_by_title!=null){
+        if(type=="judul"){
+            document.getElementById("sortjudul"+order_by_title).style.backgroundColor = "#282828";
+            document.getElementById("sortjudul"+order).style.backgroundColor = "green";
+            order_by_title = order;
+        }else{
+            document.getElementById("sortjudul"+order_by_title).style.backgroundColor = "#282828";
+            document.getElementById("sorttahun"+order).style.backgroundColor = "green";
+            order_by_year = order;
+            order_by_title = null;
+        }
+    }
+    else{
+        order_by_title = "ASC";
+        document.getElementById("sortjudulASC").style.backgroundColor = "green";
+    }
+}
+document.getElementById("filterNone")
+    .addEventListener("click", function () {
+    setGenre("None");
+});
+document.getElementById("filterPop")
+    .addEventListener("click", function () {
+    setGenre("Pop");
+});
+document.getElementById("filterRock")
+    .addEventListener("click", function () {
+    setGenre("Rock");
+});
+document.getElementById("filterJazz")
+    .addEventListener("click", function () {
+    setGenre("Jazz");
+});
+document.getElementById("filterRnB")
+    .addEventListener("click", function () {
+    setGenre("RnB");
+});
+document.getElementById("sortjudulASC")
+    .addEventListener("click", function () {
+    setOrder("judul","ASC");
+});
+document.getElementById("sortjudulDESC")
+    .addEventListener("click", function () {
+    setOrder("judul","DESC");
+});
+document.getElementById("sorttahunASC")
+    .addEventListener("click", function () {
+    setOrder("tahun","ASC");
+});
+document.getElementById("sorttahunDESC")
+    .addEventListener("click", function () {
+    setOrder("tahun","DESC");
+});
+document.getElementById("searchInput")
+    .addEventListener("keyup", function(event) {
+    event.preventDefault();
+    // If the user presses the "Enter" key on the keyboard
+    if (event.keyCode == 13) {
+      // Trigger the button element with a click
+      document.getElementById("searchInputImg").click();
+    }
+  });
 
 
 // function searchFilter() {

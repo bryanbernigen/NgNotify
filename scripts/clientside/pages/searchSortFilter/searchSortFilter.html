@@ -49,10 +49,10 @@
                         <img src="../../assets/icons8-chevron-left-96.png" />
                         <img src="../../assets/icons8-chevron-right-96.png" />
                         <form class="navSearch">
-                            <button type="submit" name="searchInput">
-                                <img class="navSearchIcon" src="../../assets/icons8-search-120-black.png"/>
+                            <button type="button" name="searchInput">
+                                <img class="navSearchIcon" src="../../assets/icons8-search-120-black.png"/ id="searchInputImg" onclick="querySong()">
                             </button>
-                            <input class="navSearchInput" id="searchInput" name="searchInput" type="text" onkeyup="searchFilter()" placeholder="Search for artists, songs, or release year">
+                            <input class="navSearchInput" id="searchInput" name="searchInput" type="text" placeholder="Search for artists, songs, or release year">
                         </form>
                     </div>
                     <div class="navRight">
@@ -74,6 +74,7 @@
                     <div class="filterCollapse">
                         <div class="filterParent">Filter</div>
                         <div class="filterDrop">
+                            <div class="filterChild" id="filterNone">None</div>
                             <div class="filterChild" id="filterPop">Pop</div>
                             <div class="filterChild" id="filterRock">Rock</div>
                             <div class="filterChild" id="filterJazz">Jazz</div>
@@ -83,9 +84,14 @@
                     <div class="filterCollapse">
                         <div class="filterParent">Sort</div>
                         <div class="filterDrop">
-                            <div class="filterChild" id="sortAtoZ">A to Z</div>
-                            <div class="filterChild" id="sortZtoA">Z to A</div>
+                            <div class="filterChild" id="sortjudulASC">A to Z</div>
+                            <div class="filterChild" id="sortjudulDESC">Z to A</div>
+                            <div class="filterChild" id="sorttahunASC">Oldest First</div>
+                            <div class="filterChild" id="sorttahunDESC">Newest First</div>
                         </div>
+                    </div>
+                    <div class="filterCollapse">
+                        <div class="filterParent" type="button" onclick="querySong()">Apply Filter</div>
                     </div>
                 </div>
                 <div class="recentTitle">Recent Searches</div>
