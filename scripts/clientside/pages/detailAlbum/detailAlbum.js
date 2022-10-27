@@ -42,11 +42,15 @@ albumDetail = [
     },
 ]
 
-audio = document.querySelector('audio');
+audio = document.getElementById('addAudio');
 playmusicBt1 = document.getElementById("play");
 playmusicBt2 = document.getElementById("playmusic");
 timelineAudio = document.getElementById("timelineAudio");
+timelinePassed = document.getElementById("passedTime");
+timelineRemain = document.getElementById("remainingTime");
 soundButton = document.getElementById("vol");
+soundVolume = document.getElementById("timelineVol");
+repeatButton = document.getElementById("repeat");
 
 function appendData() {
     var div1 = document.getElementById("albumPoster");
@@ -149,7 +153,7 @@ function appendData() {
         td3.style.textAlign= "left";
         td3.style.padding = "16px";
         tr.appendChild(td3);
-
+        
         tr.onclick = function() {
             // Redirect detail song page
             window.location.href = "../detailSong/detailSong.html";
@@ -169,6 +173,17 @@ function playMusic(num) {
     var div9 = document.getElementById("sourceAudio");
     div9.src = musicData[num]["audio_path"];
     div8.load();
+
+    timelinePassed.innerHTML = "0:00";
+    timelinePassed.style.color = "white";
+    timelinePassed.style.fontFamily = "CircularStd-Light";
+    timelineRemain.innerHTML = "0:00";
+    timelineRemain.style.color = "white";
+    timelinePassed.style.fontFamily = "CircularStd-Light";
+
+    audio.volume = 0.2;
+    soundVolume.background = 'linear-gradient(to right, #1ED760 0%, #1ED760 ' + 20 + '%, #6C6C6C ' + 20 + '%, #6C6C6C 100%)';
+    soundVolume.value = 20;
 
     var div10 = document.getElementById("musicPlayerPoster");
     div10.src = albumDetail[num].Image_path;
@@ -190,7 +205,7 @@ function playMusic(num) {
 }
 
 function toggleAudioPlay () {
-    if (audio.paused) {
+    if (audio.paused || audio.played == undefined) {
         audio.play();
         playmusicBt1.className = "fas fa-pause play";
         playmusicBt2.className = "fas fa-pause playmusic";
@@ -203,11 +218,15 @@ function toggleAudioPlay () {
 }
 
 function changeTimelineAudioPosition () {
-    if (audio.paused == false) {
-        const percentage = (100*audio.currentTime) / audio.duration;
-        timelineAudio.style.background = 'linear-gradient(to right, #1ED760 0%, #1ED760 ' + percentage + '%, #6C6C6C ' + percentage + '%, #6C6C6C 100%)';
-        timelineAudio.value = percentage;
-    }
+    const percentage = (100*audio.currentTime) / audio.duration;
+    timelineAudio.style.background = 'linear-gradient(to right, #1ED760 0%, #1ED760 ' + percentage + '%, #6C6C6C ' + percentage + '%, #6C6C6C 100%)';
+    timelineAudio.value = percentage;
+    timelinePassed.innerHTML = Math.floor(Math.floor(audio.currentTime)/60) + ":" + (Math.floor(audio.currentTime)%60);
+    timelinePassed.style.color = "white";
+    timelinePassed.style.fontFamily = "CircularStd-Light";
+    timelineRemain.innerHTML = Math.floor(Math.floor(audio.duration-audio.currentTime)/60) + ":" + (Math.floor(audio.duration-audio.currentTime)%60);
+    timelinePassed.style.color = "white";
+    timelinePassed.style.fontFamily = "CircularStd-Light";
 }
 
 function audioEnded () {
@@ -226,23 +245,34 @@ function toggleSound () {
     soundButton.className = audio.muted ? "fas fa-volume-mute volume" : "fas fa-volume-up volume";
 }
 
-audio.ontimeupdate = changeTimelineAudioPosition();
+function rangeSoundVol () {
+    var value = (this.value-this.min)/(this.max-this.min)*100
+    this.style.background = 'linear-gradient(to right, #1ED760 0%, #1ED760 ' + value + '%, #6C6C6C ' + value + '%, #6C6C6C 100%)';
+    audio.volume = value/100;
+    if (value == 0) {
+        soundButton.className = "fas fa-volume-mute volume";
+    }
+    else {
+        soundButton.className = "fas fa-volume-up volume";
+    };
+}
+
+function toggleRepeat () {
+    audio.loop = !audio.loop;
+    repeatButton.className = audio.loop ? "fas fa-ban repeat" : "fas fa-redo-alt repeat";
+}
+
+audio.ontimeupdate = function() {changeTimelineAudioPosition()};
 audio.onended = audioEnded;
 playmusicBt1.addEventListener('click', toggleAudioPlay);
 playmusicBt2.addEventListener('click', toggleAudioPlay);
 timelineAudio.addEventListener('change', changeSeekTimeline);
 soundButton.addEventListener('click', toggleSound);
+soundVolume.addEventListener('change', rangeSoundVol);
+repeatButton.addEventListener('click', toggleRepeat);
 
 window.onload = function() {
     appendData();
     playMusic(0);
     console.log("udah masuk");
-    document.getElementById("timelineAudio").oninput = function() {
-        var value = (this.value-this.min)/(this.max-this.min)*100
-        this.style.background = 'linear-gradient(to right, #1ED760 0%, #1ED760 ' + value + '%, #6C6C6C ' + value + '%, #6C6C6C 100%)'
-    };
-    document.getElementById("timelineVol").oninput = function() {
-        var value = (this.value-this.min)/(this.max-this.min)*100
-        this.style.background = 'linear-gradient(to right, #1ED760 0%, #1ED760 ' + value + '%, #6C6C6C ' + value + '%, #6C6C6C 100%)'
-    };
 }
