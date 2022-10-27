@@ -112,7 +112,7 @@ function appendData(data) {
             data[i]['genre'] = "-";
         }
         div.innerHTML += '<div class="card" id="'+data[i].album_id+'" onclick="reroute(this.id)"> \
-                    <img src="' + data[i].image_path + '" class="cardImage"> \
+                    <img src="' + data[i].image_path + '" style="width: 11.5vw; height: 11.5vw; object-fit: cover;" class="cardImage"> \
                     <div class="albumTitle">' + data[i].judul + '</div> \
                     <div class="singer">' + data[i].penyanyi + '</div> \
                     <div class="dateGenre"> \

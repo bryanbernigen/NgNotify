@@ -143,7 +143,7 @@ function appendData(data) {
             data[i].image_path = "../../assets/basicimage.jpg";
         }
         div.innerHTML += '<div class="card" onclick="test()"> \
-                    <img src="' + data[i].image_path + '" class="cardImage"> \
+                    <img src="' + data[i].image_path + '" style="width: 11.5vw; height: 11.5vw; object-fit: cover;" class="cardImage" /> \
                     <div class="songTitle">' + data[i].judul + '</div> \
                     <div class="singer">' + data[i].penyanyi + '</div> \
                     <div class="dateGenre"> \
