@@ -3,6 +3,7 @@
 class Song
 {
     private $table = 'songs';
+    private $albumtable = 'albums';
     private $db;
 
     public function __construct()
@@ -30,11 +31,18 @@ class Song
         $this->db->bind(':album_id', $album_id);
         $this->db->bind(':lyric', $lyric);
         try {
-            $this->db->execute();
-            $album = new Album();
-            $res = $album->editAlbumTime($album_id, $duration);
+            $res = $this->db->execute();
+            if(!$res){
+                $this->db->rollback();
+                return false;
+            }
+            $this->db->query('UPDATE ' . $this->albumtable . ' SET total_duration = total_duration + :time WHERE album_id = :album_id');
+            $this->db->bind(':album_id', $album_id);
+            $this->db->bind(':time', $duration);
+            $res = $this->db->execute();
             if($res){
-                return $this->db->commit();
+                $this->db->commit();
+                return true;
             }else{
                 $this->db->rollback();
                 return false;
@@ -49,15 +57,16 @@ class Song
     {
         $this->db->startTransaction();
         try {
-            $old_duration = $this->getSong($song_id);
-            if(!$old_duration){
+            $old_song = $this->getSong($song_id);
+            if(!$old_song){
                 return false;
             }
-            $old_duration = $old_duration['duration'];
+            $old_duration = $old_song['duration'];
+            $old_album_id = $old_song['album_id'];
         } catch (\Throwable $th) {
+            $this->db->rollback();
             return false;
         }
-        $new_duration = $old_duration - $duration;
         $this->db->query('UPDATE ' . $this->table . ' SET judul = :judul, penyanyi = :penyanyi, tanggal_terbit = :tanggal_terbit, genre = :genre, duration = :duration, audio_path = :audio_path, image_path = :image_path, album_id = :album_id, lyric = :lyric WHERE song_id = :song_id');
         $this->db->bind(':song_id', $song_id);
         $this->db->bind(':judul', $judul);
@@ -70,9 +79,23 @@ class Song
         $this->db->bind(':album_id', $album_id);
         $this->db->bind(':lyric', $lyric);
         try {
-            $this->db->execute();
-            $album = new Album();
-            $res = $album->editAlbumTime($album_id, $new_duration);
+            $res = $this->db->execute();
+            if(!$res){
+                $this->db->rollback();
+                return false;
+            }
+            $this->db->query('UPDATE ' . $this->albumtable . ' SET total_duration = total_duration - :time WHERE album_id = :album_id');
+            $this->db->bind(':album_id', $old_album_id);
+            $this->db->bind(':time', $old_duration);
+            $res = $this->db->execute();
+            if(!$res){
+                $this->db->rollback();
+                return false;
+            }
+            $this->db->query('UPDATE ' . $this->albumtable . ' SET total_duration = total_duration + :time WHERE album_id = :album_id');
+            $this->db->bind(':album_id', $album_id);
+            $this->db->bind(':time', $duration);
+            $res = $this->db->execute();
             if($res){
                 $this->db->commit();
                 return true;
@@ -98,9 +121,15 @@ class Song
         $this->db->query('DELETE FROM ' . $this->table . ' WHERE song_id = :songId');
         $this->db->bind(':songId', $songId);
         try {
-            $this->db->execute();
-            $album = new Album();
-            $res = $album->editAlbumTime($album_id, -$duration);
+            $res = $this->db->execute();
+            if(!$res){
+                $this->db->rollback();
+                return false;
+            }
+            $this->db->query('UPDATE ' . $this->albumtable . ' SET total_duration = total_duration - :time WHERE album_id = :album_id');
+            $this->db->bind(':album_id', $album_id);
+            $this->db->bind(':time', $duration);
+            $res = $this->db->execute();
             if($res){
                 $this->db->commit();
                 return true;
