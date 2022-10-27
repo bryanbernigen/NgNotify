@@ -10,7 +10,12 @@ function getSong(){
         if(this.readyState==4 && this.status==200){
             songs = JSON.parse(this.responseText);
             if(songs["status"]){
+                song = songs["data"];
+                song.audio_path = song.audio_path.match(/(\/d\/)([-a-zA-Z0-9]+)(\/)/)[2];
+                
+                // console.log(songs["data"]["audio_path"]);
                 appendData([songs["data"]]);
+                playMusic();
             }else{
                 appendData(songNotFound);
             }
@@ -34,22 +39,6 @@ songNotFound=[
         "album_id": "0",
     },
 ];
-
-songDetailUnused= [
-    {
-        "judul": "Nxde",
-        "penyanyi": "(G)-IDLE",
-        "duration": "2:58",
-        "audio_path": "http://media.w3.org/2010/07/bunny/04-Death_Becomes_Fur.mp4",
-        "image_path": "../../assets/sample-song-image.jpg",
-        "tanggal_terbit": "2022-10-17",
-        "lyric": ["Why you think that 'bout nude? 'Cause your view's so rude","Think outside the box, then you'll like it","Hello, my name is 예삐, 예삐요 (hello)","말투는 멍청한 듯 몸매는 sexy, sexy요"," \
-                    그럼, 다이아 박힌 티아라 하나에{}","내가 퍽이나 웃게 (S.Y.), 퍽이나 웃게 (ooh)","뒤틀려버린 로렐라이, don't need no man (yah)","철학에 미친 독서광 (huh), self-made woman","싸가지없는 이 story에 무지 황당한"," \
-                    야유하는 관객들, you tricked me, you're a liar","아, 발가벗겨져 버린 movie star (movie star)","아, 별빛이 깨져버린 밤","꼴이 볼품없대도, 망가진다 해도 (uh)","다신 사랑받지 못한대도","쉿, yes, I'm a nude"," \
-                    Nude (따따랏따라)","Yes, I'm a nude","Nude (I don't give a love)","Baby, how do I look? (야)","How do I look? (야)","아리따운 날 입고, 따따랏따라", "Baby, how do I look? (야)", "How do I look? (야)"],
-        "album": "I Love",
-    },
-]
 
 audio = document.getElementById('addAudio');
 playmusicBt1 = document.getElementById("play");
@@ -118,7 +107,7 @@ function appendData(songDetail) {
     div7.style.marginBottom = "0.5vh";
 }
 
-function playMusic(num) {
+function playMusic() {
     if (audio.paused == false) {
         audio.pause();
         audio.currentTime = 0;
@@ -126,7 +115,7 @@ function playMusic(num) {
     
     var div8 = document.getElementById("addAudio");
     var div9 = document.getElementById("sourceAudio");
-    div9.src = "https://docs.google.com/uc?export=download&id=" + songDetail[num]["audio_path"];
+    div9.src = "https://docs.google.com/uc?export=download&id=" + song["audio_path"];
     // https://drive.google.com/file/d/1rjLV5Ogyz4AF6OGlmj46jDc6KYFpal-c/view?usp=sharing
     // yang dimasukkan bagian ID nya aja (setelah d/ dan sebelum /view)
     // div9.src = songDetail[num]["audio_path"];
@@ -145,12 +134,12 @@ function playMusic(num) {
 
     var div10 = document.getElementsByClassName("musicPlayerPoster");
     for (let i=0; i < div10.length; i++) {
-        div10[i].src = songDetail[num].image_path;
+        div10[i].src = song.image_path;
         div10[i].style.width = "5vw";
     }
 
     var div11 = document.getElementById("musicPlayerTitle");
-    div11.innerHTML += songDetail[num]["title"];
+    div11.innerHTML += song["judul"];
     div11.style.fontFamily = "CircularStd-Bold";
     div11.style.fontSize = "14px";
     div11.style.color = "#FFFFFF";
@@ -158,13 +147,12 @@ function playMusic(num) {
 
     var div12 = document.getElementsByClassName("musicPlayerSinger");
     for (let i=0; i < div12.length; i++) {
-        div12[i].innerHTML += songDetail[num]["singer"];
+        div12[i].innerHTML = song["penyanyi"];
         div12[i].style.color = "#FFFFFF";
         div12[i].style.width = "max-content";
     }
-    
     var div13 = document.getElementById("musicAlbum");
-    div13.innerHTML += songDetail[num]["album"];
+    div13.innerHTML = song["album"]["judul"];
     div13.style.color = "#FFFFFF";
     div13.style.width = "max-content";
 }
@@ -239,5 +227,14 @@ repeatButton.addEventListener('click', toggleRepeat);
 window.onload = function() {
     infoNavbar();
     getSong();
-    playMusic(0);
+}
+
+function prevSongDetail(){
+    if (parseInt(song_id) > 1){
+        window.location.href = "http://localhost:8080/pages/detailsong/detailsong.html?song_id="+(parseInt(song_id)-1);
+    }
+}
+
+function nextSongDetail(){
+    window.location.href = "http://localhost:8080/pages/detailsong/detailsong.html?song_id="+(parseInt(song_id)+1);
 }
