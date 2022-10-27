@@ -24,6 +24,27 @@ soundButton = document.getElementById("vol");
 soundVolume = document.getElementById("timelineVol");
 repeatButton = document.getElementById("repeat");
 
+var song_id = 1;
+function loginout() {
+    if (document.getElementById("loginout").innerHTML == "Login"){
+      window.location.href = "http://localhost:8080/pages/login/login.html?page_type=detailsong&song_id="+song_id;
+    } else {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          let res = JSON.parse(this.responseText);
+          if (res["status"]) {
+            window.location.href = "http://localhost:8080/pages/detailsong/detailsong.html?song_id="+song_id;
+          }
+        }
+      };
+      xhttp.open("POST", "http://localhost:8000/api/auth/logout", true);
+      xhttp.setRequestHeader("Accept", "application/json");
+      xhttp.withCredentials = true;
+      xhttp.send();
+    }
+}
+
 function appendData() {
     var div1 = document.getElementById("albumPoster");
     div1.src = songDetail[0].image_path;
@@ -177,7 +198,7 @@ soundVolume.addEventListener('change', rangeSoundVol);
 repeatButton.addEventListener('click', toggleRepeat);
 
 window.onload = function() {
+    infoNavbar();
     appendData();
     playMusic(0);
-    console.log("udah masuk");
 }
