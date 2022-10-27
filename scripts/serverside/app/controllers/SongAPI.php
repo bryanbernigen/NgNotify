@@ -152,7 +152,7 @@ class SongAPI extends Controller
         }
     }
 
-    public function selectSong($page = 1, $limit_page = 10)
+    public function querySong($page = 1, $limit_page = 10)
     {
         if ($_SERVER['REQUEST_METHOD'] != 'POST') {
             return json_response_fail(METHOD_NOT_ALLOWED);
@@ -174,7 +174,7 @@ class SongAPI extends Controller
         if (isset($_POST['order_by_title'])) {
             $order_by_title = $_POST['order_by_title'];
         }
-        $res = $this->model('Song')->selectSong($query, $order_by_year, $order_by_title, $filter_genre);
+        $res = $this->model('Song')->querySong($query, $order_by_year, $order_by_title, $filter_genre);
         $total = count($res);
         $res = array_slice($res, $page * $limit_page, $limit_page);
         if ($res) {
