@@ -307,7 +307,7 @@ function editSong() {
         alert("Please fill all the fields");
     }else{
     let data = {
-            "song_id": document.getElementById("albumidea").value,
+            "song_id": document.getElementById("songides").value,
             "judul": document.getElementById("songnamees").value,
             "penyanyi":penyanyi,
             "tanggal_terbit":document.getElementById("tanggalterbites").value,

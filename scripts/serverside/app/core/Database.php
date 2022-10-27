@@ -79,7 +79,7 @@ class Database
     public function execute()
     {
         try {
-            $this->stmt->execute();
+            return $this->stmt->execute();
         } catch (\Throwable $th) {
             return false;
         }
