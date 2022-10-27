@@ -12,10 +12,10 @@ class Song
         $this->db = new Database;
     }
 
-    public function addSong($judul, $penyanyi, $tanggal_terbit, $genre, $duration, $audio_path, $image_path, $album_id)
+    public function addSong($judul, $penyanyi, $tanggal_terbit, $genre, $duration, $audio_path, $image_path, $album_id, $lyric)
     {
-        $this->db->startTransaction();
-        $this->db->query('INSERT INTO ' . $this->table . ' VALUES (default, :judul, :penyanyi, :tanggal_terbit, :genre, :duration, :audio_path, :image_path, :album_id)');
+        return $this->db->startTransaction();
+        $this->db->query('INSERT INTO ' . $this->table . ' VALUES (default, :judul, :penyanyi, :tanggal_terbit, :genre, :duration, :audio_path, :image_path, :album_id, :lyric)');
         $this->db->bind(':judul', $judul);
         $this->db->bind(':penyanyi', $penyanyi);
         $this->db->bind(':tanggal_terbit', $tanggal_terbit);
@@ -24,13 +24,13 @@ class Song
         $this->db->bind(':audio_path', $audio_path);
         $this->db->bind(':image_path', $image_path);
         $this->db->bind(':album_id', $album_id);
+        $this->db->bind(':lyric', $lyric);
         try {
             $this->db->execute();
             $album = new Album();
             $res = $album->editAlbumTime($album_id, $duration);
             if($res){
-                $this->db->commit();
-                return true;
+                return $this->db->commit();
             }else{
                 $this->db->rollback();
                 return false;
@@ -41,12 +41,20 @@ class Song
         }
     }
 
-    public function editSong($song_id, $judul, $penyanyi, $tanggal_terbit, $genre, $duration, $audio_path, $image_path, $album_id)
+    public function editSong($song_id, $judul, $penyanyi, $tanggal_terbit, $genre, $duration, $audio_path, $image_path, $album_id, $lyric)
     {
         $this->db->startTransaction();
-        $old_duration = $this->getSong($song_id)['duration'];
+        try {
+            $old_duration = $this->getSong($song_id);
+            if(!$old_duration){
+                return false;
+            }
+            $old_duration = $old_duration['duration'];
+        } catch (\Throwable $th) {
+            return false;
+        }
         $new_duration = $old_duration - $duration;
-        $this->db->query('UPDATE ' . $this->table . ' SET judul = :judul, penyanyi = :penyanyi, tanggal_terbit = :tanggal_terbit, genre = :genre, duration = :duration, audio_path = :audio_path, image_path = :image_path, album_id = :album_id WHERE song_id = :song_id');
+        $this->db->query('UPDATE ' . $this->table . ' SET judul = :judul, penyanyi = :penyanyi, tanggal_terbit = :tanggal_terbit, genre = :genre, duration = :duration, audio_path = :audio_path, image_path = :image_path, album_id = :album_id, lyric = :lyric WHERE song_id = :song_id');
         $this->db->bind(':song_id', $song_id);
         $this->db->bind(':judul', $judul);
         $this->db->bind(':penyanyi', $penyanyi);
@@ -56,6 +64,7 @@ class Song
         $this->db->bind(':audio_path', $audio_path);
         $this->db->bind(':image_path', $image_path);
         $this->db->bind(':album_id', $album_id);
+        $this->db->bind(':lyric', $lyric);
         try {
             $this->db->execute();
             $album = new Album();
@@ -107,7 +116,12 @@ class Song
         $this->db->bind(':songId', $songId);
         try {
             $this->db->execute();
-            return $this->db->single();
+            try {
+                $resut = $this->db->single();
+                return $resut;
+            } catch (\Throwable $th) {
+                return false;
+            }
         } catch (PDOException $e) {
             return  false;
         }
@@ -133,19 +147,33 @@ class Song
         }
     }
 
+    public function getSongsFromAlbum($album_id){
+        $this->db->query('SELECT * FROM ' . $this->table . ' WHERE album_id = :album_id');
+        $this->db->bind(':album_id', $album_id);
+        try {
+            $result = $this->db->resultSet();
+            if(!$result){
+                return false;
+            }
+            return $result;
+        } catch (PDOException $e) {
+            return  false;
+        }
+    }
+
     /*
     $orderByYear - NULL jika tidak terurut berdasarkan tahun, ASC/DESC jika terurut berdasarkan tahun
     $orderByJudul - ASC atau DESC tidak boleh NULL karena secara otomatis akan terutur berdasarkan judul jika tahun kosong
     */
-    public function selectSong($query, $orderByYear, $orderByJudul, $filterGenre){
+    public function selectSong($query, $orderByYear, $orderByJudul, $filterByGenre){
         //select * from songs where ((judul like '%zzz%' OR penyanyi like '%zzz%' 
         //OR DATE_PART('YEAR',tanggal_terbit) = 2000) AND genre like '%a%') 
         //ORDER BY DATE_PART('YEAR',tanggal_terbit) ASC
         $likeQuery = '%' . $query . '%';
-        $filterGenre = '%' . $filterGenre . '%';
+        $filterGenre = '%' . $filterByGenre . '%';
         if(isset($query)){
             if(is_numeric($query)){
-                if(isset($filterGenre)){
+                if(isset($filterByGenre)){
                     if(isset($orderByYear)){
                         $this->db->query('SELECT * FROM ' . $this->table . ' WHERE (EXTRACT(YEAR FROM tanggal_terbit) = :query AND genre like :filterGenre) ORDER BY tanggal_terbit ' . $orderByYear);
                         $this->db->bind(':query', $query);
@@ -169,7 +197,7 @@ class Song
                 }
             }
             else{
-                if(isset($filterGenre)){
+                if(isset($filterByGenre)){
                     if(isset($orderByYear)){
                     $this->db->query("SELECT * FROM " . $this->table . " WHERE (judul LIKE :likeQuery OR penyanyi LIKE :likeQuery) AND genre LIKE :filterGenre ORDER BY tanggal_terbit " . $orderByYear);
                     $this->db->bind(':likeQuery', $likeQuery);
@@ -194,7 +222,7 @@ class Song
             }
         }
         else{
-            if(isset($filterGenre)){
+            if(isset($filterByGenre)){
                 if(isset($orderByYear)){
                     $this->db->query('SELECT * FROM ' . $this->table . ' WHERE genre LIKE :filterGenre ORDER BY tanggal_terbit ' . $orderByYear);
                     $this->db->bind(':filterGenre', $filterGenre);

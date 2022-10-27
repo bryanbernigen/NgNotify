@@ -1,54 +1,53 @@
+var songs;
+var albums;
+
 window.onload = function() {
-    addOptions();
+    infoNavbar();
+    getSongs();
+    getAlbums();
     collapse();
-    uploadImageAudio();
-    
 }
 
-albumIDs = [
-    {id: 1, name: "Album 1"},
-    {id: 2, name: "Album 2"},
-    {id: 3, name: "Album 3"},
-    {id: 4, name: "Album 4"},
-    {id: 5, name: "Album 5"},
-    {id: 6, name: "Album 6"},
-    {id: 7, name: "Album 7"},
-    {id: 8, name: "Album 8"},
-    {id: 9, name: "Album 9"},
-    {id: 10, name: "Album 10"},
-]
+function loginout() {
+    if (document.getElementById("loginout").innerHTML == "Login") {
+      window.location.href = "http://localhost:8080/pages/login/login.html?page_type=addData";
+    } else {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          let res = JSON.parse(this.responseText);
+          if (res["status"]) {
+            window.location.href = "http://localhost:8080/pages/addData/addData.html";
+          }
+        }
+      };
+      xhttp.open("POST", "http://localhost:8000/api/auth/logout", true);
+      xhttp.setRequestHeader("Accept", "application/json");
+      xhttp.withCredentials = true;
+      xhttp.send();
+    }
+}
 
-songInAlbum = [
-    {id: 1, name: "Song 1"},
-    {id: 2, name: "Song 2"},
-    {id: 3, name: "Song 3"},
-    {id: 4, name: "Song 4"},
-    {id: 5, name: "Song 5"},
-    {id: 6, name: "Song 6"},
-    {id: 7, name: "Song 7"},
-    {id: 8, name: "Song 8"},
-    {id: 9, name: "Song 9"},
-    {id: 10, name: "Song 10"},
-]
-
-function addOptions() {
+function addOptions(albumIDs, songInAlbum) {
     var divDocument = document.getElementsByClassName("albumid");
     for (let j = 0; j < divDocument.length; j++) {
         for (let i = 0; i < albumIDs.length; i++) {
             select = document.createElement("option");
-            select.value = albumIDs[i].id;
-            select.innerHTML = albumIDs[i].id + '. ' + albumIDs[i].name;
+            select.value = albumIDs[i].album_id;
+            select.innerHTML = albumIDs[i].album_id + '. ' + albumIDs[i].judul;
             select.style.fontFamily = "CircularStd-Light";
             divDocument[j].appendChild(select);
         }
     }
-    var div = document.getElementById("songid");
-    for (let i = 0; i < songInAlbum.length; i++) {
-        select = document.createElement("option");
-        select.value = songInAlbum[i].id;
-        select.innerHTML = songInAlbum[i].id + '. ' + songInAlbum[i].name;
-        select.style.fontFamily = "CircularStd-Light";
-        div.appendChild(select);
+    var div = document.getElementsByClassName("songid");
+    for (let j = 0; j < div.length; j++) {
+        for (let i = 0; i < songInAlbum.length; i++) {
+            select = document.createElement("option");
+            select.value = songInAlbum[i].song_id;
+            select.innerHTML = songInAlbum[i].song_id + '. ' + songInAlbum[i].judul;
+            select.style.fontFamily = "CircularStd-Light";
+            div[j].appendChild(select);
+        }
     }
 }
 
@@ -68,61 +67,338 @@ function collapse() {
     }
 }
 
-function uploadImageAudio() {
-    event.preventDefault();
-    for (let i = 0; i < 4; i++) {
-        var imgInputs = document.getElementById("imageupload"+i);
-        imgInputs.addEventListener("change", function() {
-            let imgReader = new FileReader();
-            imgReader.addEventListener("load", () => {
-                const uploadedImage = imgReader.result;
-                console.log(uploadedImage);
-                var divImage = document.getElementById("displayImage"+i);
-                divImage.src = uploadedImage;
-                divImage.style.width = "90%";
-                divImage.style.padding = "10px";
-                divImage.style.backgroundColor = "white";
-                divImage.style.borderRadius = "10px";
-                divImage.style.marginTop = "10px";
-                divImage.style.marginBottom = "20px";
-            });
-            imgReader.readAsDataURL(this.files[0]);
-        });
+function getSongs(albums){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function(){
+        if(this.readyState==4 && this.status==200){
+            songs = JSON.parse(this.responseText)['data'];
+            addOptions(albums,songs);
+        }
     };
+    xhttp.open("GET","http://localhost:8000/api/songapi/showallsongs",true);
+    xhttp.setRequestHeader("Accept", "application/json");
+    xhttp.withCredentials = true;
+    xhttp.send();
+}
 
-    for (let i = 0; i < 2; i++) {
-        var audioInputs = document.getElementById("audioupload"+i);
-        audioInputs.addEventListener("change", function() {
-            let audioReader = new FileReader();
-            audioReader.addEventListener("load", () => {
-                const uploadedAudio = audioReader.result;
-                console.log(uploadedAudio);
-            });
-            audioReader.readAsDataURL(this.files[0]);
-        });
+function getAlbums(){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function(){
+        if(this.readyState==4 && this.status==200){
+            albums = JSON.parse(this.responseText)['data'];
+            getSongs(albums);
+        }
     };
+    xhttp.open("GET","http://localhost:8000/api/albumapi/showallalbum",true);
+    xhttp.setRequestHeader("Accept", "application/json");
+    xhttp.withCredentials = true;
+    xhttp.send();
+}
+
+function loadImage(from, showWhere){
+    document.getElementById("displayImage"+showWhere).src=document.getElementById("imageupload"+from).value;
+}
+
+function autoDataEditAlbum(){
+    console.log('masuk auto data edit album');
+    album_id = document.getElementById("albumidea").value;
+    for (let index = 0; index < albums.length; index++) {
+        if(albums[index].album_id == album_id){
+            choosen_album = albums[index];
+            break; 
+        }
+    }
+    document.getElementById("albumnameea").value = choosen_album.judul;
+    document.getElementById("singerea").value = choosen_album.penyanyi;
+    document.getElementById("totaldurationea").value = choosen_album.total_duration;
+    document.getElementById("genreea").value = choosen_album.genre;
+    document.getElementById("tanggalterbitea").value = choosen_album.tanggal_terbit;
+    document.getElementById("imageuploadea").value = choosen_album.image_path;
+    document.getElementById("displayImage0").src = choosen_album.image_path;
 }
 
 function editAlbum() {
-
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function(){
+        if(this.readyState==4 && this.status==200){
+            let res = JSON.parse(this.responseText);
+            if(res['status']){
+                alert("edit  success");
+            }
+            else{
+                alert("edit failed");
+            }
+            //TODO: Refresh songs and albums after edit
+        }
+    };
+    let genre = null;
+    if(document.getElementById("genreea").value != ""){
+        document.getElementById("genreea").value
+    }
+    if(document.getElementById("albumidea").value==""
+    || document.getElementById("albumnameea").value==""
+    || document.getElementById("singerea").value==""
+    || document.getElementById("totaldurationea").value==""
+    || document.getElementById("tanggalterbitea").value==""
+    || document.getElementById("imageuploadea").value==""){
+        alert("Please fill all the fields");
+    }else{
+    let data = {
+            "album_id": document.getElementById("albumidea").value,
+            "judul": document.getElementById("albumnameea").value,
+            "penyanyi":document.getElementById("singerea").value,
+            "total_duration":document.getElementById("totaldurationea").value,
+            "image_path":document.getElementById("imageuploadea").value,
+            "tanggal_terbit":document.getElementById("tanggalterbitea").value,
+            "genre":genre,
+        };
+        console.log(data);
+        xhttp.open("POST","http://localhost:8000/api/albumapi/editalbum",true);
+        xhttp.setRequestHeader("Accept", "application/json");
+        xhttp.setRequestHeader("Content-Type", "application/json");
+        xhttp.withCredentials = true;
+        xhttp.send(JSON.stringify(data));
+    } 
 }
 
 function addAlbum() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function(){
+        if(this.readyState==4 && this.status==200){
+            let res = JSON.parse(this.responseText);
+            if(res['status']){
+                alert("album successfully added");
+            }
+            else{
+                alert("failed to add album");
+            }
+            //TODO : Refresh songs and albums after add
+        }
+    };
+    let genre = null;
+    if(document.getElementById("genreea").value != ""){
+        document.getElementById("genreea").value
+    }
+    if(document.getElementById("albumidaa").value=="" 
+    || document.getElementById("albumnameaa").value=="" 
+    || document.getElementById("singeraa").value=="" 
+    || document.getElementById("totaldurationaa").value=="" 
+    || document.getElementById("imageuploadaa").value=="" 
+    || document.getElementById("tanggalterbitaa").value==""){
+        alert("Please fill all the fields");   
+    }else{
+        let data = {
+            "album_id": document.getElementById("albumidaa").value,
+            "judul": document.getElementById("albumnameaa").value,
+            "penyanyi":document.getElementById("singeraa").value,
+            "total_duration":document.getElementById("totaldurationaa").value,
+            "image_path":document.getElementById("imageuploadaa").value,
+            "tanggal_terbit":document.getElementById("tanggalterbitaa").value,
+            "genre":genre,
+        };
+        console.log(data);
+        xhttp.open("POST","http://localhost:8000/api/albumapi/addalbum",true);
+        xhttp.setRequestHeader("Accept", "application/json");
+        xhttp.setRequestHeader("Content-Type", "application/json");
+        xhttp.withCredentials = true;
+        xhttp.send(JSON.stringify(data)); 
+    }
+}
 
+function autoDataDeleteAlbum(){
+    console.log('masuk auto data delete album');
+    album_id = document.getElementById("albumidda").value;
+    for (let index = 0; index < albums.length; index++) {
+        if(albums[index].album_id == album_id){
+            choosen_album = albums[index];
+            break; 
+        }
+    }
+    document.getElementById("albumnameda").value = choosen_album.judul;
+    document.getElementById("singerda").value = choosen_album.penyanyi;
+    document.getElementById("totaldurationda").value = choosen_album.total_duration;
+    document.getElementById("genreda").value = choosen_album.genre;
+    document.getElementById("tanggalterbitda").value = choosen_album.tanggal_terbit;
+    document.getElementById("imageuploadda").value = choosen_album.image_path;
+    loadImage('da','2');
 }
 
 function deleteAlbum() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function(){
+        if(this.readyState==4 && this.status==200){
+            let res = JSON.parse(this.responseText);
+            if(res['status']){
+                alert("album successfully deleted");
+            }
+            else{
+                alert("failed to delete album");
+            }
+            //TODO : Refresh songs and albums after add
+        }
+    };
+    let data = {
+        "album_id": document.getElementById("albumidda").value,
+    };
+    if(data.album_id==3){
+        console.log('album_id 3');
+    }
+    xhttp.open("POST","http://localhost:8000/api/albumapi/deletealbum",true);
+    xhttp.setRequestHeader("Accept", "application/json");
+    xhttp.setRequestHeader("Content-Type", "application/json");
+    xhttp.withCredentials = true;
+    xhttp.send(JSON.stringify(data)); 
+}
 
+function autoDataEditSong(){
+    console.log('masuk auto data edit album');
+    song_id = document.getElementById("songides").value;
+    console.log(song_id);
+    for (let index = 0; index < songs.length; index++) {
+        if(songs[index].song_id == song_id){
+            choosen_song = songs[index];
+            break; 
+        }
+    }
+    document.getElementById("songnamees").value = choosen_song.judul;
+    document.getElementById("singeres").value = choosen_song.penyanyi;
+    document.getElementById("tanggalterbites").value = choosen_song.tanggal_terbit;
+    document.getElementById("genrees").value = choosen_song.genre;
+    document.getElementById("durationes").value = choosen_song.duration;
+    document.getElementById("audiouploades").value = choosen_song.audio_path;
+    document.getElementById("imageuploades").value = choosen_song.image_path;
+    document.getElementById("albumides").value = choosen_song.album_id;
+    loadImage('es','3');
 }
 
 function editSong() {
-
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function(){
+        if(this.readyState==4 && this.status==200){
+            let res = JSON.parse(this.responseText);
+            if(res['status']){
+                alert("edit  success");
+            }
+            else{
+                alert("edit failed");
+            }
+            //TODO: Refresh songs and albums after edit
+        }
+    };
+    let penyanyi = null;
+    let genre = null;
+    let image_path = null;
+    let lyrics = null;
+    if(document.getElementById("singeres").value != ""){
+        penyanyi = document.getElementById("singeres").value;
+    }
+    if(document.getElementById("genrees").value != ""){
+        genre = document.getElementById("genrees").value;
+    }
+    if(document.getElementById("imageuploades").value != ""){
+        image_path = document.getElementById("imageuploades").value;
+    }
+    if(document.getElementById("songides").value == "" 
+    || document.getElementById("songnamees").value == "" 
+    || document.getElementById("durationes").value == "" 
+    || document.getElementById("tanggalterbites").value == ""
+    || document.getElementById("audiouploades").value == ""
+    || document.getElementById("albumides").value == ""){
+        alert("Please fill all the fields");
+    }else{
+    let data = {
+            "song_id": document.getElementById("albumidea").value,
+            "judul": document.getElementById("songnamees").value,
+            "penyanyi":penyanyi,
+            "tanggal_terbit":document.getElementById("tanggalterbites").value,
+            "genre":genre,
+            "duration":document.getElementById("durationes").value,
+            "audio_path":document.getElementById("audiouploades").value,
+            "image_path":image_path,
+            "album_id":document.getElementById("albumides").value,
+            "lyrics":lyrics,
+        };
+        console.log(data);
+        xhttp.open("POST","http://localhost:8000/api/songapi/editsong",true);
+        xhttp.setRequestHeader("Accept", "application/json");
+        xhttp.setRequestHeader("Content-Type", "application/json");
+        xhttp.withCredentials = true;
+        xhttp.send(JSON.stringify(data));
+    } 
 }
 
-function addSong() {
 
+function addsong() {
+    console.log("test");
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function(){
+        if(this.readyState==4 && this.status==200){
+            let res = JSON.parse(this.responseText);
+            if(res['status']){
+                alert("edit  success");
+            }
+            else{
+                alert("edit failed");
+            }
+            //TODO: Refresh songs and albums after edit
+        }
+    };
+    let penyanyi = null;
+    let genre = null;
+    let image_path = null;
+    let lyrics = null;
+    if(document.getElementById("singeras").value != ""){
+        penyanyi = document.getElementById("singeras").value;
+    }
+    if(document.getElementById("genreas").value != ""){
+        genre = document.getElementById("genreas").value;
+    }
+    if(document.getElementById("imageuploadas").value != ""){
+        image_path = document.getElementById("imageuploadas").value;
+    }
+    if(document.getElementById("songtitleas").value == "" 
+    || document.getElementById("durationas").value == "" 
+    || document.getElementById("tanggalterbitas").value == ""
+    || document.getElementById("audiouploadas").value == ""
+    || document.getElementById("albumidas").value == ""){
+        alert("Please fill all the fields");
+    }else{
+    let data = {
+            "judul": document.getElementById("songtitleas").value,
+            "penyanyi":penyanyi,
+            "tanggal_terbit":document.getElementById("tanggalterbitas").value,
+            "genre":genre,
+            "duration":document.getElementById("durationas").value,
+            "audio_path":document.getElementById("audiouploadas").value,
+            "image_path":image_path,
+            "album_id":document.getElementById("albumidas").value,
+            "lyrics":lyrics,
+        };
+        console.log(data);
+        xhttp.open("POST","http://localhost:8000/api/songapi/addsong",true);
+        xhttp.setRequestHeader("Accept", "application/json");
+        xhttp.setRequestHeader("Content-Type", "application/json");
+        xhttp.withCredentials = true;
+        xhttp.send(JSON.stringify(data));
+    } 
 }
 
-function deleteAlbum() {
-    
+function autoDataDeleteSong(){
+    song_id = document.getElementById("songidds").value;
+    console.log(song_id);
+    for (let index = 0; index < songs.length; index++) {
+        if(songs[index].song_id == song_id){
+            choosen_song = songs[index];
+            break; 
+        }
+    }
+    document.getElementById("songtitleds").value = choosen_song.judul;
+    document.getElementById("singerds").value = choosen_song.penyanyi;
+    document.getElementById("tanggalterbitds").value = choosen_song.tanggal_terbit;
+    document.getElementById("genreds").value = choosen_song.genre;
+    document.getElementById("durationds").value = choosen_song.duration;
+    document.getElementById("audiouploadds").value = choosen_song.audio_path;
+    document.getElementById("imageuploadds").value = choosen_song.image_path;
+    document.getElementById("albumidds").value = choosen_song.album_id;
+    loadImage('ds','5');
 }

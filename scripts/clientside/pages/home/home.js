@@ -142,7 +142,7 @@ function appendData(data) {
         if(data[i].image_path == null){
             data[i].image_path = "../../assets/basicimage.jpg";
         }
-        div.innerHTML += '<div class="card"> \
+        div.innerHTML += '<div class="card" onclick="test()"> \
                     <img src="' + data[i].image_path + '" class="cardImage"> \
                     <div class="songTitle">' + data[i].judul + '</div> \
                     <div class="singer">' + data[i].penyanyi + '</div> \
@@ -160,4 +160,15 @@ function appendData(data) {
     div.style.alignItems = "center";
     mainContainer.appendChild(div);
     return div;
+}
+
+function test(){
+    console.log("test");
+    if (localStorage.getItem("test") === null) {
+        localStorage.setItem("test", 1);
+    }
+    else {
+        localStorage.test = Number(localStorage.test) + 1;
+    }
+    console.log(localStorage.test);
 }

@@ -23,11 +23,11 @@ class Database{
     }
 
     public function startTransaction(){
-        $this->dbh->beginTransaction();
+        return $this->dbh->beginTransaction();
     }
     
     public function commit(){
-        $this->dbh->commit();
+        return $this->dbh->commit();
     }
     
     public function rollback(){

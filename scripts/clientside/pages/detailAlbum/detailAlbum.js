@@ -1,46 +1,35 @@
-musicData = [
-    {
-        "title": "TOMBOY",
-        "singer": "(G)-IDLE",
-        "duration": "2:54",
-        "audio_path": "http://media.w3.org/2010/07/bunny/04-Death_Becomes_Fur.mp4",
-    },
-    {
-        "title": "TOMBOY",
-        "singer": "(G)-IDLE",
-        "duration": "2:54",
-        "audio_path": "http://media.w3.org/2010/07/bunny/04-Death_Becomes_Fur.mp4",
-    },
-    {
-        "title": "TOMBOY",
-        "singer": "(G)-IDLE",
-        "duration": "2:54",
-        "audio_path": "http://media.w3.org/2010/07/bunny/04-Death_Becomes_Fur.mp4",
-    },
-    {
-        "title": "TOMBOY",
-        "singer": "(G)-IDLE",
-        "duration": "2:54",
-        "audio_path": "http://media.w3.org/2010/07/bunny/04-Death_Becomes_Fur.mp4",
-    },
-    {
-        "title": "TOMBOY",
-        "singer": "(G)-IDLE",
-        "duration": "2:54",
-        "audio_path": "http://media.w3.org/2010/07/bunny/04-Death_Becomes_Fur.mp4",
-    },
-]
+var album_id;
+function getAlbum(){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function(){
+        if(this.readyState==4 && this.status==200){
+            albumDetail = JSON.parse(this.responseText);
+            // console.log(songs["data"]);
+            getSongsFromAlbum(album_id, albumDetail['data']);
+        }
+    };
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    album_id = urlParams.get('album_id')
+    xhttp.open("GET","http://localhost:8000/api/albumapi/getalbum?album_id="+album_id,true);
+    xhttp.setRequestHeader("Accept", "application/json");
+    xhttp.withCredentials = true;
+    xhttp.send();
+}
 
-albumDetail = [
-    {
-        "Judul": "Antifragile",
-        "Penyanyi": "Le Sserafim",
-        "Total_duration": "654",
-        "Image_path": "../../assets/sample-song-image.jpg",
-        "Tanggal_terbit": "10/17/2022",
-        "NumSong": "5",
-    },
-]
+function getSongsFromAlbum(album_id, albumDetail){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function(){
+        if(this.readyState==4 && this.status==200){
+            let musicData = JSON.parse(this.responseText);
+            appendData(albumDetail,musicData['data']);
+        }
+    };
+    xhttp.open("GET","http://localhost:8000/api/songapi/getsongsfromalbum?album_id="+album_id,true);
+    xhttp.setRequestHeader("Accept", "application/json");
+    xhttp.withCredentials = true;
+    xhttp.send();
+}
 
 audio = document.getElementById('addAudio');
 playmusicBt1 = document.getElementById("play");
@@ -52,35 +41,35 @@ soundButton = document.getElementById("vol");
 soundVolume = document.getElementById("timelineVol");
 repeatButton = document.getElementById("repeat");
 
-function appendData() {
+function appendData(albumDetail, musicData) {
     var div1 = document.getElementById("albumPoster");
-    div1.src = albumDetail[0].Image_path;
+    div1.src = albumDetail.image_path;
     div1.style.width = "15vw";
 
     var div2 = document.getElementById("albumTitle");
-    div2.innerHTML += albumDetail[0].Judul;
+    div2.innerHTML += albumDetail.judul;
     div2.style.width = "58vw";
 
     var div3 = document.getElementById("albumSinger");
-    div3.innerHTML += albumDetail[0].Penyanyi;
+    div3.innerHTML += albumDetail.penyanyi;
     div3.style.fontFamily = "CircularStd-Bold";
     div3.style.color = "#FFFFFF";
     div3.style.width = "max-content";
 
     var div4 = document.getElementById("albumYear");
-    div4.innerHTML += albumDetail[0].Tanggal_terbit;
+    div4.innerHTML += albumDetail.tanggal_terbit;
     div4.style.fontFamily = "CircularStd-Medium";
     div4.style.color = "#FFFFFF";
     div4.style.width = "max-content";
 
     var div5 = document.getElementById("albumNumSong");
-    div5.innerHTML += albumDetail[0].NumSong + ' songs,';
+    div5.innerHTML += musicData.length + ' songs,';
     div5.style.fontFamily = "CircularStd-Medium";
     div5.style.color = "#FFFFFF";
     div5.style.width = "max-content";
 
     var div6 = document.getElementById("albumDuration");
-    div6.innerHTML += albumDetail[0].Total_duration + " seconds";
+    div6.innerHTML += albumDetail.total_duration + " seconds";
     div6.style.fontFamily = "CircularStd-Light";
     div6.style.color = "#6C6C6C";
     div6.style.width = "max-content";
@@ -133,7 +122,12 @@ function appendData() {
 
         // Title - Singer
         let td2 = document.createElement('td');
-        td2.innerHTML = musicData[i]["title"] + '―' + musicData[i]["singer"];
+        if(musicData[i]["penyanyi"]!=null){
+            td2.innerHTML = musicData[i]["judul"] + ' ― ' + musicData[i]["penyanyi"];
+        }
+        else{
+            td2.innerHTML = musicData[i]["judul"]
+        }
         td2.style.color = "#FFFFFF";
         td2.style.fontFamily = "CircularStd-Medium";
         td2.style.fontSize = "14px";
@@ -272,7 +266,28 @@ soundVolume.addEventListener('change', rangeSoundVol);
 repeatButton.addEventListener('click', toggleRepeat);
 
 window.onload = function() {
-    appendData();
+    infoNavbar();
+    getAlbum();
     playMusic(0);
     console.log("udah masuk");
 }
+
+function loginout() {
+    if (document.getElementById("loginout").innerHTML == "Login"){
+      window.location.href = "http://localhost:8080/pages/login/login.html?page_type=detailalbum&album_id="+album_id;
+    } else {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          let res = JSON.parse(this.responseText);
+          if (res["status"]) {
+            window.location.href = "http://localhost:8080/pages/detailalbum/detailalbum.html?album_id="+album_id;
+          }
+        }
+      };
+      xhttp.open("POST", "http://localhost:8000/api/auth/logout", true);
+      xhttp.setRequestHeader("Accept", "application/json");
+      xhttp.withCredentials = true;
+      xhttp.send();
+    }
+  }

@@ -59,7 +59,7 @@ class Album
 
     public function deleteAlbum($albumId){
         $this->db->query('DELETE FROM ' . $this->table . ' WHERE album_id = :albumId');
-        $this->db->bind(':AlbumId', $albumId);
+        $this->db->bind(':albumId', $albumId);
         try {
             $this->db->execute();
             return true;
