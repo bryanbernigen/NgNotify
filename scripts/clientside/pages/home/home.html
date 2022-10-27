@@ -16,16 +16,16 @@
         <nav>
             <div class="navCt">
                 <div class="navLeft">
-                    <img class="navLogo" src="../../assets/Spotify_Logo_RGB_White.png"/>
+                    <img class="navLogo" src="../../assets/Spotify_Logo_RGB_White.png" onclick="redirectToHome()"/>
                     <div class="navSearch">
                         <img class="navSearchIcon" onclick="searchSong()" id="songqueryimg" src="../../assets/icons8-search-120-black.png"/>
                         <input class="navSearchInput" type="text" id="querysong" placeholder="Search for artists, songs, or release year" >
                     </div>
                 </div>
                 <div class="navRight">
-                    <div class="navItems">
+                    <div class="navItems" onclick="redirectToHome()">
                         <img class="navIcon" src="../../assets/icons8-home-144.png"/>
-                        <span class="navText" onclick="redirectToHome()">Home</span>
+                        <span class="navText">Home</span>
                     </div>
                     <div class="navItems">
                         <img class="navIcon" src="../../assets/icons8-music-library-96.png"/>

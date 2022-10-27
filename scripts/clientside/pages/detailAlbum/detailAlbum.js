@@ -291,3 +291,13 @@ function loginout() {
       xhttp.send();
     }
   }
+
+function nextAlbum() {
+    window.location.href = "http://localhost:8080/pages/detailalbum/detailalbum.html?album_id="+(parseInt(album_id)+1);
+}
+
+function prevAlbum() {
+    if (album_id > 1) {
+        window.location.href = "http://localhost:8080/pages/detailalbum/detailalbum.html?album_id="+(parseInt(album_id)-1);
+    }
+}

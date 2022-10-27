@@ -12,19 +12,20 @@
         <title>Spotify - Admin</title>
         <script src="../navbar.js"></script>
         <script src="addData.js"></script>
+        <script src="../navbar.js"></script>
     </head>
     <body>
         <div class="sidebar">
             <div class="sidebarTop">
-                <img class="sidebarLogo" src="../../assets/Spotify_Logo_RGB_White.png"/>
+                <img class="sidebarLogo" src="../../assets/Spotify_Logo_RGB_White.png" onclick="redirectToHome()"/>
             </div>
             <div class="sidebarMiddleWrap">
                 <div class="sidebarBottom">
-                    <div class="sidebarItems">
+                    <div class="sidebarItems" onclick="redirectToHome()">
                         <img class="sidebarIcon" src="../../assets/icons8-home-144.png"/>
                         <span class="sidebarText">Home</span>
                     </div>
-                    <div class="sidebarItems">
+                    <div class="sidebarItems" onclick="redirectToAlbum()">
                         <img class="sidebarIcon" src="../../assets/icons8-music-library-96.png"/>
                         <span class="sidebarText">Albums</span>
                     </div>
@@ -48,8 +49,6 @@
             <nav>
                 <div class="navCt">
                     <div class="navLeft">
-                        <img src="../../assets/icons8-chevron-left-96.png" />
-                        <img src="../../assets/icons8-chevron-right-96.png" />
                     </div>
                     <div class="navRight">
                         <div class="navCollapse">
