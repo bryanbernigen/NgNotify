@@ -58,6 +58,9 @@ function selectAlbum(){
                 albums = res['data'];
                 appendData(albums['albums'], "queryResultAlbum");
             }
+            else{
+                appendData(albumNotFound, "queryResultAlbum");
+            }
         }
     };
 
@@ -83,6 +86,9 @@ function selectSong(){
                 songs = res['data'];
                 appendData(songs['songs'], "queryResultSong");
             }
+            else{
+                appendData(songNotFound, "queryResultSong");
+            }
         }
     };
     let data = {
@@ -98,145 +104,27 @@ function selectSong(){
     xhttp.send(JSON.stringify(data)); 
 }
 
-
-songList = [
+songNotFound=[
     {
-        "Judul": "Anti fragile",
-        "Penyanyi": "Le Sserafim",
-        "Tanggal_terbit": "10/17/2022",
-        "Genre": "Pop",
-        "Duration": "232",
-        "Audio_path": "https://www.youtube.com/watch?v=pyf8cbqyfPs",
-        "Image_path": "../../assets/sample-song-image.jpg",
-        "album_id": "1",
+        "judul": "No Song Found",
+        "penyanyi": "Unknown",
+        "tanggal_terbit": "2000-01-01",
+        "genre": "Unkonwn",
+        "duration": "0",
+        "audio_path": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        "image_path": "https://www.alfaromeo.it/content/dam/moc/common/404-error/mobile/mobile_404.png",
+        "album_id": "0",
     },
-    {
-        "Judul": "Anti fragile",
-        "Penyanyi": "Le Sserafim",
-        "Tanggal_terbit": "10/17/2022",
-        "Genre": "Pop",
-        "Duration": "232",
-        "Audio_path": "https://www.youtube.com/watch?v=pyf8cbqyfPs",
-        "Image_path": "../../assets/sample-song-image.jpg",
-        "album_id": "1",
-    },
-    {
-        "Judul": "Anti fragile",
-        "Penyanyi": "Le Sserafim",
-        "Tanggal_terbit": "10/17/2022",
-        "Genre": "Pop",
-        "Duration": "232",
-        "Audio_path": "https://www.youtube.com/watch?v=pyf8cbqyfPs",
-        "Image_path": "../../assets/sample-song-image.jpg",
-        "album_id": "1",
-    },
-    {
-        "Judul": "Anti fragile",
-        "Penyanyi": "Le Sserafim",
-        "Tanggal_terbit": "10/17/2022",
-        "Genre": "Pop",
-        "Duration": "232",
-        "Audio_path": "https://www.youtube.com/watch?v=pyf8cbqyfPs",
-        "Image_path": "../../assets/Spotify_Logo_CMYK_Green.png",
-        "album_id": "1",
-    },
-    {
-        "Judul": "Anti fragile",
-        "Penyanyi": "Le Sserafim",
-        "Tanggal_terbit": "10/17/2022",
-        "Genre": "Pop",
-        "Duration": "232",
-        "Audio_path": "https://www.youtube.com/watch?v=pyf8cbqyfPs",
-        "Image_path": "../../assets/Spotify_Logo_CMYK_Green.png",
-        "album_id": "1",
-    },
-    {
-        "Judul": "Anti fragile",
-        "Penyanyi": "Le Sserafim",
-        "Tanggal_terbit": "10/17/2022",
-        "Genre": "Pop",
-        "Duration": "232",
-        "Audio_path": "https://www.youtube.com/watch?v=pyf8cbqyfPs",
-        "Image_path": "../../assets/Spotify_Logo_CMYK_Green.png",
-        "album_id": "1",
-    },
-    {
-        "Judul": "Anti fragile",
-        "Penyanyi": "Le Sserafim",
-        "Tanggal_terbit": "10/17/2022",
-        "Genre": "Pop",
-        "Duration": "232",
-        "Audio_path": "https://www.youtube.com/watch?v=pyf8cbqyfPs",
-        "Image_path": "../../assets/Spotify_Logo_CMYK_Green.png",
-        "album_id": "1",
-    },
-]
-
-albumList = [
-    {
-        "album_id": "1",
-        "Judul": "Antifragile",
-        "Penyanyi": "Le Sserafim",
-        "Total_duration": "654",
-        "Image_path": "../../assets/Spotify_Logo_CMYK_Green.png",
-        "Tanggal_terbit": "10/17/2022",
-        "Genre": "Pop",
-    },
-    {
-        "album_id": "2",
-        "Judul": "Antifragile",
-        "Penyanyi": "Le Sserafim",
-        "Total_duration": "654",
-        "Image_path": "../../assets/Spotify_Logo_CMYK_Green.png",
-        "Tanggal_terbit": "10/17/2022",
-        "Genre": "Pop",
-    },
-    {
-        "album_id": "3",
-        "Judul": "Antifragile",
-        "Penyanyi": "Le Sserafim",
-        "Total_duration": "654",
-        "Image_path": "../../assets/Spotify_Logo_CMYK_Green.png",
-        "Tanggal_terbit": "10/17/2022",
-        "Genre": "Pop",
-    },
-    {
-        "album_id": "4",
-        "Judul": "Antifragile",
-        "Penyanyi": "Le Sserafim",
-        "Total_duration": "654",
-        "Image_path": "../../assets/Spotify_Logo_CMYK_Green.png",
-        "Tanggal_terbit": "10/17/2022",
-        "Genre": "Pop",
-    },
-    {
-        "album_id": "5",
-        "Judul": "Antifragile",
-        "Penyanyi": "Le Sserafim",
-        "Total_duration": "654",
-        "Image_path": "../../assets/sample-song-image.jpg",
-        "Tanggal_terbit": "10/17/2022",
-        "Genre": "Pop",
-    },
-    {
-        "album_id": "6",
-        "Judul": "Antifragile",
-        "Penyanyi": "Le Sserafim",
-        "Total_duration": "654",
-        "Image_path": "../../assets/sample-song-image.jpg",
-        "Tanggal_terbit": "10/17/2022",
-        "Genre": "Pop",
-    },
-    {
-        "album_id": "7",
-        "Judul": "Antifragile",
-        "Penyanyi": "Le Sserafim",
-        "Total_duration": "654",
-        "Image_path": "../../assets/sample-song-image.jpg",
-        "Tanggal_terbit": "10/17/2022",
-        "Genre": "Pop",
-    },
-]
+];
+albumNotFound=[{
+    "album_id": "0",
+    "judul": "No Album Found",
+    "penyanyi": "Unknown",
+    "total_duration": "0",
+    "image_path": "https://www.alfaromeo.it/content/dam/moc/common/404-error/mobile/mobile_404.png",
+    "tanggal_terbit": "2000-01-01",
+    "genre": "Unkonwn",
+}];
 
 filterPop = document.getElementById("filterPop");
 filterRock = document.getElementById("filterRock");
