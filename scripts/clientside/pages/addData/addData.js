@@ -335,10 +335,10 @@ function addsong() {
         if(this.readyState==4 && this.status==200){
             let res = JSON.parse(this.responseText);
             if(res['status']){
-                alert("edit  success");
+                alert("song sucessfully added");
             }
             else{
-                alert("edit failed");
+                alert("failed to add song");
             }
             //TODO: Refresh songs and albums after edit
         }
@@ -370,7 +370,7 @@ function addsong() {
             "genre":genre,
             "duration":document.getElementById("durationas").value,
             "audio_path":document.getElementById("audiouploadas").value,
-            "image_path":image_path,
+            "image_path":"image_path",
             "album_id":document.getElementById("albumidas").value,
             "lyrics":lyrics,
         };

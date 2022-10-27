@@ -14,7 +14,11 @@ class Song
 
     public function addSong($judul, $penyanyi, $tanggal_terbit, $genre, $duration, $audio_path, $image_path, $album_id, $lyric)
     {
-        return $this->db->startTransaction();
+        try {
+            $this->db->startTransaction();
+        }catch (\Throwable $th) {
+            return false;
+        }
         $this->db->query('INSERT INTO ' . $this->table . ' VALUES (default, :judul, :penyanyi, :tanggal_terbit, :genre, :duration, :audio_path, :image_path, :album_id, :lyric)');
         $this->db->bind(':judul', $judul);
         $this->db->bind(':penyanyi', $penyanyi);
