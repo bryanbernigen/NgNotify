@@ -31,7 +31,6 @@ function getSongs(){
     xhttp.onreadystatechange = function(){
         if(this.readyState==4 && this.status==200){
             songs = JSON.parse(this.responseText);
-            // console.log(songs["data"]);
             appendData(songs['data']);
         }
     };
@@ -46,7 +45,6 @@ function searchSong(){
     xhttp.onreadystatechange = function(){
         if(this.readyState==4 && this.status==200){
             songs = JSON.parse(this.responseText);
-            // console.log(songs["data"]);
             appendData(songs['data']);
         }
     };
@@ -151,7 +149,6 @@ function appendData(data) {
                         <div class="genre">' + data[i].genre + '</div> \
                     </div> \
                 </div>';
-        console.log(data[i]);
     }
     div.style.display = "flex";
     div.style.flexDirection = "row";
@@ -163,12 +160,26 @@ function appendData(data) {
 }
 
 function test(){
-    console.log("test");
     if (localStorage.getItem("test") === null) {
         localStorage.setItem("test", 1);
     }
     else {
         localStorage.test = Number(localStorage.test) + 1;
     }
-    console.log(localStorage.test);
 }
+
+function searchSong(){
+    query = document.getElementById("querysong").value;
+    window.location.href = "http://localhost:8080/pages/searchsortfilter/searchsortfilter.html?query=" + query;
+}
+
+document.getElementById("querysong")
+    .addEventListener("keyup", function(event) {
+    console.log("searching");
+    event.preventDefault();
+    // If the user presses the "Enter" key on the keyboard
+    if (event.keyCode == 13) {
+      // Trigger the button element with a click
+      document.getElementById("songqueryimg").click();
+    }
+  });

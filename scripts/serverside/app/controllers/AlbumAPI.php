@@ -79,4 +79,37 @@ class AlbumAPI extends Controller
             json_response_fail('ALBUM_NOT_FOUND');
         }
     }
+
+    public function queryAlbum($page = 1, $limit_page = 10)
+    {
+        if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+            return json_response_fail(METHOD_NOT_ALLOWED);
+        }
+        $query = NULL;
+        $order_by_year = NULL;
+        $filter_genre = NULL;
+        $order_by_title = 'ASC';
+        $page = (int) $page - 1;
+        if (isset($_POST['order_by_year'])) {
+            $order_by_year = $_POST['order_by_year'];
+        }
+        if (isset($_POST['filter_genre'])) {
+            $filter_genre = $_POST['filter_genre'];
+        }
+        if (isset($_POST['query'])) {
+            $query = $_POST['query'];
+        }
+        if (isset($_POST['order_by_title'])) {
+            $order_by_title = $_POST['order_by_title'];
+        }
+        $res = $this->model('Album')->queryAlbum($query, $order_by_year, $order_by_title, $filter_genre);
+        $total = count($res);
+        $res = array_slice($res, $page * $limit_page, $limit_page);
+        if ($res) {
+            json_response_success(array("albums"=>$res, "pages"=>ceil($total/$limit_page)));
+        } else {
+            json_response_fail(SONG_NOT_FOUND);
+        }
+    }
+
 }

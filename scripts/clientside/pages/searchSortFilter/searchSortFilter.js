@@ -1,3 +1,67 @@
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+var query = urlParams.get('query');
+var order_by_title = null;
+var order_by_year = null;
+var filter_genre = null;
+
+window.onload = function() {
+    selectSong();
+    selectAlbum();
+}
+
+function selectAlbum(){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function(){
+        if(this.readyState==4 && this.status==200){
+            let res = JSON.parse(this.responseText);
+            if(res['status']){
+
+                appendData(res['data']['albums'], "queryResultAlbum");
+            }
+            else{
+                alert("failed to add album");
+            }
+        }
+    };
+
+    let data = {
+        "query" : query,
+        "order_by_year": order_by_year,
+        "filter_genre": filter_genre,
+        "order_by_title": order_by_title,
+    };
+    xhttp.open("POST","http://localhost:8000/api/albumapi/queryalbum/1",true);
+    xhttp.setRequestHeader("Accept", "application/json");
+    xhttp.setRequestHeader("Content-Type", "application/json");
+    xhttp.withCredentials = true;
+    xhttp.send(JSON.stringify(data)); 
+}
+
+function selectSong(){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function(){
+        if(this.readyState==4 && this.status==200){
+            let res = JSON.parse(this.responseText);
+            if(res['status']){
+                appendData(res['data']['songs'], "queryResultSong");
+            }
+        }
+    };
+    let data = {
+        "query" : query,
+        "order_by_year": order_by_year,
+        "filter_genre": filter_genre,
+        "order_by_title": order_by_title,
+    };
+    xhttp.open("POST","http://localhost:8000/api/songapi/querysong/1",true);
+    xhttp.setRequestHeader("Accept", "application/json");
+    xhttp.setRequestHeader("Content-Type", "application/json");
+    xhttp.withCredentials = true;
+    xhttp.send(JSON.stringify(data)); 
+}
+
+
 songList = [
     {
         "Judul": "Anti fragile",
@@ -158,11 +222,11 @@ function appendData(data, target) {
             data[i].image_path = "../../assets/basicimage.jpg";
         }
         div.innerHTML += '<div class="card"> \
-                    <img src="' + data[i].Image_path + '" class="cardImage"> \
+                    <img src="' + data[i].image_path + '" class="cardImage"> \
                     <div class="songTitle">' + data[i].judul + '</div> \
                     <div class="singer">' + data[i].penyanyi + '</div> \
                     <div class="dateGenre"> \
-                        <div class="date">' + data[i].Tanggal_terbit + '</div> \
+                        <div class="date">' + data[i].tanggal_terbit + '</div> \
                         <div class="genre">' + data[i].genre + '</div> \
                     </div> \
                 </div>';
@@ -208,10 +272,7 @@ sortZtoA.addEventListener("click", function () {
     appendData(dataSong, "queryResultSong");
 });
 
-window.onload = function() {
-    appendData(albumList, "queryResultAlbum");
-    appendData(songList, "queryResultSong");
-}
+
 
 // function searchFilter() {
 //     event.preventDefault();
