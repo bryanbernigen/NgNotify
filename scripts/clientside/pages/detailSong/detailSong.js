@@ -29,7 +29,7 @@ songNotFound=[
         "tanggal_terbit": "2000-01-01",
         "genre": "Unkonwn",
         "duration": "0",
-        "audio_path": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        "audio_path": "https://docs.google.com/uc?export=download&id=1rjLV5Ogyz4AF6OGlmj46jDc6KYFpal-c",
         "image_path": "https://www.alfaromeo.it/content/dam/moc/common/404-error/mobile/mobile_404.png",
         "album_id": "0",
     },
@@ -126,7 +126,10 @@ function playMusic(num) {
     
     var div8 = document.getElementById("addAudio");
     var div9 = document.getElementById("sourceAudio");
-    div9.src = songDetail[num]["audio_path"];
+    div9.src = "https://docs.google.com/uc?export=download&id=" + songDetail[num]["audio_path"];
+    // https://drive.google.com/file/d/1rjLV5Ogyz4AF6OGlmj46jDc6KYFpal-c/view?usp=sharing
+    // yang dimasukkan bagian ID nya aja (setelah d/ dan sebelum /view)
+    // div9.src = songDetail[num]["audio_path"];
     div8.load();
 
     timelinePassed.innerHTML = "0:00";

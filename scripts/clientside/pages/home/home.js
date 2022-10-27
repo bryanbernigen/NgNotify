@@ -3,6 +3,7 @@ var songs
 function initPage(){
     getSongs();
     infoNavbar();
+    putNavbar();
 }
 
 function loginout(){
@@ -157,7 +158,7 @@ function appendData(data) {
         if(data[i].image_path == null){
             data[i].image_path = "../../assets/basicimage.jpg";
         }
-        div.innerHTML += '<div class="card" onclick="test()"> \
+        div.innerHTML += '<div class="card" id="'+ data[i].song_id+'" onclick="rerouteToDetailSong(this.id)"> \
                     <img src="' + data[i].image_path + '" style="width: 11.5vw; height: 11.5vw; object-fit: cover;" class="cardImage" /> \
                     <div class="songTitle">' + data[i].judul + '</div> \
                     <div class="singer">' + data[i].penyanyi + '</div> \
@@ -200,3 +201,7 @@ document.getElementById("querysong")
       document.getElementById("songqueryimg").click();
     }
   });
+
+function rerouteToDetailSong(id){
+    window.location.href = "http://localhost:8080/pages/detailsong/detailsong.html?song_id=" + id;
+}

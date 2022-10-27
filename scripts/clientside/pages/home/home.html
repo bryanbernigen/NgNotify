@@ -14,7 +14,7 @@
     </head>
     <body onload="initPage()">
         <nav>
-            <div class="navCt">
+            <div class="navCt" id="navCt">
                 <div class="navLeft">
                     <img class="navLogo" src="../../assets/Spotify_Logo_RGB_White.png" onclick="redirectToHome()"/>
                     <div class="navSearch">
@@ -29,6 +29,35 @@
                     </div>
                     <div class="navItems">
                         <img class="navIcon" src="../../assets/icons8-music-library-96.png"/>
+                        <span class="navText" onclick="redirectToAlbum()">Albums</span>
+                    </div>
+                    <div class="navCollapse">
+                        <div class="navItems">
+                            <img class="navIcon" src="../../assets/icons8-user-100.png"/>
+                            <span class="navText" id="uname"></span>
+                            <i class="fa fa-caret-down"></i>
+                        </div>
+                        <div class="navDrop">
+                            <div class="navChild" onclick="loginout()" id="loginout">Log out</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="navCtAdmin" id="navCtAdmin">
+                <div class="navLeft">
+                    <img class="navLogo" src="../../assets/Spotify_Logo_RGB_White.png"/>
+                </div>
+                <div class="navRight">
+                    <div class="navItems">
+                        <img class="navIcon" src="../../assets/icons8-add-song-96.png"/>
+                        <span class="navText" onclick="redirectToAddSongAlbum()">Add Song</span>
+                    </div>
+                    <div class="navItems">
+                        <img class="navIcon" src="../../assets/icons8-music-library-96.png"/>
+                        <span class="navText" onclick="redirectToAddSongAlbum()">Add Album</span>
+                    </div>
+                    <div class="navItems">
+                        <img class="navIcon" src="../../assets/icons8-playlist-96.png"/>
                         <span class="navText" onclick="redirectToAlbum()">Albums</span>
                     </div>
                     <div class="navCollapse">
