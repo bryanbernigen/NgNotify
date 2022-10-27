@@ -20,9 +20,9 @@
             </div>
             <div class="sidebarMiddleWrap">
                 <div class="sidebarBottom">
-                    <div class="sidebarItems">
+                    <div class="sidebarItems" onclick="redirectToHome()">
                         <img class="sidebarIcon" src="../../assets/icons8-home-144.png"/>
-                        <span class="sidebarText" onclick="redirectToHome()">Home</span>
+                        <span class="sidebarText">Home</span>
                     </div>
                     <div class="sidebarItems" onclick="redirectToSearchSortFilter()">
                         <img class="sidebarIcon" src="../../assets/icons8-search-120.png"/>
@@ -51,14 +51,14 @@
         <div class="ct">
             <nav>
                 <div class="navCt" id="navCt">
-                    <div class="navLeft" onclick="history.back()">
-                        <img src="../../assets/icons8-chevron-left-96.png" />
+                    <div class="navLeft" >
+                        <img src="../../assets/icons8-chevron-left-96.png" onclick="redirectToHome()" />
                     </div>
                     <div class="navRight">
                         <div class="navCollapse">
                             <div class="navItems">
                                 <img class="navIcon" src="../../assets/icons8-user-100.png"/>
-                                <span class="navText" id="uname"></span>
+                                <span class="navText" id="unameuwu"></span>
                                 <i class="fa fa-caret-down"></i>
                             </div>
                             <div class="navDrop">
@@ -68,21 +68,25 @@
                     </div>
                 </div>
                 <div class="navCtAdmin" id="navCtAdmin">
-                    <div class="navLeft" onclick="history.back()">
-                        <img src="../../assets/icons8-chevron-left-96.png" />
+                    <div class="navLeft" >
+                        <img src="../../assets/icons8-chevron-left-96.png" onclick="redirectToHome()" />
                     </div>
                     <div class="navRight">
-                        <div class="navItems">
+                        <div class="navItems" onclick="redirectToAddSongAlbum()">
                             <img class="navIcon" src="../../assets/icons8-add-song-96.png"/>
-                            <span class="navText" onclick="redirectToAddSongAlbum()">Add Song</span>
+                            <span class="navText">Add Song</span>
                         </div>
-                        <div class="navItems">
+                        <div class="navItems" onclick="redirectToAddSongAlbum()">
                             <img class="navIcon" src="../../assets/icons8-music-library-96.png"/>
-                            <span class="navText" onclick="redirectToAddSongAlbum()">Add Album</span>
+                            <span class="navText">Add Album</span>
                         </div>
-                        <div class="navItems">
+                        <div class="navItems" onclick="redirectToAlbum()">
                             <img class="navIcon" src="../../assets/icons8-playlist-96.png"/>
-                            <span class="navText" onclick="redirectToAlbum()">Albums</span>
+                            <span class="navText">Albums</span>
+                        </div>
+                        <div class="navItems" onclick="redirectToListUsers()">
+                            <img class="navIcon" src="../../assets/icons8-select-users-96.png"/>
+                            <span class="navText">Users</span>
                         </div>
                         <div class="navCollapse">
                             <div class="navItems">
@@ -91,7 +95,7 @@
                                 <i class="fa fa-caret-down"></i>
                             </div>
                             <div class="navDrop">
-                                <div class="navChild" onclick="loginout()" id="loginout">Log out</div>
+                                <div class="navChild" id="loginout" onclick="loginout()">Log out</div>
                             </div>
                         </div>
                     </div>

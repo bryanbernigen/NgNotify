@@ -17,25 +17,33 @@
                 <img class="headerImg" src="../../assets/Spotify_Logo_RGB_Black.png"/>
             </div>
             <div class="registerPrompt">Sign up for free to start listening.</div>
+            <div class="failPrompt" id="failPrompt"></div>
             <div class="registerFormCt">
                 <form method="POST">
                     <label class="registerFormLabel" for="email">What's your email?</label><br>
-                    <input class="invalidRegisterFormInput" type="email" id="email" name="email" placeholder="Enter your email." oninput="checkEmail()"><br>
-                    <!-- <input class="registerFormInput" type="text" id="email" name="email" placeholder="Enter your email."><br> -->
-                    <div class="invalidInput">
-                        <img src="../../assets/icons8-warning-67-red.png" />
-                        <div class="incorrectUnamePass">Incorrect username or password.</div>
+                    <input class="registerFormInput" type="email" id="email" name="email" placeholder="Enter your email." oninput="checkEmail()"><br>
+                    <div class="invalidInput" id="invalidInput">
+                        <img src="../../assets/icons8-warning-67-red.png" id="invalid1"/>
+                        <div class="incorrectUnamePass" id="incorrect1">Incorrect username or password.</div>
                     </div>
-                    <a class="registerFormLink" href="">Use phone number instead.</a><br><br><br>
+                    <a class="registerFormLink" href="">Use phone number instead.</a><br><br>
 
                     <label class="registerFormLabel" for="emailconfirm">Confirm your email</label><br>
-                    <input class="registerFormInput" type="email" id="emailconfirm" name="emailconfirm" placeholder="Enter your email again." oninput="revalidateEmail()"><br><br>
-                    
+                    <input class="registerFormInput" type="email" id="emailconfirm" name="emailconfirm" placeholder="Enter your email again." oninput="revalidateEmail()"><br>
+                    <div class="invalidInput" id="invalidInput">
+                        <img src="../../assets/icons8-warning-67-red.png" id="invalid2"/>
+                        <div class="incorrectUnamePass" id="incorrect2">Confirm your correct email.</div>
+                    </div><br>
+
                     <label class="registerFormLabel" for="password">Create a Password</label><br>
                     <input class="registerFormInput" type="password" id="password" name="password" placeholder="Create a Password." required><br><br>
 
                     <label class="registerFormLabel" for="uname">What should we call you?</label><br>
                     <input class="registerFormInput" type="text" id="uname" name="uname" placeholder="Enter a profile name." oninput="checkUsername()"><br>
+                    <div class="invalidInput" id="invalidInput">
+                        <img src="../../assets/icons8-warning-67-red.png" id="invalid3"/>
+                        <div class="incorrectUnamePass" id="incorrect3">Username inavailable.</div>
+                    </div>
                     <div class="registerFormLink">This appears on your profile.</div><br><br><br>
 
                     <label class="registerFormLabel" for="DOB">What's your date of birth</label><br>

@@ -28,6 +28,28 @@
     margin-bottom: 20px;
 }
 
+.loginFail {
+    font-family: "CircularStd-Book";
+    font-size: 14px;
+    color: white;
+    background-color: red;
+    width: 100%;
+    padding: 15px 0;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.loginFail img {
+    width: 20px;
+    height: 20px;
+    margin-right: 15px;
+}
+
 .registerFormCt {
     width: 450px;
     display: flex;
@@ -53,6 +75,11 @@
 .invalidInput img {
     width: 14px;
     height: 14px;
+    display: none;
+}
+
+.incorrectUnamePass {
+    display: none;
 }
 
 .registerFormLabel {

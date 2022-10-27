@@ -1,23 +1,55 @@
 var songs;
 var albums;
 var current_song_id;
-audioInput = document.getElementById("audiouploades");
 
 window.onload = function() {
-    infoNavbar();
+    infoNavbarplus();
     getSongs();
     getAlbums();
     collapse();
 }
 
-function autoDataEditDuration() {
-    let audioSrc = "https://docs.google.com/uc?export=download&id=" + document.getElementById("audiouploades").value;
-    let audio = document.createElement("audio");
-    audio.src = audioSrc;
-    let audioDuration = audio.duration;
+function infoNavbarplus(){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function(){
+        if(this.readyState==4 && this.status==200){
+            let res = JSON.parse(this.responseText);
+            uname = document.getElementById("uname");
+            if(res['status']){
+                if(res['data'].isAdmin){
+                    document.getElementById("uname").innerHTML = res['data'].username;
+                }else{
+                    window.location = "http://localhost:8080/pages/home/home.html";
+                }
+                putNavbar(res['data'].isAdmin);
+            }
+            else {
+                window.location = "http://localhost:8080/pages/home/home.html";
+            }
+        }
+    };
+    xhttp.open("GET","http://localhost:8000/api/auth/info",true);
+    xhttp.setRequestHeader("Accept", "application/json");
+    xhttp.withCredentials = true;
+    xhttp.send();
 }
 
-audioInput.addEventListener('keyup', autoDataEditDuration);
+function autoDataEditDuration(location) {
+    console.log('a');
+    var source = document.getElementById("sourceAudio");
+    var path = document.getElementById("audioupload"+location);
+    try {
+        source.src = "https://docs.google.com/uc?export=download&id=" + path.value.match(/(\/d\/)([-a-zA-Z0-9]+)(\/)/)[2];
+        audio = document.getElementById("addAudio");  
+    } catch (error) {
+        document.getElementById("duration"+location).value = null;
+    }
+    audio.load();
+    audio.onloadedmetadata = function() {
+        document.getElementById("duration"+location).value = parseInt(audio.duration);
+    }
+}
+
 
 function loginout() {
     if (document.getElementById("loginout").innerHTML == "Login") {
@@ -129,7 +161,6 @@ function loadImage(from, showWhere){
 // }
 
 function autoDataEditAlbum(){
-    console.log('masuk auto data edit album');
     album_id = document.getElementById("albumidea").value;
     for (let index = 0; index < albums.length; index++) {
         if(albums[index].album_id == album_id){
@@ -191,7 +222,6 @@ function editAlbum() {
             "tanggal_terbit":document.getElementById("tanggalterbitea").value,
             "genre":genre,
         };
-        console.log(data);
         xhttp.open("POST","http://localhost:8000/api/albumapi/editalbum",true);
         xhttp.setRequestHeader("Accept", "application/json");
         xhttp.setRequestHeader("Content-Type", "application/json");
@@ -237,7 +267,6 @@ function addAlbum() {
             "tanggal_terbit":document.getElementById("tanggalterbitaa").value,
             "genre":genre,
         };
-        console.log(data);
         xhttp.open("POST","http://localhost:8000/api/albumapi/addalbum",true);
         xhttp.setRequestHeader("Accept", "application/json");
         xhttp.setRequestHeader("Content-Type", "application/json");
@@ -248,7 +277,6 @@ function addAlbum() {
 }
 
 function autoDataDeleteAlbum(){
-    console.log('masuk auto data delete album');
     album_id = document.getElementById("albumidda").value;
     for (let index = 0; index < albums.length; index++) {
         if(albums[index].album_id == album_id){
@@ -286,9 +314,6 @@ function deleteAlbum() {
     let data = {
         "album_id": document.getElementById("albumidda").value,
     };
-    if(data.album_id==3){
-        console.log('album_id 3');
-    }
     xhttp.open("POST","http://localhost:8000/api/albumapi/deletealbum",true);
     xhttp.setRequestHeader("Accept", "application/json");
     xhttp.setRequestHeader("Content-Type", "application/json");
@@ -298,9 +323,7 @@ function deleteAlbum() {
 }
 
 function autoDataEditSong(){
-    console.log('masuk auto data edit album');
     song_id = document.getElementById("songides").value;
-    console.log(song_id);
     current_song_id = song_id;
     for (let index = 0; index < songs.length; index++) {
         if(songs[index].song_id == song_id){
@@ -347,13 +370,6 @@ function editSong() {
     if(document.getElementById("imageuploades").value != ""){
         image_path = document.getElementById("imageuploades").value;
     }
-    if(document.getElementById("audiouploades").value != "") {
-        let audioSrc = "https://docs.google.com/uc?export=download&id=" + document.getElementById("audiouploades").value;
-        let audio = document.createElement("audio");
-        audio.src = audioSrc;
-        let audioDuration = audio.duration;
-        document.getElementById("durationes").value = audioDuration;
-    }
     if(document.getElementById("lyrices").value != ""){
         lyrics = document.getElementById("lyrices").value.split("\n");
     }
@@ -371,13 +387,12 @@ function editSong() {
             "penyanyi":penyanyi,
             "tanggal_terbit":document.getElementById("tanggalterbites").value,
             "genre":genre,
-            "duration":audioDuration,
+            "duration":document.getElementById("durationes").value,
             "audio_path":document.getElementById("audiouploades").value,
             "image_path":image_path,
             "album_id":document.getElementById("albumides").value,
             "lyric":lyrics,
         };
-        console.log(data);
         xhttp.open("POST","http://localhost:8000/api/songapi/editsong",true);
         xhttp.setRequestHeader("Accept", "application/json");
         xhttp.setRequestHeader("Content-Type", "application/json");
@@ -389,7 +404,6 @@ function editSong() {
 
 
 function addsong() {
-    console.log("test");
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function(){
         if(this.readyState==4 && this.status==200){
@@ -425,15 +439,12 @@ function addsong() {
         lyrics = document.getElementById("lyricas").value.split("\n");
     }
     if(document.getElementById("audiouploadas").value != "") {
-        let audioSrc = "https://docs.google.com/uc?export=download&id=" + document.getElementById("audiouploades").value;
-        let audio = document.createElement("audio");
-        audio.src = audioSrc;
-        let audioDuration = audio.duration;
-        document.getElementById("durationas").value = audioDuration;
+        
     }
     if(document.getElementById("songtitleas").value == "" 
     || document.getElementById("tanggalterbitas").value == ""
     || document.getElementById("audiouploadas").value == ""
+    || document.getElementById("durationas").value==""
     || document.getElementById("albumidas").value == ""){
         alert("Please fill all the fields");
     }else{
@@ -442,13 +453,12 @@ function addsong() {
             "penyanyi":penyanyi,
             "tanggal_terbit":document.getElementById("tanggalterbitas").value,
             "genre":genre,
-            "duration":audioDuration,
+            "duration":document.getElementById("durationas").value,
             "audio_path":document.getElementById("audiouploadas").value,
             "image_path":image_path,
             "album_id":document.getElementById("albumidas").value,
             "lyric":lyrics,
         };
-        console.log(data);
         xhttp.open("POST","http://localhost:8000/api/songapi/addsong",true);
         xhttp.setRequestHeader("Accept", "application/json");
         xhttp.setRequestHeader("Content-Type", "application/json");
@@ -460,7 +470,6 @@ function addsong() {
 
 function autoDataDeleteSong(){
     song_id = document.getElementById("songidds").value;
-    console.log(song_id);
     for (let index = 0; index < songs.length; index++) {
         if(songs[index].song_id == song_id){
             choosen_song = songs[index];

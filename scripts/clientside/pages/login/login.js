@@ -9,10 +9,20 @@ function login(){
                     console.log("login success");
                     const queryString = window.location.search;
                     const urlParams = new URLSearchParams(queryString);
-                    let page_type = urlParams.get('page_type')
-                    let album_id = urlParams.get('album_id')
+                    let page_type = urlParams.get('page_type');
+                    if(page_type==null){
+                        page_type = '';
+                    }
+                    let album_id = urlParams.get('album_id');
+                    if(album_id==null){
+                        album_id = '';
+                    }
+                    let song_id = urlParams.get('song_id');
+                    if(song_id==null){
+                        song_id='';
+                    }
                     if(page_type){
-                        window.location = "http://localhost:8080/pages/" + page_type+"/" + page_type + ".html?album_id="+album_id;
+                        window.location = "http://localhost:8080/pages/" + page_type+"/" + page_type + ".html?album_id="+album_id+"&song_id="+song_id;
                     }
                     else{
                         window.location = "http://localhost:8080/pages/home/home.html";

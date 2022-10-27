@@ -95,7 +95,9 @@ class AlbumAPI extends Controller
             $order_by_year = $_POST['order_by_year'];
         }
         if (isset($_POST['filter_genre'])) {
+            if($_POST['filter_genre']!='None'){
             $filter_genre = $_POST['filter_genre'];
+            }
         }
         if (isset($_POST['query'])) {
             $query = $_POST['query'];

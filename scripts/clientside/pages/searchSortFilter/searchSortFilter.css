@@ -29,7 +29,11 @@ body {
 }
 
 .sidebarLogo {
-    width: 15vw;
+    width: 12.5vw;
+}
+
+.sidebarLogo:hover {
+    cursor: pointer;
 }
 
 .sidebarBottom {
@@ -55,6 +59,10 @@ body {
     justify-content: center;
     align-items: center;
     column-gap: 15px;
+}
+
+.sidebarItems:hover {
+    cursor: pointer;
 }
 
 .spc {
@@ -108,6 +116,7 @@ hr {
 
 .navLeft img:hover {
     background-color: #6c6c6c;
+    cursor: pointer;
 }
 
 .navSearch {
@@ -176,6 +185,7 @@ input {
 
 .navItems:hover {
     background-color: #535353;
+    cursor: pointer;
 }
 
 .navIcon {
@@ -226,6 +236,7 @@ input {
 .navDrop:hover {
     background-color: #282828;
     display: block;
+    cursor: pointer;
 }
 
 .navCollapse:hover .navDrop {

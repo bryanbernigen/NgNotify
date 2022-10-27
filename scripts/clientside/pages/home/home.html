@@ -15,10 +15,10 @@
     <body onload="initPage()">
         <nav>
             <div class="navCt" id="navCt">
-                <div class="navLeft" onclick="history.back()">
+                <div class="navLeft">
                     <img class="navLogo" src="../../assets/Spotify_Logo_RGB_White.png" onclick="redirectToHome()"/>
                     <div class="navSearch">
-                        <img class="navSearchIcon" onclick="searchSong()" id="songqueryimg" src="../../assets/icons8-search-120-black.png"/>
+                        <img class="navSearchIcon" id="songqueryimg" src="../../assets/icons8-search-120-black.png" onclick="searchSong()"/>
                         <input class="navSearchInput" type="text" id="querysong" placeholder="Search for artists, songs, or release year" >
                     </div>
                 </div>
@@ -27,14 +27,14 @@
                         <img class="navIcon" src="../../assets/icons8-home-144.png"/>
                         <span class="navText">Home</span>
                     </div>
-                    <div class="navItems">
+                    <div class="navItems" onclick="redirectToAlbum()">
                         <img class="navIcon" src="../../assets/icons8-music-library-96.png"/>
-                        <span class="navText" onclick="redirectToAlbum()">Albums</span>
+                        <span class="navText">Albums</span>
                     </div>
                     <div class="navCollapse">
                         <div class="navItems">
                             <img class="navIcon" src="../../assets/icons8-user-100.png"/>
-                            <span class="navText" id="uname"></span>
+                            <span class="navText" id="unameuwu"></span>
                             <i class="fa fa-caret-down"></i>
                         </div>
                         <div class="navDrop">
@@ -44,21 +44,29 @@
                 </div>
             </div>
             <div class="navCtAdmin" id="navCtAdmin">
-                <div class="navLeft" onclick="history.back()">
-                    <img class="navLogo" src="../../assets/Spotify_Logo_RGB_White.png"/>
+                <div class="navLeft">
+                    <img class="navLogo" src="../../assets/Spotify_Logo_RGB_White.png" onclick="redirectToHome()"/>
+                    <div class="navSearch">
+                        <img class="navSearchIcon" id="songqueryimg" src="../../assets/icons8-search-120-black.png" onclick="searchSong()"/>
+                        <input class="navSearchInput" type="text" id="querysong" placeholder="Search for artists, songs, or release year" >
+                    </div>
                 </div>
                 <div class="navRight">
-                    <div class="navItems">
+                    <div class="navItems" onclick="redirectToAddSongAlbum()">
                         <img class="navIcon" src="../../assets/icons8-add-song-96.png"/>
-                        <span class="navText" onclick="redirectToAddSongAlbum()">Add Song</span>
+                        <span class="navText">Add Song</span>
                     </div>
-                    <div class="navItems">
+                    <div class="navItems" onclick="redirectToAddSongAlbum()">
                         <img class="navIcon" src="../../assets/icons8-music-library-96.png"/>
-                        <span class="navText" onclick="redirectToAddSongAlbum()">Add Album</span>
+                        <span class="navText">Add Album</span>
                     </div>
-                    <div class="navItems">
+                    <div class="navItems" onclick="redirectToAlbum()">
                         <img class="navIcon" src="../../assets/icons8-playlist-96.png"/>
-                        <span class="navText" onclick="redirectToAlbum()">Albums</span>
+                        <span class="navText">Albums</span>
+                    </div>
+                    <div class="navItems" onclick="redirectToListUsers()">
+                        <img class="navIcon" src="../../assets/icons8-select-users-96.png"/>
+                        <span class="navText">Users</span>
                     </div>
                     <div class="navCollapse">
                         <div class="navItems">

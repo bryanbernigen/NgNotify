@@ -1,8 +1,10 @@
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 var song_id = urlParams.get('song_id');
+var album_id;
 var song = null;
-
+var updated = false;
+var restricted = true;
 
 function getSong(){
     var xhttp = new XMLHttpRequest();
@@ -11,6 +13,7 @@ function getSong(){
             songs = JSON.parse(this.responseText);
             if(songs["status"]){
                 song = songs["data"];
+                album_id = song.album_id;
                 song.audio_path = song.audio_path.match(/(\/d\/)([-a-zA-Z0-9]+)(\/)/)[2];
                 
                 // console.log(songs["data"]["audio_path"]);
@@ -26,6 +29,40 @@ function getSong(){
     xhttp.withCredentials = true;
     xhttp.send();
 }
+
+function infoNavbarAdded(){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function(){
+        if(this.readyState==4 && this.status==200){
+            let res = JSON.parse(this.responseText);
+            if(res['status']){
+                restricted = false;
+                if(res['data'].isAdmin){
+                    document.getElementById("uname").innerHTML = res['data'].username;
+                }else{
+                    document.getElementById("unameuwu").innerHTML = res['data'].username;
+                }
+                putNavbar(res['data'].isAdmin);
+            }
+            else {
+                uname.innerHTML = "Guest";
+                document.getElementById("loginout").innerHTML = "Login";
+                putNavbar(false);
+                checkRestricted();
+            }
+        }
+    };
+    xhttp.open("GET","http://localhost:8000/api/auth/info",true);
+    xhttp.setRequestHeader("Accept", "application/json");
+    xhttp.withCredentials = true;
+    xhttp.send();
+}
+
+function rerouteToDetailAlbum(){
+    window.location.href = "http://localhost:8080/pages/detailAlbum/detailAlbum.html?album_id="+album_id;
+
+}
+
 
 songNotFound=[
     {
@@ -52,7 +89,7 @@ repeatButton = document.getElementById("repeat");
 
 function loginout() {
     if (document.getElementById("loginout").innerHTML == "Login"){
-      window.location.href = "http://localhost:8080/pages/login/login.html?page_type=detailsong&song_id="+song_id;
+      window.location.href = "http://localhost:8080/pages/login/login.html?page_type=detailsong&song_id="+urlParams.get('song_id');
     } else {
       var xhttp = new XMLHttpRequest();
       xhttp.onreadystatechange = function () {
@@ -134,10 +171,13 @@ function playMusic() {
     soundVolume.background = 'linear-gradient(to right, #1ED760 0%, #1ED760 ' + 20 + '%, #6C6C6C ' + 20 + '%, #6C6C6C 100%)';
     soundVolume.value = 20;
 
-    var div10 = document.getElementsByClassName("musicPlayerPoster");
+    var div10 = document.getElementById("musicPlayerPoster");
     for (let i=0; i < div10.length; i++) {
         div10[i].src = song.image_path;
         div10[i].style.width = "5vw";
+        div10[i].style.height= "5vw";
+        div10[i].style.objectFit = "cover";
+        div10[i].href = "http://localhost:8080/pages/detailSong/detailSong.html?song_id="+song_id;
     }
 
     var div11 = document.getElementById("musicPlayerTitle");
@@ -160,6 +200,14 @@ function playMusic() {
 }
 
 function toggleAudioPlay () {
+    console.log(restricted);
+    if (restricted){
+        alert("Daily Free Trial Limit Reached, Login to Continue Listening");
+        return;
+    }
+    if (!updated){
+        updatePlayRestrict();
+    }
     if (audio.paused || audio.played == undefined) {
         audio.play();
         playmusicBt1.className = "fas fa-pause play";
@@ -227,7 +275,7 @@ soundVolume.addEventListener('change', rangeSoundVol);
 repeatButton.addEventListener('click', toggleRepeat);
 
 window.onload = function() {
-    infoNavbar();
+    infoNavbarAdded();
     getSong();
 }
 
@@ -239,4 +287,50 @@ function prevSongDetail(){
 
 function nextSongDetail(){
     window.location.href = "http://localhost:8080/pages/detailsong/detailsong.html?song_id="+(parseInt(song_id)+1);
+}
+
+function checkRestricted(){
+    // current is guest
+    
+    let lastPlayed = localStorage.getItem("lastPlayed");
+    let today = new Date();
+    let daily = localStorage.getItem("dailyPlay");
+    today.setHours(0,0,0,0);
+    // resets if new day
+    if (lastPlayed == null || new Date(lastPlayed) < today){
+        localStorage.setItem("lastPlayed", today);
+        localStorage.setItem("dailyPlay", 0);
+        daily = 0;
+    }
+    if (daily == null || daily < 3){
+        restricted = false;
+    }
+}
+
+function updatePlayRestrict(){
+    updated = true;
+    // current is guest
+    if (document.getElementById("loginout").innerHTML == "Login"){
+        let daily = localStorage.getItem("dailyPlay");
+        let lastPlayed = localStorage.getItem("lastPlayed");
+        let today = new Date(); 
+        daily = parseInt(daily);
+        today.setHours(0,0,0,0);
+        if (lastPlayed == null) {
+            localStorage.setItem("lastPlayed", today);
+        }
+        else if (lastPlayed != today) {
+            localStorage.setItem("lastPlayed", today);
+            localStorage.setItem("dailyPlay", 0);
+            daily = 0;
+        }
+        if(isNaN(daily)) {
+            localStorage.setItem("dailyPlay", 1);
+        } else if (daily < 3) {
+            localStorage.setItem("dailyPlay", daily + 1);
+        } else {
+            alert("You have reached your daily play limit");
+            return;
+        }
+    }
 }
