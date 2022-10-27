@@ -67,7 +67,13 @@ class Song
             $this->db->rollback();
             return false;
         }
-        $this->db->query('UPDATE ' . $this->table . ' SET judul = :judul, penyanyi = :penyanyi, tanggal_terbit = :tanggal_terbit, genre = :genre, duration = :duration, audio_path = :audio_path, image_path = :image_path, album_id = :album_id, lyric = :lyric WHERE song_id = :song_id');
+        if(isset($lyric)){
+            $this->db->query('UPDATE ' . $this->table . ' SET judul = :judul, penyanyi = :penyanyi, tanggal_terbit = :tanggal_terbit, genre = :genre, duration = :duration, audio_path = :audio_path, image_path = :image_path, album_id = :album_id, lyric = :lyric WHERE song_id = :song_id');
+            $this->db->bind(':lyric', $lyric);
+        }
+        else{
+            $this->db->query('UPDATE ' . $this->table . ' SET judul = :judul, penyanyi = :penyanyi, tanggal_terbit = :tanggal_terbit, genre = :genre, duration = :duration, audio_path = :audio_path, image_path = :image_path, album_id = :album_id WHERE song_id = :song_id');
+        }
         $this->db->bind(':song_id', $song_id);
         $this->db->bind(':judul', $judul);
         $this->db->bind(':penyanyi', $penyanyi);
@@ -77,7 +83,6 @@ class Song
         $this->db->bind(':audio_path', $audio_path);
         $this->db->bind(':image_path', $image_path);
         $this->db->bind(':album_id', $album_id);
-        $this->db->bind(':lyric', $lyric);
         try {
             $res = $this->db->execute();
             if(!$res){

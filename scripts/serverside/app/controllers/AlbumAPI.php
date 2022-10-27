@@ -13,9 +13,9 @@ class AlbumAPI extends Controller
         }
         $result = $this->model('Album')->addAlbum($_POST['judul'], $_POST['penyanyi'], $_POST['total_duration'], $_POST['image_path'], $_POST['tanggal_terbit'], $genre);
         if ($result) {
-            echo json_response_success($result);
+            json_response_success($result);
         } else {
-            echo json_response_fail($result);
+            json_response_fail($result);
         }
     }
 
@@ -32,12 +32,13 @@ class AlbumAPI extends Controller
         if(isset($_POST['album_id']) && isset($_POST['judul']) && isset($_POST['penyanyi']) && isset($_POST['total_duration']) && isset($_POST['image_path']) && isset($_POST['tanggal_terbit'])){
             $result = $this->model('Album')->editAlbum($_POST['album_id'], $_POST['judul'], $_POST['penyanyi'], $_POST['total_duration'], $_POST['image_path'], $_POST['tanggal_terbit'], $genre);
             if ($result) {
-                echo json_response_success($result);
+                json_response_success($result);
             } else {
-                echo json_response_fail($result);
+                json_response_fail($result);
             }
+        }else{
+            return json_response_fail(WRONG_API_CALL);
         }
-        return json_response_fail(WRONG_API_CALL);
     }
 
     public function deleteAlbum()
