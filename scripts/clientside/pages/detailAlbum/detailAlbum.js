@@ -22,7 +22,20 @@ function getSongsFromAlbum(album_id, albumDetail){
     xhttp.onreadystatechange = function(){
         if(this.readyState==4 && this.status==200){
             let musicData = JSON.parse(this.responseText);
-            appendData(albumDetail,musicData['data']);
+            if(musicData['status'])
+            {
+                appendData(albumDetail,musicData['data']);
+            }
+            else{
+            songNotFound=[
+                {
+                    "judul": "No Songs Found",
+                    "penyanyi": "Unknown",
+                    "duration": "0",
+                    "audio_path": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+                }]
+            appendData(albumDetail,songNotFound);
+            }
         }
     };
     xhttp.open("GET","http://localhost:8000/api/songapi/getsongsfromalbum?album_id="+album_id,true);
@@ -150,7 +163,7 @@ function appendData(albumDetail, musicData) {
         
         tr.onclick = function() {
             // Redirect detail song page
-            window.location.href = "../detailSong/detailSong.html";
+            window.location.href = "../detailSong/detailSong.html?song_id=" + musicData[i]["song_id"];
         }
 
         table.appendChild(tr);

@@ -31,7 +31,11 @@ function getSongs(){
     xhttp.onreadystatechange = function(){
         if(this.readyState==4 && this.status==200){
             songs = JSON.parse(this.responseText);
-            appendData(songs['data']);
+            if(songs['status']){
+                appendData(songs['data']);
+            }else{
+                appendData(songNotFound);
+            }
         }
     };
     xhttp.open("GET","http://localhost:8000/api/songapi/showallsongs",true);
@@ -53,6 +57,19 @@ function searchSong(){
     xhttp.withCredentials = true;
     xhttp.send();
 }
+
+songNotFound=[
+    {
+        "judul": "No Song Found",
+        "penyanyi": "Unknown",
+        "tanggal_terbit": "2000-01-01",
+        "genre": "Unkonwn",
+        "duration": "0",
+        "audio_path": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        "image_path": "https://www.alfaromeo.it/content/dam/moc/common/404-error/mobile/mobile_404.png",
+        "album_id": "0",
+    },
+];
 
 musicList = [
     {

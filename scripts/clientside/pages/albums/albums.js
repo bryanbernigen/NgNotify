@@ -8,7 +8,11 @@ function getAlbums(){
     xhttp.onreadystatechange = function(){
         if(this.readyState==4 && this.status==200){
             albums = JSON.parse(this.responseText);
-            appendData(albums['data']);
+            if(albums['status']){
+                appendData(albums['data']);
+            }else{
+                appendData(albumNotFound);
+            }
         }
     };
     xhttp.open("GET","http://localhost:8000/api/albumapi/showallalbum",true);
@@ -37,6 +41,16 @@ function loginout() {
       xhttp.send();
     }
 }
+
+albumNotFound=[{
+    "album_id": "0",
+    "judul": "No Album Found",
+    "penyanyi": "Unknown",
+    "total_duration": "0",
+    "image_path": "https://www.alfaromeo.it/content/dam/moc/common/404-error/mobile/mobile_404.png",
+    "tanggal_terbit": "2000-01-01",
+    "genre": "Unkonwn",
+}];
 
 albumList = [
     {

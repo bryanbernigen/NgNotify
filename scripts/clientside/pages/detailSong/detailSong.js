@@ -1,13 +1,50 @@
-songDetail = [
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+var song_id = urlParams.get('song_id');
+var song = null;
+
+
+function getSong(){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function(){
+        if(this.readyState==4 && this.status==200){
+            songs = JSON.parse(this.responseText);
+            if(songs["status"]){
+                appendData([songs["data"]]);
+            }else{
+                appendData(songNotFound);
+            }
+        }
+    };
+    xhttp.open("GET","http://localhost:8000/api/songapi/getsong?song_id="+song_id,true);
+    xhttp.setRequestHeader("Accept", "application/json");
+    xhttp.withCredentials = true;
+    xhttp.send();
+}
+
+songNotFound=[
     {
-        "title": "Nxde",
-        "singer": "(G)-IDLE",
+        "judul": "No Song Found",
+        "penyanyi": "Unknown",
+        "tanggal_terbit": "2000-01-01",
+        "genre": "Unkonwn",
+        "duration": "0",
+        "audio_path": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        "image_path": "https://www.alfaromeo.it/content/dam/moc/common/404-error/mobile/mobile_404.png",
+        "album_id": "0",
+    },
+];
+
+songDetailUnused= [
+    {
+        "judul": "Nxde",
+        "penyanyi": "(G)-IDLE",
         "duration": "2:58",
         "audio_path": "http://media.w3.org/2010/07/bunny/04-Death_Becomes_Fur.mp4",
         "image_path": "../../assets/sample-song-image.jpg",
-        "release_date": "2022-10-17",
-        "lyrics": ["Why you think that 'bout nude? 'Cause your view's so rude","Think outside the box, then you'll like it","Hello, my name is 예삐, 예삐요 (hello)","말투는 멍청한 듯 몸매는 sexy, sexy요"," \
-                    그럼, 다이아 박힌 티아라 하나에","내가 퍽이나 웃게 (S.Y.), 퍽이나 웃게 (ooh)","뒤틀려버린 로렐라이, don't need no man (yah)","철학에 미친 독서광 (huh), self-made woman","싸가지없는 이 story에 무지 황당한"," \
+        "tanggal_terbit": "2022-10-17",
+        "lyric": ["Why you think that 'bout nude? 'Cause your view's so rude","Think outside the box, then you'll like it","Hello, my name is 예삐, 예삐요 (hello)","말투는 멍청한 듯 몸매는 sexy, sexy요"," \
+                    그럼, 다이아 박힌 티아라 하나에{}","내가 퍽이나 웃게 (S.Y.), 퍽이나 웃게 (ooh)","뒤틀려버린 로렐라이, don't need no man (yah)","철학에 미친 독서광 (huh), self-made woman","싸가지없는 이 story에 무지 황당한"," \
                     야유하는 관객들, you tricked me, you're a liar","아, 발가벗겨져 버린 movie star (movie star)","아, 별빛이 깨져버린 밤","꼴이 볼품없대도, 망가진다 해도 (uh)","다신 사랑받지 못한대도","쉿, yes, I'm a nude"," \
                     Nude (따따랏따라)","Yes, I'm a nude","Nude (I don't give a love)","Baby, how do I look? (야)","How do I look? (야)","아리따운 날 입고, 따따랏따라", "Baby, how do I look? (야)", "How do I look? (야)"],
         "album": "I Love",
@@ -24,7 +61,6 @@ soundButton = document.getElementById("vol");
 soundVolume = document.getElementById("timelineVol");
 repeatButton = document.getElementById("repeat");
 
-var song_id = 1;
 function loginout() {
     if (document.getElementById("loginout").innerHTML == "Login"){
       window.location.href = "http://localhost:8080/pages/login/login.html?page_type=detailsong&song_id="+song_id;
@@ -45,23 +81,23 @@ function loginout() {
     }
 }
 
-function appendData() {
+function appendData(songDetail) {
     var div1 = document.getElementById("albumPoster");
     div1.src = songDetail[0].image_path;
     div1.style.width = "15vw";
 
     var div2 = document.getElementById("albumTitle");
-    div2.innerHTML += songDetail[0].title;
+    div2.innerHTML += songDetail[0].judul;
     div2.style.width = "50vw";
 
     var div3 = document.getElementById("albumSinger");
-    div3.innerHTML += songDetail[0].singer;
+    div3.innerHTML += songDetail[0].penyanyi;
     div3.style.fontFamily = "CircularStd-Bold";
     div3.style.color = "#FFFFFF";
     div3.style.width = "max-content";
 
     var div4 = document.getElementById("albumYear");
-    div4.innerHTML += songDetail[0].release_date;
+    div4.innerHTML += songDetail[0].tanggal_terbit;
     div4.style.fontFamily = "CircularStd-Medium";
     div4.style.color = "#FFFFFF";
     div4.style.width = "max-content";
@@ -71,10 +107,10 @@ function appendData() {
     div6.style.fontFamily = "CircularStd-Light";
     div6.style.color = "#6C6C6C";
     div6.style.width = "max-content";
-    
+
     var div7 = document.getElementById("songLyrics");
-    for (let i = 0; i < songDetail[0].lyrics.length; i++) {
-        div7.innerHTML += songDetail[0].lyrics[i] + "<br>";
+    for (let i = 0; i < songDetail[0].lyric.length; i++) {
+        div7.innerHTML += songDetail[0].lyric[i] + "<br>";
     }
     div7.style.fontFamily = "CircularStd-Book";
     div7.style.fontSize = "16px";
@@ -199,6 +235,6 @@ repeatButton.addEventListener('click', toggleRepeat);
 
 window.onload = function() {
     infoNavbar();
-    appendData();
+    getSong();
     playMusic(0);
 }
