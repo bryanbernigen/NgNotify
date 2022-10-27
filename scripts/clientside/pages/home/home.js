@@ -3,7 +3,6 @@ var songs
 function initPage(){
     getSongs();
     infoNavbar();
-    putNavbar();
 }
 
 function loginout(){

@@ -43,13 +43,17 @@ function login(){
 }
 
 function failInfo(){
-    var mainContainer = document.getElementById("failprompt");
-    let div = document.createElement("div");
-    div.innerHTML +=    '<div class="loginFail"> \
-                            <img src="../../assets/icons8-warning-67.png" /> \
-                            <div class="incorrectUnamePass">Incorrect username or password.</div> \
-                        </div>';
-    mainContainer.appendChild(div);
+    var mainContainer = document.getElementById("failPrompt")
+    mainContainer.innerHTML +=  '<div class="loginFail"> \
+                                    <img src="../../assets/icons8-warning-67.png" /> \
+                                    <div class="incorrectUnamePass">Incorrect username or password.</div> \
+                                </div>';
+    mainContainer.style.width = "100%";
+    mainContainer.style.display = "flex";
+    mainContainer.style.justifyContent = "center";
+    mainContainer.style.alignItems = "center";
+    mainContainer.style.flexDirection = "row";
+    mainContainer.style.flexWrap = "nowrap";
 };
 
 function checklogin(){

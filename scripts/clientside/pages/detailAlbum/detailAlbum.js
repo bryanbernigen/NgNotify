@@ -58,6 +58,8 @@ function appendData(albumDetail, musicData) {
     var div1 = document.getElementById("albumPoster");
     div1.src = albumDetail.image_path;
     div1.style.width = "15vw";
+    div1.style.height = "15vw";
+    div1.style.objectFit = "cover";
 
     var div2 = document.getElementById("albumTitle");
     div2.innerHTML += albumDetail.judul;
@@ -178,7 +180,7 @@ function playMusic(num) {
     }
     var div8 = document.getElementById("addAudio");
     var div9 = document.getElementById("sourceAudio");
-    div9.src = musicData[num]["audio_path"];
+    div9.src = "https://docs.google.com/uc?export=download&id=" + musicData[num]["audio_path"];
     div8.load();
 
     timelinePassed.innerHTML = "0:00";

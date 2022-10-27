@@ -1,6 +1,7 @@
 var songs;
 var albums;
 var current_song_id;
+audioInput = document.getElementById("audiouploades");
 
 window.onload = function() {
     infoNavbar();
@@ -8,6 +9,15 @@ window.onload = function() {
     getAlbums();
     collapse();
 }
+
+function autoDataEditDuration() {
+    let audioSrc = "https://docs.google.com/uc?export=download&id=" + document.getElementById("audiouploades").value;
+    let audio = document.createElement("audio");
+    audio.src = audioSrc;
+    let audioDuration = audio.duration;
+}
+
+audioInput.addEventListener('keyup', autoDataEditDuration);
 
 function loginout() {
     if (document.getElementById("loginout").innerHTML == "Login") {
@@ -103,20 +113,20 @@ function loadImage(from, showWhere){
     document.getElementById("displayImage"+showWhere).style.height = "11.5vw";
 }
 
-function clearInputsCollapse() {
-    // window.location.reload();
-    // var inputs = document.getElementsByTagName("input");
-    // for (let index = 0; index < inputs.length; index++) {
-    //     inputs[index].value = "";
-    // }
-    // let coll = document.getElementsByClassName("collapsibleTextWrapper");
-    // for (let i = 0; i < coll.length; i++) {
-    //     let content = coll[i].nextElementSibling;
-    //     if (content.style.display === "block") {
-    //         content.style.display = "none";
-    //     }
-    // }
-}
+// function clearInputsCollapse() {
+//     window.location.reload();
+//     var inputs = document.getElementsByTagName("input");
+//     for (let index = 0; index < inputs.length; index++) {
+//         inputs[index].value = "";
+//     }
+//     let coll = document.getElementsByClassName("collapsibleTextWrapper");
+//     for (let i = 0; i < coll.length; i++) {
+//         let content = coll[i].nextElementSibling;
+//         if (content.style.display === "block") {
+//             content.style.display = "none";
+//         }
+//     }
+// }
 
 function autoDataEditAlbum(){
     console.log('masuk auto data edit album');
@@ -148,7 +158,11 @@ function editAlbum() {
         if(this.readyState==4 && this.status==200){
             let res = JSON.parse(this.responseText);
             if(res['status']){
-                alert("Album sucessfully edited");
+                if(window.confirm("Album sucessfully edited")){
+                    window.location.reload();
+                }else{
+                    window.location.reload();
+                }
             }
             else{
                 alert("edit failed");
@@ -193,7 +207,11 @@ function addAlbum() {
         if(this.readyState==4 && this.status==200){
             let res = JSON.parse(this.responseText);
             if(res['status']){
-                alert("album successfully added");
+                if(window.confirm("Album sucessfully added")){
+                    window.location.reload();
+                }else{
+                    window.location.reload();
+                }
             }
             else{
                 alert("failed to add album");
@@ -205,19 +223,16 @@ function addAlbum() {
     if(document.getElementById("genreea").value != ""){
         document.getElementById("genreea").value
     }
-    if(document.getElementById("albumidaa").value=="" 
-    || document.getElementById("albumnameaa").value=="" 
+    if(document.getElementById("albumnameaa").value=="" 
     || document.getElementById("singeraa").value=="" 
-    || document.getElementById("totaldurationaa").value=="" 
     || document.getElementById("imageuploadaa").value=="" 
     || document.getElementById("tanggalterbitaa").value==""){
         alert("Please fill all the fields");   
     }else{
         let data = {
-            "album_id": document.getElementById("albumidaa").value,
             "judul": document.getElementById("albumnameaa").value,
             "penyanyi":document.getElementById("singeraa").value,
-            "total_duration":document.getElementById("totaldurationaa").value,
+            "total_duration":"0",
             "image_path":document.getElementById("imageuploadaa").value,
             "tanggal_terbit":document.getElementById("tanggalterbitaa").value,
             "genre":genre,
@@ -256,7 +271,11 @@ function deleteAlbum() {
         if(this.readyState==4 && this.status==200){
             let res = JSON.parse(this.responseText);
             if(res['status']){
-                alert("album successfully deleted");
+                if(window.confirm("Album sucessfully deleted")){
+                    window.location.reload();
+                }else{
+                    window.location.reload();
+                }
             }
             else{
                 alert("failed to delete album");
@@ -306,7 +325,7 @@ function editSong() {
         if(this.readyState==4 && this.status==200){
             let res = JSON.parse(this.responseText);
             if(res['status']){
-                alert("edit  success");
+                alert("song successfully edited");
             }
             else{
                 alert("edit failed");
@@ -329,10 +348,11 @@ function editSong() {
         image_path = document.getElementById("imageuploades").value;
     }
     if(document.getElementById("audiouploades").value != "") {
-        let audioSrc = document.getElementById("audiouploades").value;
+        let audioSrc = "https://docs.google.com/uc?export=download&id=" + document.getElementById("audiouploades").value;
         let audio = document.createElement("audio");
         audio.src = audioSrc;
         let audioDuration = audio.duration;
+        document.getElementById("durationes").value = audioDuration;
     }
     if(document.getElementById("lyrices").value != ""){
         lyrics = document.getElementById("lyrices").value.split("\n");
@@ -351,7 +371,7 @@ function editSong() {
             "penyanyi":penyanyi,
             "tanggal_terbit":document.getElementById("tanggalterbites").value,
             "genre":genre,
-            "duration":"0",
+            "duration":audioDuration,
             "audio_path":document.getElementById("audiouploades").value,
             "image_path":image_path,
             "album_id":document.getElementById("albumides").value,
@@ -375,7 +395,11 @@ function addsong() {
         if(this.readyState==4 && this.status==200){
             let res = JSON.parse(this.responseText);
             if(res['status']){
-                alert("song sucessfully added");
+                if(window.confirm("Song sucessfully added")){
+                    window.location.reload();
+                }else{
+                    window.location.reload();
+                }
             }
             else{
                 alert("failed to add song");
@@ -387,6 +411,7 @@ function addsong() {
     let genre = null;
     let image_path = null;
     let lyrics = null;
+    let audioDuration = 0;
     if(document.getElementById("singeras").value != ""){
         penyanyi = document.getElementById("singeras").value;
     }
@@ -399,6 +424,13 @@ function addsong() {
     if(document.getElementById("lyricas").value != ""){
         lyrics = document.getElementById("lyricas").value.split("\n");
     }
+    if(document.getElementById("audiouploadas").value != "") {
+        let audioSrc = "https://docs.google.com/uc?export=download&id=" + document.getElementById("audiouploades").value;
+        let audio = document.createElement("audio");
+        audio.src = audioSrc;
+        let audioDuration = audio.duration;
+        document.getElementById("durationas").value = audioDuration;
+    }
     if(document.getElementById("songtitleas").value == "" 
     || document.getElementById("tanggalterbitas").value == ""
     || document.getElementById("audiouploadas").value == ""
@@ -410,7 +442,7 @@ function addsong() {
             "penyanyi":penyanyi,
             "tanggal_terbit":document.getElementById("tanggalterbitas").value,
             "genre":genre,
-            "duration":"0",
+            "duration":audioDuration,
             "audio_path":document.getElementById("audiouploadas").value,
             "image_path":image_path,
             "album_id":document.getElementById("albumidas").value,
@@ -452,7 +484,11 @@ function deleteSong() {
         if(this.readyState==4 && this.status==200){
             let res = JSON.parse(this.responseText);
             if(res['status']){
-                alert("song successfully deleted");
+                if(window.confirm("Song sucessfully deleted")){
+                    window.location.reload();
+                }else{
+                    window.location.reload();
+                }
             }
             else{
                 alert("failed to delete song");

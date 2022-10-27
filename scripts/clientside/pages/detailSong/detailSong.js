@@ -74,6 +74,8 @@ function appendData(songDetail) {
     var div1 = document.getElementById("albumPoster");
     div1.src = songDetail[0].image_path;
     div1.style.width = "15vw";
+    div1.style.height = "15vw";
+    div1.style.objectFit = "cover";
 
     var div2 = document.getElementById("albumTitle");
     div2.innerHTML += songDetail[0].judul;

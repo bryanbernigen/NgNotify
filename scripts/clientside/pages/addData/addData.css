@@ -70,6 +70,7 @@ body {
 
 .sidebarItems:hover {
     cursor: pointer;
+    color: white;
 }
 
 .spc {
@@ -94,7 +95,7 @@ hr {
     float: right;
 }
 
-.navCt {
+.navCt, .navCtAdmin {
     background-color: rgba(0,0,0, 0.2);
     display: flex;
     flex-direction: row;
@@ -347,6 +348,12 @@ input[type="file"]::file-selector-button:hover {
 .formBt:hover {
     cursor: pointer;
     outline: 2px solid #1ED760;
+}
+
+option {
+    font-family: "CircularStd-Light";
+    font-size: 14px;
+    color: #6A6A6A;
 }
 
 

@@ -11,6 +11,7 @@ function info(){
             if(res['status']){
                 if(res['data']['isAdmin']){
                     getUsers();
+                    putNavbar(username);
                 }
             }
             else {

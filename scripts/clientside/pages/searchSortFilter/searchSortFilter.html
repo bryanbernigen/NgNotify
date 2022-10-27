@@ -22,6 +22,10 @@
                         <img class="sidebarIcon" src="../../assets/icons8-home-144.png"/>
                         <span class="sidebarText">Home</span>
                     </div>
+                    <div class="sidebarItems" onclick="redirectToSearchSortFilter()">
+                        <img class="sidebarIcon" src="../../assets/icons8-search-120.png"/>
+                        <span class="sidebarText">Search</span>
+                    </div>
                     <div class="sidebarItems">
                         <img class="sidebarIcon" src="../../assets/icons8-music-library-96.png"/>
                         <span class="sidebarText">Albums</span>
@@ -45,9 +49,8 @@
         <div class="ct">
             <nav>
                 <div class="navCt">
-                    <div class="navLeft">
+                    <div class="navLeft" onclick="history.back()">
                         <img src="../../assets/icons8-chevron-left-96.png" />
-                        <img src="../../assets/icons8-chevron-right-96.png" />
                         <form class="navSearch">
                             <button type="button" name="searchInput">
                                 <img class="navSearchIcon" src="../../assets/icons8-search-120-black.png"/ id="searchInputImg" onclick="querySong()">
@@ -98,8 +101,11 @@
                 <hr>
                 <div class="recentTitle">Albums</div><br>
                 <div id="queryResultAlbum" class="queryResultAlbum"></div>
+                <div class="pagination" id="pagenumAlbum"></div>
+                <hr>
                 <div class="recentTitle">Songs</div><br>
                 <div id="queryResultSong" class="queryResultSong"></div>
+                <div class="pagination" id="pagenumSong"></div>
                 <div class="footerPage">
                     <div class="footerTop">
                         <div class="footerTopLeft">
