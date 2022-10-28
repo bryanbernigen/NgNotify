@@ -53,7 +53,7 @@
             <nav>
                 <div class="navCt" id="navCt">
                     <div class="navLeft" >
-                        <img src="../../assets/icons8-chevron-left-96.png" />
+                        <img src="../../assets/icons8-chevron-left-96.png" onclick="redirectToHome()"/>
                     </div>
                     <div class="navRight">
                         <div class="navCollapse">
@@ -70,7 +70,7 @@
                 </div>
                 <div class="navCtAdmin" id="navCtAdmin">
                     <div class="navLeft" >
-                        <img src="../../assets/icons8-chevron-left-96.png" />
+                        <img src="../../assets/icons8-chevron-left-96.png" onclick="redirectToHome()"/>
                     </div>
                     <div class="navRight">
                         <div class="navItems" onclick="redirectToAddSongAlbum()">
@@ -119,7 +119,7 @@
                                 <input class="formInputText" type="text" id="albumnameea" name="albumname" placeholder="Born Pink"><br>
                                 <br>
                                 <label class="formLabel" for="singer">Singer</label><br>
-                                <input class="formInputText" type="text" id="singerea" name="singer" placeholder="Blackpink" disabled><br>
+                                <input class="formInputText" type="text" id="singerea" name="singer" placeholder="Blackpink"><br>
                                 <br>
                                 <label class="formLabel" for="totalduration">Total Duration</label><br>
                                 <input class="formInputText" type="number" id="totaldurationea" name="totalduration" placeholder="0" disabled><br>
@@ -214,7 +214,7 @@
                                 <input class="formInputText" type="text" id="songnamees" name="songname" placeholder="Born Pink"><br>
                                 <br>
                                 <label class="formLabel" for="singer">Singer</label><br>
-                                <input class="formInputText" type="text" id="singeres" name="singer" placeholder="Blackpink" disabled><br>
+                                <input class="formInputText" type="text" id="singeres" name="singer" placeholder="Blackpink"><br>
                                 <br>
                                 <label class="formLabel" for="tanggalterbit">Date Released</label><br>
                                 <input class="formInputText" type="date" id="tanggalterbites" name="tanggalterbit" placeholder="DD/MM/YYYY"><br>
@@ -232,7 +232,7 @@
                                 </audio>
                                 <br>
                                 <label class="formLabel" for="imageupload0">Image Path</label><br>
-                                <input class="formInputText" type="text" id="imageuploades" name="imagepath"><br>
+                                <input class="formInputText" type="text" id="imageuploades" name="imagepath" onchange="loadImage('es','3')"><br>
                                 <br>
                                 <img class="clippedImage" id="displayImage3"></img>
                                 <br> <br>
