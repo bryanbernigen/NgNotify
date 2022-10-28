@@ -2,7 +2,7 @@
 <br />
 <div align="center">
   <a href="https://gitlab.informatika.org/if3110-2022-k01-01-32/if-3110-2022-k-01-01-32">
-    <img src="scripts/clientside/assets/ngnotify.png" alt="Logo">
+    <img src="assets/ngnotify.png" alt="Logo">
   </a>
 
   <h3 align="center">Ngnotify</h3>
