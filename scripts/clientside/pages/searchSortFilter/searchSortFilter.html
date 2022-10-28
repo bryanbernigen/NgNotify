@@ -74,6 +74,12 @@
                 <div class="navCtAdmin" id="navCtAdmin">
                     <div class="navLeft" >
                         <img src="../../assets/icons8-chevron-left-96.png" onclick="redirectToHome()" />
+                        <div class="navSearch">
+                            <button type="button" name="searchInput">
+                                <img class="navSearchIcon" src="../../assets/icons8-search-120-black.png" id="searchInputImg" onclick="querySong()">
+                            </button>
+                            <input class="navSearchInput" id="searchInput2" name="searchInput" type="text" placeholder="Search for artists, songs, or release year">
+                        </div>
                     </div>
                     <div class="navRight">
                         <div class="navItems" onclick="redirectToAddSongAlbum()">

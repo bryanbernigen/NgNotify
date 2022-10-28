@@ -168,6 +168,7 @@ function autoDataEditAlbum(){
             break; 
         }
     }
+    console.log(choosen_album);
     document.getElementById("albumnameea").value = choosen_album.judul;
     document.getElementById("singerea").value = choosen_album.penyanyi;
     document.getElementById("totaldurationea").value = choosen_album.total_duration;
@@ -203,7 +204,7 @@ function editAlbum() {
     };
     let genre = null;
     if(document.getElementById("genreea").value != ""){
-        document.getElementById("genreea").value
+        genre = document.getElementById("genreea").value
     }
     if(document.getElementById("albumidea").value==""
     || document.getElementById("albumnameea").value==""
@@ -228,7 +229,7 @@ function editAlbum() {
         xhttp.withCredentials = true;
         xhttp.send(JSON.stringify(data));
     } 
-    clearInputsCollapse();
+    // clearInputsCollapse();
 }
 
 function addAlbum() {
@@ -251,7 +252,7 @@ function addAlbum() {
     };
     let genre = null;
     if(document.getElementById("genreea").value != ""){
-        document.getElementById("genreea").value
+        genre = document.getElementById("genreea").value
     }
     if(document.getElementById("albumnameaa").value=="" 
     || document.getElementById("singeraa").value=="" 
@@ -273,7 +274,7 @@ function addAlbum() {
         xhttp.withCredentials = true;
         xhttp.send(JSON.stringify(data)); 
     }
-    clearInputsCollapse();
+    // clearInputsCollapse();
 }
 
 function autoDataDeleteAlbum(){
@@ -319,7 +320,7 @@ function deleteAlbum() {
     xhttp.setRequestHeader("Content-Type", "application/json");
     xhttp.withCredentials = true;
     xhttp.send(JSON.stringify(data)); 
-    clearInputsCollapse();
+    // clearInputsCollapse();
 }
 
 function autoDataEditSong(){
@@ -348,7 +349,11 @@ function editSong() {
         if(this.readyState==4 && this.status==200){
             let res = JSON.parse(this.responseText);
             if(res['status']){
-                alert("song successfully edited");
+                if(window.confirm("Song sucessfully editted")){
+                    window.location.reload();
+                }else{
+                    window.location.reload();
+                }
             }
             else{
                 alert("edit failed");
@@ -399,7 +404,7 @@ function editSong() {
         xhttp.withCredentials = true;
         xhttp.send(JSON.stringify(data));
     } 
-    clearInputsCollapse();
+    // clearInputsCollapse();
 }
 
 
@@ -465,7 +470,7 @@ function addsong() {
         xhttp.withCredentials = true;
         xhttp.send(JSON.stringify(data));
     } 
-    clearInputsCollapse();
+    // clearInputsCollapse();
 }
 
 function autoDataDeleteSong(){
@@ -513,5 +518,5 @@ function deleteSong() {
     xhttp.setRequestHeader("Content-Type", "application/json");
     xhttp.withCredentials = true;
     xhttp.send(JSON.stringify(data)); 
-    clearInputsCollapse();
+    // clearInputsCollapse();
 }

@@ -9,6 +9,8 @@ var filter_genre = null;
 var songs = null;
 var totalPageAlbum = null;
 var totalPageSong = null;
+var currentPageAlbum = null;
+var currentPageSong = null;
 
 function loginout() {
     if (document.getElementById("loginout").innerHTML == "Login") {
@@ -55,9 +57,15 @@ window.onload = function() {
 function querySong(){
     param = '';
     query = document.getElementById("searchInput").value;
-    if(query != null){
+    if(query != ""){
         param += 'query='+query+'&';
+    }else{
+        query = document.getElementById("searchInput2").value;
+        if(query != null || query != ''){
+            param += 'query='+query+'&';
+        }
     }
+    
     if(order_by_title != null){
         param += 'order_by_title='+order_by_title+'&';
     }
@@ -75,10 +83,10 @@ function selectAlbum(numPage){
     xhttp.onreadystatechange = function(){
         if(this.readyState==4 && this.status==200){
             let res = JSON.parse(this.responseText);
+            currentPageAlbum = numPage;
             if(res['status']){
                 albums = res['data'];
                 totalPageAlbum = res['data']['pages'];
-                console.log(totalPageAlbum);
                 clearAlbum();
                 appendData(albums['albums'], "queryResultAlbum");
             }
@@ -96,7 +104,7 @@ function selectAlbum(numPage){
         "filter_genre": filter_genre,
         "order_by_title": order_by_title,
     };
-    xhttp.open("POST","http://localhost:8000/api/albumapi/queryalbum/"+numPage+"/2/",true);
+    xhttp.open("POST","http://localhost:8000/api/albumapi/queryalbum/"+numPage+"/8/",true);
     xhttp.setRequestHeader("Accept", "application/json");
     xhttp.setRequestHeader("Content-Type", "application/json");
     xhttp.withCredentials = true;
@@ -108,10 +116,10 @@ function selectSong(numPage){
     xhttp.onreadystatechange = function(){
         if(this.readyState==4 && this.status==200){
             let res = JSON.parse(this.responseText);
+            currentPageSong = numPage;
             if(res['status']){
                 songs = res['data'];
                 totalPageSong = res['data']['pages'];
-                console.log(totalPageSong);
                 clearSong();
                 appendData(songs['songs'], "queryResultSong");
             }
@@ -128,7 +136,7 @@ function selectSong(numPage){
         "filter_genre": filter_genre,
         "order_by_title": order_by_title,
     };
-    xhttp.open("POST","http://localhost:8000/api/songapi/querysong/"+numPage,true);
+    xhttp.open("POST","http://localhost:8000/api/songapi/querysong/"+numPage+"/8/",true);
     xhttp.setRequestHeader("Accept", "application/json");
     xhttp.setRequestHeader("Content-Type", "application/json");
     xhttp.withCredentials = true;
@@ -229,7 +237,7 @@ function appendData(data, target) {
     mainContainer.style.flexDirection = "row";
     mainContainer.style.flexWrap = "wrap";
     mainContainer.style.justifyContent = "center";
-    mainContainer.style.alignItems = "center";
+    mainContainer.style.alignItems = "flex-start";
     mainContainer.style.color = "white";
 
     if (target == "queryResultAlbum") {
@@ -251,14 +259,24 @@ function reroutesong(id){
 function paginationAlbum() {
     var pageAlbumContainer = document.getElementById("pagenumAlbum");
     for (i = 0; i < totalPageAlbum; i++) {
-        pageAlbumContainer.innerHTML += '<div class="page" onclick="selectAlbum(' + (i+1) + ')">' + (i + 1) + '</div>';
+        if (i == currentPageAlbum-1) {
+            pageAlbumContainer.innerHTML += '<div class="pageCurr" style="background-color: #282828; color: white;">' + (i+1) + '</div>';
+        }
+        else {
+            pageAlbumContainer.innerHTML += '<div class="page" onclick="selectAlbum(' + (i+1) + ')">' + (i + 1) + '</div>';
+        }
     }
 }
 
 function paginationSong() {
     var pageSongContainer = document.getElementById("pagenumSong");
     for (i = 0; i < totalPageSong; i++) {
-        pageSongContainer.innerHTML += '<div class="page" onclick="selectSong(' + (i+1) + ')">' + (i + 1) + '</div>';
+        if (i == currentPageSong-1) {
+            pageSongContainer.innerHTML += '<div class="pageCurr" style="background-color: #282828; color: white;">' + (i+1) + '</div>';
+        }
+        else {
+            pageSongContainer.innerHTML += '<div class="page" onclick="selectSong(' + (i+1) + ')">' + (i + 1) + '</div>';
+        }
     }
 }
 

@@ -139,7 +139,7 @@ function appendData(data) {
     div.style.flexDirection = "row";
     div.style.flexWrap = "wrap";
     div.style.justifyContent = "center";
-    div.style.alignItems = "center";
+    div.style.alignItems = "flex-start";
     mainContainer.appendChild(div);
     return div;
 }

@@ -155,7 +155,7 @@ class Song
         try {
             $this->db->execute();
             try {
-                $resut = $this->db->single();
+                $resut = $this->db->single();   
                 return $resut;
             } catch (\Throwable $th) {
                 return false;
@@ -166,7 +166,7 @@ class Song
     }
 
     public function showAllSongs(){
-        $this->db->query('SELECT * FROM ' . $this->table);
+        $this->db->query('SELECT * FROM ' . $this->table . ' ORDER BY song_id');
         try {
             $this->db->execute();
             return $this->db->resultSet();

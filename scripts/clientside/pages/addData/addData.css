@@ -119,6 +119,7 @@ hr {
 
 .navLeft img:hover {
     background-color: #6c6c6c;
+    cursor: pointer;
 }
 
 .navRight {
