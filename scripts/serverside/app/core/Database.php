@@ -10,7 +10,6 @@ class Database
     {
         require_once __DIR__ . '/../constants/base.php';
         $option = [
-            PDO::ATTR_PERSISTENT => 5,
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_TIMEOUT => 600,
             PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true,
