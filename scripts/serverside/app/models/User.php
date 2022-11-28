@@ -99,7 +99,7 @@ class User
     }
 
     public function showAllUser(){
-        $this->db->query('SELECT * FROM ' . $this->table);
+        $this->db->query('SELECT user_id,email,username,"isAdmin" FROM ' . $this->table);
         try{
             $this->db->execute();
             return $this->db->resultSet();

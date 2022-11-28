@@ -30,7 +30,7 @@ function getUsers(){
     xhttp.onreadystatechange = function(){
         if(this.readyState==4 && this.status==200){
             users = JSON.parse(this.responseText);
-            // console.log(users["data"]);
+            console.log(users["data"]);
             appendData(users['data']);
         }
     };
@@ -88,7 +88,7 @@ function appendData(jsonData) {
     var divContainer = document.getElementById("userTable");
 
     //columns to be displayed
-    let displayColumns = ['user_id', 'email', "password", "username", "isAdmin"];
+    let displayColumns = ['user_id', 'email', "username", "isAdmin"];
     
     //Create table header
     let table = document.createElement('table');
