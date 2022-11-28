@@ -57,3 +57,20 @@ function redirectToSearchSortFilter() {
 function redirectToListUsers() {
     window.location.href = "http://localhost:8080/pages/listuser/listuser.html";
 }
+
+function formatTime(time){
+    var date = new Date(0);
+    date.setSeconds(time); // specify value for SECONDS here
+    var timeString = date.toISOString().substring(11, 19);
+    if(timeString[0] == "0" && timeString[1] == "0"){
+        if(timeString[3] == "0" && timeString[4] == "0"){
+            return timeString.substring(6,8);
+        }
+        else{
+            return timeString.substring(3,8);
+        }
+    }
+    else{
+        return timeString;
+    }
+}
