@@ -41,13 +41,13 @@ window.onload = function() {
         setGenre(urlParams.get('filter_genre'));
     }
     if(order_by_title != null){
-        setOrder('title', order_by_title);
+        setOrder('judul', order_by_title);
     }
     else if(order_by_year != null){
         setOrder('tahun', order_by_year);
     }
     else{
-        setOrder("title", "ASC");
+        setOrder("judul", "ASC");
     }
     infoNavbar();
     selectSong(1);
@@ -57,22 +57,22 @@ window.onload = function() {
 function querySong(){
     param = '';
     query = document.getElementById("searchInput").value;
-    if(query != ""){
+    if(query != "" && query != null){
         param += 'query='+query+'&';
     }else{
         query = document.getElementById("searchInput2").value;
-        if(query != null || query != ''){
+        if(query != null && query != ''){
             param += 'query='+query+'&';
         }
     }
     
-    if(order_by_title != null){
+    if(order_by_title != null && order_by_title != ''){
         param += 'order_by_title='+order_by_title+'&';
     }
-    if(order_by_year != null){
+    if(order_by_year != null && order_by_year != ''){
         param += 'order_by_year='+order_by_year+'&';
     }
-    if(filter_genre != null || filter_genre != 'None'){
+    if(filter_genre != null && filter_genre != 'None'){
         param += 'filter_genre='+filter_genre+'&';
     }
     window.location.href = "http://localhost:8080/pages/searchsortfilter/searchsortfilter.html?" + param;
@@ -297,7 +297,7 @@ function setGenre(inputGenre){
 }
 
 function setOrder(type,order){
-    if(order_by_year!=null){
+    if(order_by_year!=null && order_by_year != ''){
         if(type=="judul"){
             document.getElementById("sorttahun"+order_by_year).style.backgroundColor = "#282828";
             document.getElementById("sortjudul"+order).style.backgroundColor = "green";
@@ -309,7 +309,7 @@ function setOrder(type,order){
             order_by_year = order;
         }
     }
-    else if(order_by_title!=null){
+    else if(order_by_title!=null && order_by_title != ''){
         if(type=="judul"){
             document.getElementById("sortjudul"+order_by_title).style.backgroundColor = "#282828";
             document.getElementById("sortjudul"+order).style.backgroundColor = "green";
