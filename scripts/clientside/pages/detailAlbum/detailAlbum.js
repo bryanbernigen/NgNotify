@@ -127,7 +127,7 @@ function appendData(albumDetail) {
     div5.style.width = "max-content";
 
     var div6 = document.getElementById("albumDuration");
-    div6.innerHTML += albumDetail.total_duration + " seconds";
+    div6.innerHTML += formatTime(albumDetail.total_duration);
     div6.style.fontFamily = "CircularStd-Light";
     div6.style.color = "#6C6C6C";
     div6.style.width = "max-content";
@@ -198,7 +198,7 @@ function appendData(albumDetail) {
 
         // Duration
         let td3 = document.createElement('td');
-        td3.innerHTML = musicData[i]["duration"];
+        td3.innerHTML = formatTime(musicData[i]["duration"]);
         td3.style.color = "#6C6C6C";
         td3.style.fontFamily = "CircularStd-Medium";
         td3.style.fontSize = "14px";

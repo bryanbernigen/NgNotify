@@ -131,7 +131,7 @@ function appendData(songDetail) {
     div4.style.width = "max-content";
 
     var div6 = document.getElementById("albumDuration");
-    div6.innerHTML += songDetail[0].duration;
+    div6.innerHTML += formatTime(songDetail[0].duration);
     div6.style.fontFamily = "CircularStd-Light";
     div6.style.color = "#6C6C6C";
     div6.style.width = "max-content";
