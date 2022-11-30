@@ -12,7 +12,11 @@ class SubscriptionAPI extends Controller {
                 json_response_fail(WRONG_API_CALL);
                 return;
             }
-            $res = $this->model('Subscription')->newSubscription($_POST['creator_id'], $_POST['subscriber_id']);
+            $imagePath = null;
+            if(isset($_POST['image_path'])){
+                $imagePath = $_POST['image_path'];
+            }
+            $res = $this->model('Subscription')->newSubscription($_POST['creator_id'], $_POST['subscriber_id'], $imagePath);
             if($res){
                 json_response_success('New subscription created');
             }
