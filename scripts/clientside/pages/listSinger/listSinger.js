@@ -30,8 +30,7 @@ let singerdata
 let current_user;
 
 window.onload = function() {
-    // infoNavbarAdded();
-    getSinger();
+    infoNavbarAdded();
     
 }
 
@@ -48,11 +47,14 @@ function infoNavbarAdded(){
                 current_user = res['data'].user_id
                 restricted = false;
                 putNavbar(username);
+                getSinger();
             }
             else {
                 uname.innerHTML = "Haha";
                 document.getElementById("loginout").innerHTML = "Login";
                 putNavbar(false);
+                current_user = 1;
+                getSinger();
             }
         }
     };
@@ -78,13 +80,19 @@ function getSinger(){
     xhttp.onreadystatechange = function(){
         if(this.readyState==4 && this.status==200){
             singerdata = JSON.parse(this.responseText).data;
+            console.log(singerdata);
             appendData(singerdata);
         }
     };
-    xhttp.open("GET","http://localhost:3000/singers/",true);
+    let data = {
+        "user_id": current_user
+    }
+    xhttp.open("POST","http://localhost:3000/singers/",true);
     xhttp.setRequestHeader("Accept", "application/json");
+    xhttp.setRequestHeader("Content-Type", "application/json");
     xhttp.withCredentials = false;
-    xhttp.send();
+    xhttp.send(JSON.stringify(data));
+    console.log(xhttp);
 }
 
 function loginout() {
@@ -169,7 +177,7 @@ function appendData(singerdata) {
                                 <div id="onetoneName"> ' + singerdata[i].name + '</div> \
                             </div>';
         }
-        else if (singerdata[i].status == "NONE") {
+        else {
             div.innerHTML += '<div class="onetone" id="'+singerdata[i].user_id+'" onclick="subscribe(this.id)"> \
                                 <img class="onetoneImgWhite" src="' + singerdata[i].image_path + '"/> \
                                 <div id="onetoneName"> ' + singerdata[i].name + '</div> \
