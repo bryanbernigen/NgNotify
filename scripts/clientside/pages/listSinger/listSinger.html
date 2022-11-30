@@ -6,14 +6,12 @@
         <meta name="theme-color" content="#000000" />
         <link rel="apple-touch-icon" />
         <link rel="icon" href="../../assets/Spotify_LogoOnly_RGB_White.png" />
-        <link rel="stylesheet" href="albums.css">
+        <link rel="stylesheet" href="listSinger.css">
         <link rel="stylesheet" href="../../globals.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
         <title>Spotify - Web Player</title>
-        <script src="../navbar.js"></script>
-        <script src="albums.js"></script>
     </head>
-    <body onload="initPage();">
+    <body>
         <div class="sidebar">
             <div class="sidebarTop">
                 <img class="sidebarLogo" src="../../assets/Spotify_Logo_RGB_White.png" onclick="redirectToHome()"/>
@@ -28,9 +26,9 @@
                         <img class="sidebarIcon" src="../../assets/icons8-search-120.png"/>
                         <span class="sidebarText">Search</span>
                     </div>
-                    <div class="sidebarItems">
+                    <div class="sidebarItems" onclick="redirectToAlbum()">
                         <img class="sidebarIcon" src="../../assets/icons8-music-library-96.png"/>
-                        <span class="sidebarText" onclick="redirectToAlbum()">Albums</span>
+                        <span class="sidebarText">Albums</span>
                     </div>
                     <div class="sidebarItems">
                         <img class="sidebarIcon" src="../../assets/icons8-renew-96.png"/>
@@ -77,7 +75,7 @@
                 </div>
                 <div class="navCtAdmin" id="navCtAdmin">
                     <div class="navLeft" >
-                        <img src="../../assets/icons8-chevron-left-96.png" onclick="redirectToHome()" />
+                        <img src="../../assets/icons8-chevron-left-96.png" onclick="redirectToHome()"  />
                     </div>
                     <div class="navRight">
                         <div class="navItems" onclick="redirectToAddSongAlbum()">
@@ -103,16 +101,29 @@
                                 <i class="fa fa-caret-down"></i>
                             </div>
                             <div class="navDrop">
-                                <div class="navChild" id="loginout" onclick="loginout()">Log out</div>
+                                <div class="navChild" onclick="loginout()" id="loginout">Log out</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </nav>
-            <div class="albumCt">
-                <div id="albumCards"></div>
-                
+            <div class="contentCt">
+                <div class="prompt">Choose 3 or more artist you like.</div>
+                <div class="navSearch">
+                    <div class='link'>
+                        <img class="navSearchIcon" src="../../assets/icons8-search-120.png" />
+                    </div>
+                    <input class="navSearchInput" type="text" id="querysong" placeholder="Search for artists, songs, or release year" />
+                </div>
+                <div id="listSingerCt">
+                    
+                </div>
+                <div class='paginationWrapper'>
+                </div>
+                <button class='doneBt'>DONE</button>
             </div>
         </div>
+        <script src="../navbar.js"></script>
+        <script src="listSinger.js"></script>
     </body>
 </html>
