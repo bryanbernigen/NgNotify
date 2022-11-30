@@ -58,6 +58,14 @@ function redirectToListUsers() {
     window.location.href = "http://localhost:8080/pages/listuser/listuser.html";
 }
 
+function redirectToSubscribe() {
+    window.location.href = "http://localhost:8080/pages/listSinger/listSinger.html";
+}
+
+function redirectToListSong() {
+    window.location.href = "http://localhost:8080/pages/listSong/listSong.html";
+}
+
 function formatTime(time){
     var date = new Date(0);
     date.setSeconds(time); // specify value for SECONDS here
