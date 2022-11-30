@@ -11,7 +11,7 @@ class Subscription
         $this->db = new Database;
     }
 
-    public function newSubscription($creatorId, $subscriberId)
+    public function newSubscription($creatorId, $subscriberId, $imagePath)
     {
         try {
             $this->db->query("SELECT * FROM $this->table WHERE creator_id = :creator_id AND subscriber_id = :subscriber_id");
@@ -26,10 +26,10 @@ class Subscription
                     $this->db->bind('subscriber_id', $subscriberId);
                 }
             } else {
-                $this->db->query("INSERT INTO $this->table (creator_id, subscriber_id, status) VALUES (:creator_id, :subscriber_id, 'PENDING')");
+                $this->db->query("INSERT INTO $this->table (creator_id, subscriber_id, status, image_path) VALUES (:creator_id, :subscriber_id, 'PENDING', :image_path)");
                 $this->db->bind('creator_id', $creatorId);
                 $this->db->bind('subscriber_id', $subscriberId);
-                $this->db->execute();
+                $this->db->bind('image_path', $imagePath);
             }
             try {
                 $this->db->execute();
