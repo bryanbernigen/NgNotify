@@ -38,6 +38,14 @@ function putNavbar(isAdmin) {
     }
 }
 
+function redirectToSubscribe() {
+    window.location.href = "http://localhost:8080/pages/listSinger/listSinger.html";
+}
+
+function redirectToPremiumSong() {
+    window.location.href = "http://localhost:8080/pages/listSong/listSong.html";
+}
+
 function redirectToAlbum(){
     window.location.href = "http://localhost:8080/pages/albums/albums.html";
 }
@@ -56,14 +64,6 @@ function redirectToSearchSortFilter() {
 
 function redirectToListUsers() {
     window.location.href = "http://localhost:8080/pages/listuser/listuser.html";
-}
-
-function redirectToSubscribe() {
-    window.location.href = "http://localhost:8080/pages/listSinger/listSinger.html";
-}
-
-function redirectToListSong() {
-    window.location.href = "http://localhost:8080/pages/listSong/listSong.html";
 }
 
 function formatTime(time){

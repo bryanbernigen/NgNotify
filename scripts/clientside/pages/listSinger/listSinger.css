@@ -7,16 +7,6 @@
     width: 100%;
 }
 
-.homeCt {
-    color: white;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    padding: 25px;
-}
-
 .navSearch {
     background-color: rgba(255, 255, 255, 0.3);
     border-radius: 5px;
@@ -63,7 +53,7 @@
     font-family: "CircularStd-Black";
     font-size: 14px;
     color: black;
-    margin: 0 auto;
+    margin: 5vh auto;
 }
 
 .doneBt:hover {
@@ -277,6 +267,28 @@ hr {
     flex-wrap: nowrap;
     align-items: flex-start;
     padding: 20px 40px;
+}
+
+.onetone {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.onetoneImg {
+    display: block;
+    border-radius: 50%;
+    width: 12.5vw;
+    height: 12.5vw;
+    margin-bottom: 2vh;
+    cursor: pointer;
+}
+
+.onetoneText {
+    font-family: "Circular Std-Book";
+    font-size: 16px;
 }
 
 

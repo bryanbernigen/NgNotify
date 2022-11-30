@@ -6,13 +6,34 @@
     <div className="onetoneName">{creator_name}</div>
 </div> */}
 
-window.onload = function() {
-    infoNavbarAdded();
-    getSinger();
-}
-
-let singerdata;
+// let singerdata = [
+//     {
+//         "user_id": 1,
+//         "username": "chaewon123",
+//         "name": "Chae Won",
+//         "creator_pic": "../../assets/basicimage.jpg"
+//     },
+//     {
+//         "user_id": 2,
+//         "username": "chaewon123",
+//         "name": "Chae Won",
+//         "creator_pic": "../../assets/basicimage.jpg"
+//     },
+//     {
+//         "user_id": 3,
+//         "username": "chaewon123",
+//         "name": "Chae Won",
+//         "creator_pic": "../../assets/basicimage.jpg"
+//     },
+// ];
+let singerdata
 let current_user;
+
+window.onload = function() {
+    // infoNavbarAdded();
+    getSinger();
+    
+}
 
 function infoNavbarAdded(){
     var xhttp = new XMLHttpRequest();
@@ -31,7 +52,6 @@ function infoNavbarAdded(){
             else {
                 uname.innerHTML = "Haha";
                 document.getElementById("loginout").innerHTML = "Login";
-                checkRestricted();
                 putNavbar(false);
             }
         }
@@ -57,16 +77,13 @@ function getSinger(){
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function(){
         if(this.readyState==4 && this.status==200){
-            singer = JSON.parse(this.responseText);
-            if (singer["data"]) {
-                singerdata = singer["data"];
-                appendData();
-            }
+            singerdata = JSON.parse(this.responseText).data;
+            appendData(singerdata);
         }
     };
     xhttp.open("GET","http://localhost:3000/singers/",true);
     xhttp.setRequestHeader("Accept", "application/json");
-    xhttp.withCredentials = true;
+    xhttp.withCredentials = false;
     xhttp.send();
 }
 
@@ -90,32 +107,82 @@ function loginout() {
     }
 }
 
-let subscribed = [];
+function searchByID(id) {
+    for (let i = 0; i < singerdata.length; i++) {
+        if (singerdata[i].user_id == id) {
+            return singerdata[i].isSubscribed;
+        }
+    }
+    return false;
+}
 
 function subscribe(id) {
     // <div id="onetoneOverlay" onclick="" style={{"--artist_pic": "url("+creator_pic+")"} as React.CSSProperties} /> \
-    subscribed.push(id);
-    // TODO: post update subscription
-
-    // TODO: pop from singerdata if a singer has been subscribed by a user
-
-    appendData();
+    let search = searchByID(id);
+    // already subscribed
+    if (search == true) {
+        redirectToPremiumSong();
+    }
+    // post update subscription
+    else if (search == false) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                let res = JSON.parse(this.responseText);
+                if (res["status"]) {
+                    window.location.href = "http://localhost:8080/pages/listSinger/listSinger.html";
+                }
+            }
+        };
+        xhttp.open("POST", "http://localhost:3000/subscription/update/", true);
+        xhttp.setRequestHeader("Accept", "application/json");
+        xhttp.withCredentials = false;
+        xhttp.send(JSON.stringify({
+            "user_id": current_user,
+            "creator_id": id
+        }));
+    }
 }
 
-function appendData() {
+function appendData(singerdata) {
     var mainContainer = document.getElementById("listSingerCt");
     let div = document.createElement("div");
     for (var i = 0; i < singerdata.length; i++) {
-        div.innerHTML += '<div class="onetone" id="'+singerdata[i].user_id+'" onclick="subscribe(this.id)"> \
-                            <img class="onetoneImg" src="' + singerdata[i].creator_pic + '/> \
-                            <div id="onetoneName"> ' + singerdata[i].name + '</div> \
-                        </div>'
+        if(!singerdata[i].image_path){
+            singerdata[i].image_path = "../../assets/basicimage.jpg"
+        }
+        if (singerdata[i].status == "PENDING") {
+            div.innerHTML += '<div class="onetone" id="'+singerdata[i].user_id+'" onclick="subscribe(this.id)"> \
+                                <img class="onetoneImgYellow" src="' + singerdata[i].image_path + '"/> \
+                                <div id="onetoneName"> ' + singerdata[i].name + '</div> \
+                            </div>';
+        }
+        else if (singerdata[i].status == "ACCEPTED") {
+            div.innerHTML += '<div class="onetone" id="'+singerdata[i].user_id+'" onclick="subscribe(this.id)"> \
+                                <img class="onetoneImgGreen" src="' + singerdata[i].image_path + '"/> \
+                                <div id="onetoneName"> ' + singerdata[i].name + '</div> \
+                            </div>';
+        }
+        else if (singerdata[i].status == "REJECTED") {
+            div.innerHTML += '<div class="onetone" id="'+singerdata[i].user_id+'" onclick="subscribe(this.id)"> \
+                                <img class="onetoneImgRed" src="' + singerdata[i].image_path + '"/> \
+                                <div id="onetoneName"> ' + singerdata[i].name + '</div> \
+                            </div>';
+        }
+        else if (singerdata[i].status == "NONE") {
+            div.innerHTML += '<div class="onetone" id="'+singerdata[i].user_id+'" onclick="subscribe(this.id)"> \
+                                <img class="onetoneImgWhite" src="' + singerdata[i].image_path + '"/> \
+                                <div id="onetoneName"> ' + singerdata[i].name + '</div> \
+                            </div>';
+        }
     }
     div.style.display = "flex";
     div.style.flexDirection = "row";
     div.style.flexWrap = "wrap";
     div.style.justifyContent = "center";
     div.style.alignItems = "flex-start";
+    div.style.columnGap = "2vw";
+    mainContainer.appendChild(div);
 
     var onetone = document.getElementById("onetone");
     onetone.style.display = "flex";
@@ -124,14 +191,41 @@ function appendData() {
     onetone.style.justifyContent = "flex-start";
     onetone.style.alignItems = "center";
 
-    var onetone = document.getElementById("onetoneImg");
+    var onetone = document.getElementById("onetoneImgRed");
     onetone.style.display = "block";
     onetone.style.borderRadius = "50%";
     onetone.style.width = "12.5vw";
     onetone.style.height = "12.5vw";
     onetone.style.marginBottom = "2vh";
     onetone.style.cursor = "pointer";
+    onetone.style.objectFit = "cover";
     
-    mainContainer.appendChild(div);
+    var onetone = document.getElementById("onetoneImgYellow");
+    onetone.style.display = "block";
+    onetone.style.borderRadius = "50%";
+    onetone.style.width = "12.5vw";
+    onetone.style.height = "12.5vw";
+    onetone.style.marginBottom = "2vh";
+    onetone.style.cursor = "pointer";
+    onetone.style.objectFit = "cover";
+    
+    var onetone = document.getElementById("onetoneImgGreen");
+    onetone.style.display = "block";
+    onetone.style.borderRadius = "50%";
+    onetone.style.width = "12.5vw";
+    onetone.style.height = "12.5vw";
+    onetone.style.marginBottom = "2vh";
+    onetone.style.cursor = "pointer";
+    onetone.style.objectFit = "cover";
+    
+    var onetone = document.getElementById("onetoneImgWhite");
+    onetone.style.display = "block";
+    onetone.style.borderRadius = "50%";
+    onetone.style.width = "12.5vw";
+    onetone.style.height = "12.5vw";
+    onetone.style.marginBottom = "2vh";
+    onetone.style.cursor = "pointer";
+    onetone.style.objectFit = "cover";
+
     return div;
 }
