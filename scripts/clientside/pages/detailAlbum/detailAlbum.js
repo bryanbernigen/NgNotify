@@ -27,14 +27,18 @@ function infoNavbarAdded(){
             let res = JSON.parse(this.responseText);
             uname = document.getElementById("uname");
             if(res['status']){
-                console.log(res['data']['username']);
-                uname.innerHTML = 'pasp';
-                username = res['data'].isAdmin;
+                if(res['data'].isAdmin){
+                    document.getElementById("uname").innerHTML = res['data'].username;
+                }else{
+                    document.getElementById("unameuwu").innerHTML = res['data'].username;
+                }
                 restricted = false;
-                putNavbar(username);
+                username = res['data'].isAdmin;
+                current_user = res['data'].user_id
+                putNavbar(res['data'].isAdmin);
             }
             else {
-                uname.innerHTML = "Haha";
+                uname.innerHTML = "guest";
                 document.getElementById("loginout").innerHTML = "Login";
                 checkRestricted();
                 putNavbar(false);

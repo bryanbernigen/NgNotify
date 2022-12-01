@@ -24,20 +24,36 @@ function infoNavbarAdded(){
             let res = JSON.parse(this.responseText);
             uname = document.getElementById("uname");
             if(res['status']){
-                uname.innerHTML = 'pasp';
-                username = res['data'].isAdmin;
+                const queryString = window.location.search;
+                const urlParams = new URLSearchParams(queryString);
+                let content_type = urlParams.get('content');
+                if (content_type == null) {
+                    content_type = 'all';
+                }
+                if(res['data'].isAdmin){
+                    document.getElementById("uname").innerHTML = res['data'].username;
+                }else{
+                    document.getElementById("unameuwu").innerHTML = res['data'].username;
+                }
                 restricted = false;
-                current_user = res['data'].user_id;
-                putNavbar(username);
-                getPremiumSongs();
+                username = res['data'].isAdmin;
+                current_user = res['data'].user_id
+                putNavbar(res['data'].isAdmin);
+                getPremiumSongs(content_type);
             }
             else {
+                const queryString = window.location.search;
+                const urlParams = new URLSearchParams(queryString);
+                let content_type = urlParams.get('content');
+                if (content_type == null) {
+                    content_type = 'all';
+                }
                 uname.innerHTML = "guest";
                 document.getElementById("loginout").innerHTML = "Login";
                 // checkRestricted();
                 current_user = 0; //kalo belom login user_id = 0 (aka ga bisa akses)
                 putNavbar(false);
-                getPremiumSongs();
+                getPremiumSongs(content_type);
             }
         }
     };
@@ -58,23 +74,45 @@ function putNavbar(isAdmin) {
     }
 }
 
-function getPremiumSongs(){
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function(){
-        if(this.readyState==4 && this.status==200){
-            let songs = JSON.parse(this.responseText);
-            appendData(songs.data);
-        }
-    };
-    let data = {
-        "user_id": current_user
-    };
-    xhttp.open("POST", "http://localhost:3000/songs/premiumsongs", true);
-    xhttp.setRequestHeader("Accept", "application/json");
-    xhttp.setRequestHeader("Content-Type", "application/json");
-    xhttp.withCredentials = false;
-    xhttp.send(JSON.stringify(data));
-    console.log(xhttp);
+function getPremiumSongs(content){
+    if (content === 'all') {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function(){
+            if(this.readyState==4 && this.status==200){
+                let songs = JSON.parse(this.responseText);
+                appendData(songs.data);
+            }
+        };
+        let data = {
+            "user_id": current_user
+        };
+        xhttp.open("POST", "http://localhost:3000/songs/premiumsongs", true);
+        xhttp.setRequestHeader("Accept", "application/json");
+        xhttp.setRequestHeader("Content-Type", "application/json");
+        xhttp.withCredentials = false;
+        xhttp.send(JSON.stringify(data));
+        console.log(xhttp);
+    }
+    else {
+        cont = parseInt(content);
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function(){
+            if(this.readyState==4 && this.status==200){
+                let songs = JSON.parse(this.responseText);
+                appendData(songs.data);
+            }
+        };
+        let data = {
+            "user_id": current_user,
+            "penyanyi_id": cont,
+        };
+        xhttp.open("POST", "http://localhost:3000/songs/fetch", true);
+        xhttp.setRequestHeader("Accept", "application/json");
+        xhttp.setRequestHeader("Content-Type", "application/json");
+        xhttp.withCredentials = false;
+        xhttp.send(JSON.stringify(data));
+        console.log(xhttp);
+    }
 }
 
 audio = document.getElementById('addAudio');
