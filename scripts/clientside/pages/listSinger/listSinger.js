@@ -57,6 +57,8 @@ function polling(){
     xhttp.setRequestHeader("Content-Type", "application/json");
     xhttp.withCredentials = false;
     xhttp.send(JSON.stringify(data));
+
+    var cleardiv = document.getElementById("singerlist");
 }
 
 function infoNavbarAdded(){
@@ -202,44 +204,42 @@ function subscribe(id) {
 
 function appendData(singerdata) {
     var mainContainer = document.getElementById("listSingerCt");
-    let div = document.createElement("div");
     for (var i = 0; i < singerdata.length; i++) {
         if(!singerdata[i].image_path){
             singerdata[i].image_path = "../../assets/basicimage.jpg"
         }
         if (singerdata[i].status == "PENDING") {
-            div.innerHTML += '<div class="onetone" id="'+singerdata[i].user_id+'" onclick="subscribe(this.id)"> \
+            mainContainer.innerHTML += '<div class="onetone" id="'+singerdata[i].user_id+'" onclick="subscribe(this.id)"> \
                                 <img class="onetoneImgYellow" src="' + singerdata[i].image_path + '"/> \
                                 <div class="onetoneName"> ' + singerdata[i].name + '</div> \
                             </div>';
         }
         else if (singerdata[i].status == "ACCEPTED") {
-            div.innerHTML += '<div class="onetone" id="'+singerdata[i].user_id+'" onclick="subscribe(this.id)"> \
+            mainContainer.innerHTML += '<div class="onetone" id="'+singerdata[i].user_id+'" onclick="subscribe(this.id)"> \
                                 <img class="onetoneImgGreen" src="' + singerdata[i].image_path + '"/> \
                                 <div class="onetoneName"> ' + singerdata[i].name + '</div> \
                             </div>';
         }
         else if (singerdata[i].status == "REJECTED") {
-            div.innerHTML += '<div class="onetone" id="'+singerdata[i].user_id+'" onclick="subscribe(this.id)"> \
+            mainContainer.innerHTML += '<div class="onetone" id="'+singerdata[i].user_id+'" onclick="subscribe(this.id)"> \
                                 <img class="onetoneImgRed" src="' + singerdata[i].image_path + '"/> \
                                 <div class="onetoneName"> ' + singerdata[i].name + '</div> \
                             </div>';
         }
         else {
-            div.innerHTML += '<div class="onetone" id="'+singerdata[i].user_id+'" onclick="subscribe(this.id)"> \
+            mainContainer.innerHTML += '<div class="onetone" id="'+singerdata[i].user_id+'" onclick="subscribe(this.id)"> \
                                 <img class="onetoneImgWhite" src="' + singerdata[i].image_path + '"/> \
                                 <div class="onetoneName"> ' + singerdata[i].name + '</div> \
                             </div>';
         }
     }
-    div.style.display = "flex";
-    div.style.flexDirection = "row";
-    div.style.flexWrap = "wrap";
-    div.style.justifyContent = "center";
-    div.style.alignItems = "flex-start";
-    div.style.columnGap = "2vw";
-    div.style.rowGap = "2vw";
-    mainContainer.appendChild(div);
+    mainContainer.style.display = "flex";
+    mainContainer.style.flexDirection = "row";
+    mainContainer.style.flexWrap = "wrap";
+    mainContainer.style.justifyContent = "center";
+    mainContainer.style.alignItems = "flex-start";
+    mainContainer.style.columnGap = "2vw";
+    mainContainer.style.rowGap = "2vw";
 
     var onetone = document.getElementsByClassName("onetone");
     for (let j = 0; j < onetone.length; j++) {
@@ -304,4 +304,38 @@ function appendData(singerdata) {
     }
 
     return div;
+}
+
+function searchFilter() {
+    event.preventDefault();
+    var input = document.getElementById("querysong");
+    var filter = input.value.toLowerCase();
+    console.log(filter);
+    var resultContainer = document.getElementById("listSingerCt");
+    resultContainer.innerHTML = "";
+
+    let count = 0;
+    for (let i = 0; i < singerdata.length; i++) {
+        if (singerdata[i].name.toLowerCase().includes(filter)) {
+            count += 1;
+        }
+    }
+    if (count > 0) {
+        newsingerdata = singerdata.filter(function (singer) {
+            return singer.name.toLowerCase().includes(filter);
+        });
+        appendData(newsingerdata);
+    }
+    else {
+        resultContainer.innerHTML = "No result";
+        resultContainer.style.fontFamily = "CircularStd-Book";
+        resultContainer.style.fontSize = "5vh";
+        resultContainer.style.color = "#FFFFFF";
+        resultContainer.style.textAlign = "center";
+        resultContainer.style.margin = "0 auto";
+        resultContainer.style.background = "rgba(0, 0, 0, 0.5)";
+        resultContainer.style.borderRadius = "20px";
+        resultContainer.style.padding = "5vh 0";
+        resultContainer.style.width = "50vw";
+    }
 }
