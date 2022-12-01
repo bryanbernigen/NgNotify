@@ -2,16 +2,17 @@ var album_id;
 var updated = false;
 var restricted = true;
 let current_user;
-var songs = [
-    {
-        "song_id": 1,
-        "judul": "Lemonade",
-        "penyanyi": "NCT 127",
-        "duration": 210,
-        "audio_path": "hahaha.mp3",
-        "image_path": "https://cdn.idntimes.com/content-images/community/2019/09/65957734-2447619898633179-2873692900906505834-n-f7a238bd572281e532df58d4c505ed19.jpg"
-    }
-];
+var songs;
+// var songs = [
+//     {
+//         "song_id": 1,
+//         "judul": "Lemonade",
+//         "penyanyi": "NCT 127",
+//         "duration": 210,
+//         "audio_path": "hahaha.mp3",
+//         "image_path": "https://cdn.idntimes.com/content-images/community/2019/09/65957734-2447619898633179-2873692900906505834-n-f7a238bd572281e532df58d4c505ed19.jpg"
+//     }
+// ];
 
 window.onload = function() {
     infoNavbarAdded();
@@ -79,7 +80,7 @@ function getPremiumSongs(content){
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function(){
             if(this.readyState==4 && this.status==200){
-                let songs = JSON.parse(this.responseText);
+                songs = JSON.parse(this.responseText);
                 appendData(songs.data);
             }
         };
@@ -98,7 +99,7 @@ function getPremiumSongs(content){
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function(){
             if(this.readyState==4 && this.status==200){
-                let songs = JSON.parse(this.responseText);
+                songs = JSON.parse(this.responseText);
                 appendData(songs.data);
             }
         };
@@ -171,18 +172,18 @@ function appendData(songs) {
         td1.style.padding= "16px";
         if (i === 0) {
             td1.style.marginTop = "24px";
-        }
+        };
         td1.onclick = function() {
             playMusic(i);
-        }
-        if (td1.onmouseover) {
+        };
+        td1.onmouseover = function() {
             td1.style.scale = "1.1";
-        }
+        };
         tr.appendChild(td1);
 
         // Title - Singer
         let td2 = document.createElement('td');
-        if(songs[i]["penyanyi"]!=null){
+        if(songs[i]["judul"]!=null){
             td2.innerHTML = songs[i]["judul"];
         }
         else{
@@ -194,7 +195,7 @@ function appendData(songs) {
         td2.style.textAlign= "left";
         td2.style.padding = "16px";
         td2.onclick = function() {
-            playMusic(i);
+            window.location.href = "../detailSong/detailSong.html?song_id=" + songs[i]["song_id"];
         }
         tr.appendChild(td2);
 
@@ -228,10 +229,6 @@ function appendData(songs) {
         td4.style.padding = "16px";
         tr.appendChild(td4);
         
-        tr.onclick = function() {
-            // Redirect detail song page
-            window.location.href = "../detailSong/detailSong.html?song_id=" + songs[i]["song_id"];
-        }
         if (tr.onmouseover) {
             tr.style.scale = "1.1";
         }
@@ -247,7 +244,7 @@ function playMusic(num) {
     }
     var div8 = document.getElementById("addAudio");
     var div9 = document.getElementById("sourceAudio");
-    div9.src = "https://docs.google.com/uc?export=download&id=" + songs[num]["audio_path"].match(/(\/d\/)([-a-zA-Z0-9]+)(\/)/)[2];
+    div9.src = "https://docs.google.com/uc?export=download&id=" + songs["data"][num]["audio_path"].match(/(\/d\/)([-a-zA-Z0-9]+)(\/)/)[2];
     div8.load();
 
     timelinePassed.innerHTML = "0:00";
@@ -262,20 +259,20 @@ function playMusic(num) {
     soundVolume.value = 20;
 
     var div10 = document.getElementById("musicPlayerPoster");
-    div10.src = albumDetail["data"].image_path;
+    div10.src = songs["data"][num]["image_path"];
     div10.style.width = "5vw";
     div10.style.height = "5vw";
     div10.style.objectFit = "cover";
 
     var div11 = document.getElementById("musicPlayerTitle");
-    div11.innerHTML = songs[num]["judul"];
+    div11.innerHTML = songs["data"][num]["judul"];
     div11.style.fontFamily = "CircularStd-Bold";
     div11.style.fontSize = "14px";
     div11.style.color = "#FFFFFF";
     div11.style.width = "max-content";
 
     var div12 = document.getElementById("musicPlayerSinger");
-    div12.innerHTML = songs[num]["penyanyi"];
+    div12.innerHTML = songs["data"][num]["penyanyi"];
     div12.style.fontFamily = "CircularStd-Light";
     div12.style.fontSize = "11px";
     div12.style.color = "#FFFFFF";
