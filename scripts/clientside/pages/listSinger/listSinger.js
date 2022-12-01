@@ -35,6 +35,30 @@ window.onload = function() {
     
 }
 
+setInterval(polling, 10 * 1000);
+
+function polling(){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function(){
+        if(this.readyState==4 && this.status==200){
+            var newsingerdata = JSON.parse(this.responseText).data;
+            for(let i = 0; i < newsingerdata.length; i++){
+                if(newsingerdata[i].status !== singerdata[i].status){
+                    window.location.reload();
+                }
+            }
+        }
+    };
+    let data = {
+        "user_id": current_user
+    }
+    xhttp.open("POST","http://localhost:3000/singers/",true);
+    xhttp.setRequestHeader("Accept", "application/json");
+    xhttp.setRequestHeader("Content-Type", "application/json");
+    xhttp.withCredentials = false;
+    xhttp.send(JSON.stringify(data));
+}
+
 function infoNavbarAdded(){
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function(){
