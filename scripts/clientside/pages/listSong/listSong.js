@@ -1,10 +1,13 @@
 var album_id;
 var updated = false;
 var restricted = true;
+let current_user;
 var songs = [
     {
+        "song_id": 1,
         "judul": "Lemonade",
-        "singer": "NCT 127",
+        "penyanyi": "NCT 127",
+        "duration": 210,
         "audio_path": "hahaha.mp3",
         "image_path": "https://cdn.idntimes.com/content-images/community/2019/09/65957734-2447619898633179-2873692900906505834-n-f7a238bd572281e532df58d4c505ed19.jpg"
     }
@@ -12,7 +15,6 @@ var songs = [
 
 window.onload = function() {
     infoNavbarAdded();
-    getPremiumSongs();
 }
 
 function infoNavbarAdded(){
@@ -22,17 +24,20 @@ function infoNavbarAdded(){
             let res = JSON.parse(this.responseText);
             uname = document.getElementById("uname");
             if(res['status']){
-                console.log(res['data']['username']);
                 uname.innerHTML = 'pasp';
                 username = res['data'].isAdmin;
                 restricted = false;
+                current_user = res['data'].user_id;
                 putNavbar(username);
+                getPremiumSongs();
             }
             else {
                 uname.innerHTML = "guest";
                 document.getElementById("loginout").innerHTML = "Login";
                 // checkRestricted();
+                current_user = 0; //kalo belom login user_id = 0 (aka ga bisa akses)
                 putNavbar(false);
+                getPremiumSongs();
             }
         }
     };
@@ -58,14 +63,18 @@ function getPremiumSongs(){
     xhttp.onreadystatechange = function(){
         if(this.readyState==4 && this.status==200){
             let songs = JSON.parse(this.responseText);
-            appendData(songs);
-            playMusic(0);
+            appendData(songs.data);
         }
     };
-    xhttp.open("GET", "http://localhost:3000/songs/", true);
+    let data = {
+        "user_id": current_user
+    };
+    xhttp.open("POST", "http://localhost:3000/songs/premiumsongs", true);
     xhttp.setRequestHeader("Accept", "application/json");
-    xhttp.withCredentials = true;
-    xhttp.send();
+    xhttp.setRequestHeader("Content-Type", "application/json");
+    xhttp.withCredentials = false;
+    xhttp.send(JSON.stringify(data));
+    console.log(xhttp);
 }
 
 audio = document.getElementById('addAudio');
@@ -79,9 +88,10 @@ soundVolume = document.getElementById("timelineVol");
 repeatButton = document.getElementById("repeat");
 
 function appendData(songs) {
+    console.log(songs);
     var div7 = document.getElementById("detAlbumList");
-    let displayColumns = ['#', 'TITLE', 'SINGER'];
-    let columns = ['#', 'title', 'singer'];
+    let displayColumns = ['#', 'TITLE', 'SINGER', 'DURATION'];
+    let columns = ['#', 'title', 'singer', 'duration'];
 
     //Create table header
     let table = document.createElement('table');
@@ -135,7 +145,7 @@ function appendData(songs) {
         // Title - Singer
         let td2 = document.createElement('td');
         if(songs[i]["penyanyi"]!=null){
-            td2.innerHTML = songs[i]["judul"] + ' ― ' + songs[i]["penyanyi"];
+            td2.innerHTML = songs[i]["judul"];
         }
         else{
             td2.innerHTML = songs[i]["judul"]
@@ -152,13 +162,33 @@ function appendData(songs) {
 
         // Singer
         let td3 = document.createElement('td');
-        td3.innerHTML = formatTime(songs[i]["duration"]);
+        if(songs[i]["penyanyi"]!=null){
+            td3.innerHTML = songs[i]["penyanyi"];
+        }
+        else{
+            td3.innerHTML = "-";
+        }
         td3.style.color = "#6C6C6C";
         td3.style.fontFamily = "CircularStd-Medium";
         td3.style.fontSize = "14px";
         td3.style.textAlign= "left";
         td3.style.padding = "16px";
         tr.appendChild(td3);
+
+        // Duration
+        let td4 = document.createElement('td');
+        if(songs[i]["duration"]!=null){
+            td4.innerHTML = formatTime(songs[i]["duration"]);
+        }
+        else{
+            td4.innerHTML = "-";
+        }
+        td4.style.color = "#6C6C6C";
+        td4.style.fontFamily = "CircularStd-Medium";
+        td4.style.fontSize = "14px";
+        td4.style.textAlign= "left";
+        td4.style.padding = "16px";
+        tr.appendChild(td4);
         
         tr.onclick = function() {
             // Redirect detail song page

@@ -53,7 +53,7 @@ function infoNavbarAdded(){
                 uname.innerHTML = "Haha";
                 document.getElementById("loginout").innerHTML = "Login";
                 putNavbar(false);
-                current_user = 1;
+                current_user = 0; //kalo belom login user_id = 0 (aka ga bisa akses)
                 getSinger();
             }
         }
