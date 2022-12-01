@@ -26,7 +26,8 @@
 //         "creator_pic": "../../assets/basicimage.jpg"
 //     },
 // ];
-let singerdata
+
+let singerdata;
 let current_user;
 
 window.onload = function() {
@@ -41,19 +42,23 @@ function infoNavbarAdded(){
             let res = JSON.parse(this.responseText);
             uname = document.getElementById("uname");
             if(res['status']){
-                console.log(res['data']['username']);
-                uname.innerHTML = 'pasp';
+                if(res['data'].isAdmin){
+                    document.getElementById("uname").innerHTML = res['data'].username;
+                }else{
+                    document.getElementById("unameuwu").innerHTML = res['data'].username;
+                }
+                restricted = false;
                 username = res['data'].isAdmin;
                 current_user = res['data'].user_id
-                restricted = false;
-                putNavbar(username);
+                putNavbar(res['data'].isAdmin);
                 getSinger();
             }
             else {
-                uname.innerHTML = "Haha";
+                uname.innerHTML = "guest";
                 document.getElementById("loginout").innerHTML = "Login";
-                putNavbar(false);
+                checkRestricted();
                 current_user = 0; //kalo belom login user_id = 0 (aka ga bisa akses)
+                putNavbar(false);
                 getSinger();
             }
         }
@@ -80,7 +85,6 @@ function getSinger(){
     xhttp.onreadystatechange = function(){
         if(this.readyState==4 && this.status==200){
             singerdata = JSON.parse(this.responseText).data;
-            console.log(singerdata);
             appendData(singerdata);
         }
     };
@@ -92,7 +96,6 @@ function getSinger(){
     xhttp.setRequestHeader("Content-Type", "application/json");
     xhttp.withCredentials = false;
     xhttp.send(JSON.stringify(data));
-    console.log(xhttp);
 }
 
 function loginout() {
@@ -102,10 +105,10 @@ function loginout() {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-            let res = JSON.parse(this.responseText);
-            if (res["status"]) {
-                window.location.href = "http://localhost:8080/pages/listSinger/listSinger.html";
-            }
+                let res = JSON.parse(this.responseText);
+                if (res["status"]) {
+                    window.location.href = "http://localhost:8080/pages/listSinger/listSinger.html";
+                }
             }
         };
         xhttp.open("POST", "http://localhost:8000/api/auth/logout", true);
@@ -118,37 +121,58 @@ function loginout() {
 function searchByID(id) {
     for (let i = 0; i < singerdata.length; i++) {
         if (singerdata[i].user_id == id) {
-            return singerdata[i].isSubscribed;
+            return singerdata[i].status == "ACCEPTED";
         }
     }
     return false;
 }
 
+function redirectToPremiumSongForSinger(id) {
+    window.location.href = "http://localhost:8080/pages/listSong/listSong.html?content=" + id;
+}
+
+function removeList() {
+    var list = document.getElementsByClassName("onetone");
+    while (list.length > 0) {
+        list[0].parentNode.removeChild(list[0]);
+    }
+}
 function subscribe(id) {
-    // <div id="onetoneOverlay" onclick="" style={{"--artist_pic": "url("+creator_pic+")"} as React.CSSProperties} /> \
+    console.log("test");
     let search = searchByID(id);
     // already subscribed
     if (search == true) {
-        redirectToPremiumSong();
+        redirectToPremiumSongForSinger(id);
     }
     // post update subscription
-    else if (search == false) {
+    else {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
+                console.log("in");
+                parser = new DOMParser();
+                xmlDoc = parser.parseFromString(this.responseText, "text/xml");
                 let res = JSON.parse(this.responseText);
-                if (res["status"]) {
-                    window.location.href = "http://localhost:8080/pages/listSinger/listSinger.html";
-                }
+                
+                console.log(res);
+                removeList();
+                window.location.reload();
+                // document.getElementById(listSingerCt).innerHTML = "";
+                // getSinger();
+                // appendData(singerdata);
+            } else if(this.readyState == 4 ){
+                console.log("in else");
             }
         };
-        xhttp.open("POST", "http://localhost:3000/subscription/update/", true);
+        xhttp.open("POST", "http://localhost:3000/subscription/subscribe/", true);
         xhttp.setRequestHeader("Accept", "application/json");
+        xhttp.setRequestHeader("Content-Type", "application/json");
         xhttp.withCredentials = false;
-        xhttp.send(JSON.stringify({
-            "user_id": current_user,
-            "creator_id": id
-        }));
+        let data = {
+            "current_user": current_user,
+            "id": id
+        }
+        xhttp.send(JSON.stringify(data));
     }
 }
 
@@ -162,25 +186,25 @@ function appendData(singerdata) {
         if (singerdata[i].status == "PENDING") {
             div.innerHTML += '<div class="onetone" id="'+singerdata[i].user_id+'" onclick="subscribe(this.id)"> \
                                 <img class="onetoneImgYellow" src="' + singerdata[i].image_path + '"/> \
-                                <div id="onetoneName"> ' + singerdata[i].name + '</div> \
+                                <div class="onetoneName"> ' + singerdata[i].name + '</div> \
                             </div>';
         }
         else if (singerdata[i].status == "ACCEPTED") {
             div.innerHTML += '<div class="onetone" id="'+singerdata[i].user_id+'" onclick="subscribe(this.id)"> \
                                 <img class="onetoneImgGreen" src="' + singerdata[i].image_path + '"/> \
-                                <div id="onetoneName"> ' + singerdata[i].name + '</div> \
+                                <div class="onetoneName"> ' + singerdata[i].name + '</div> \
                             </div>';
         }
         else if (singerdata[i].status == "REJECTED") {
             div.innerHTML += '<div class="onetone" id="'+singerdata[i].user_id+'" onclick="subscribe(this.id)"> \
                                 <img class="onetoneImgRed" src="' + singerdata[i].image_path + '"/> \
-                                <div id="onetoneName"> ' + singerdata[i].name + '</div> \
+                                <div class="onetoneName"> ' + singerdata[i].name + '</div> \
                             </div>';
         }
         else {
             div.innerHTML += '<div class="onetone" id="'+singerdata[i].user_id+'" onclick="subscribe(this.id)"> \
                                 <img class="onetoneImgWhite" src="' + singerdata[i].image_path + '"/> \
-                                <div id="onetoneName"> ' + singerdata[i].name + '</div> \
+                                <div class="onetoneName"> ' + singerdata[i].name + '</div> \
                             </div>';
         }
     }
@@ -190,50 +214,70 @@ function appendData(singerdata) {
     div.style.justifyContent = "center";
     div.style.alignItems = "flex-start";
     div.style.columnGap = "2vw";
+    div.style.rowGap = "2vw";
     mainContainer.appendChild(div);
 
-    var onetone = document.getElementById("onetone");
-    onetone.style.display = "flex";
-    onetone.style.flexDirection = "column";
-    onetone.style.flexWrap = "wrap";
-    onetone.style.justifyContent = "flex-start";
-    onetone.style.alignItems = "center";
+    var onetone = document.getElementsByClassName("onetone");
+    for (let j = 0; j < onetone.length; j++) {
+        onetone[j].style.display = "flex";
+        onetone[j].style.flexDirection = "column";
+        onetone[j].style.flexWrap = "wrap";
+        onetone[j].style.justifyContent = "flex-start";
+        onetone[j].style.alignItems = "center";
+    }
 
-    var onetone = document.getElementById("onetoneImgRed");
-    onetone.style.display = "block";
-    onetone.style.borderRadius = "50%";
-    onetone.style.width = "12.5vw";
-    onetone.style.height = "12.5vw";
-    onetone.style.marginBottom = "2vh";
-    onetone.style.cursor = "pointer";
-    onetone.style.objectFit = "cover";
+    var onetonered = document.getElementsByClassName("onetoneImgRed");
+    for (let j = 0; j < onetonered.length; j++) {
+        onetonered[j].style.display = "block";
+        onetonered[j].style.borderRadius = "50%";
+        onetonered[j].style.width = "12.5vw";
+        onetonered[j].style.height = "12.5vw";
+        onetonered[j].style.marginBottom = "2vh";
+        onetonered[j].style.cursor = "pointer";
+        onetonered[j].style.objectFit = "cover";
+        onetonered[j].style.border = "medium solid #FF0000";
+    }
     
-    var onetone = document.getElementById("onetoneImgYellow");
-    onetone.style.display = "block";
-    onetone.style.borderRadius = "50%";
-    onetone.style.width = "12.5vw";
-    onetone.style.height = "12.5vw";
-    onetone.style.marginBottom = "2vh";
-    onetone.style.cursor = "pointer";
-    onetone.style.objectFit = "cover";
+    var onetoneyel = document.getElementsByClassName("onetoneImgYellow");
+    for (let j = 0; j < onetoneyel.length; j++) {
+        onetoneyel[j].style.display = "block";
+        onetoneyel[j].style.borderRadius = "50%";
+        onetoneyel[j].style.width = "12.5vw";
+        onetoneyel[j].style.height = "12.5vw";
+        onetoneyel[j].style.marginBottom = "2vh";
+        onetoneyel[j].style.cursor = "pointer";
+        onetoneyel[j].style.objectFit = "cover";
+        onetoneyel[j].style.border = "medium solid #FFD700";
+    }
     
-    var onetone = document.getElementById("onetoneImgGreen");
-    onetone.style.display = "block";
-    onetone.style.borderRadius = "50%";
-    onetone.style.width = "12.5vw";
-    onetone.style.height = "12.5vw";
-    onetone.style.marginBottom = "2vh";
-    onetone.style.cursor = "pointer";
-    onetone.style.objectFit = "cover";
+    var onetonegr = document.getElementsByClassName("onetoneImgGreen");
+    for (let j = 0; j < onetonegr.length; j++) {
+        onetonegr[j].style.display = "block";
+        onetonegr[j].style.borderRadius = "50%";
+        onetonegr[j].style.width = "12.5vw";
+        onetonegr[j].style.height = "12.5vw";
+        onetonegr[j].style.marginBottom = "2vh";
+        onetonegr[j].style.cursor = "pointer";
+        onetonegr[j].style.objectFit = "cover";
+        onetonegr[j].style.border = "medium solid #1ED760";
+    }
     
-    var onetone = document.getElementById("onetoneImgWhite");
-    onetone.style.display = "block";
-    onetone.style.borderRadius = "50%";
-    onetone.style.width = "12.5vw";
-    onetone.style.height = "12.5vw";
-    onetone.style.marginBottom = "2vh";
-    onetone.style.cursor = "pointer";
-    onetone.style.objectFit = "cover";
+    var onetonewh = document.getElementsByClassName("onetoneImgWhite");
+    for (let j = 0; j < onetonewh.length; j++) {
+        onetonewh[j].style.display = "block";
+        onetonewh[j].style.borderRadius = "50%";
+        onetonewh[j].style.width = "12.5vw";
+        onetonewh[j].style.height = "12.5vw";
+        onetonewh[j].style.marginBottom = "2vh";
+        onetonewh[j].style.cursor = "pointer";
+        onetonewh[j].style.objectFit = "cover";
+        onetonewh[j].style.border = "medium solid #FFFFFF";
+    }
+
+    var onetoneName = document.getElementsByClassName("onetoneName");
+    for (let j = 0; j < onetoneName.length; j++) {
+        onetoneName[j].style.fontFamily = "CircularStd-Book";
+    }
 
     return div;
 }
