@@ -4,9 +4,9 @@ function login(){
         if(this.readyState==4){
             if(this.status==200){
                 let res = JSON.parse(this.responseText);
-                console.log(res)
+                // console.log(res)
                 if(res['status']){
-                    console.log("login success");
+                    // console.log("login success");
                     const queryString = window.location.search;
                     const urlParams = new URLSearchParams(queryString);
                     let page_type = urlParams.get('page_type');
@@ -30,13 +30,13 @@ function login(){
                     //TODO: redirect to home page
                 }
                 else{
-                    console.log("login failed");
+                    // console.log("login failed");
                     failInfo();
                     //TODO: tell user that they have failed to login
                 }
             }
             else{
-                console.log("login failed");
+                // console.log("login failed");
                 failInfo();
             }
         }
@@ -72,7 +72,7 @@ function checklogin(){
         if(this.readyState==4 && this.status==200){
             let res = JSON.parse(this.responseText);
             if(res['status']){
-                console.log("login success");
+                // console.log("login success");
                 window.location = "http://localhost:8080/pages/home/home.html";
             }
         }

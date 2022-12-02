@@ -48,6 +48,12 @@ body {
     font-size: 14px;
 }
 
+.fas:hover {
+    cursor: pointer;
+    scale: 1.2;
+    transition: 0.2s;
+}
+
 .sidebarIcon {
     width: 24px;
     height: 24px;

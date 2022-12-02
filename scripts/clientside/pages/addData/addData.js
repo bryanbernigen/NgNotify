@@ -35,7 +35,7 @@ function infoNavbarplus(){
 }
 
 function autoDataEditDuration(location) {
-    console.log('a');
+    // console.log('a');
     var source = document.getElementById("sourceAudio");
     var path = document.getElementById("audioupload"+location);
     try {
@@ -168,7 +168,7 @@ function autoDataEditAlbum(){
             break; 
         }
     }
-    console.log(choosen_album);
+    // console.log(choosen_album);
     document.getElementById("albumnameea").value = choosen_album.judul;
     document.getElementById("singerea").value = choosen_album.penyanyi;
     document.getElementById("totaldurationea").value = choosen_album.total_duration;

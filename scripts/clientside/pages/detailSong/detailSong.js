@@ -200,7 +200,7 @@ function playMusic() {
 }
 
 function toggleAudioPlay () {
-    console.log(restricted);
+    // console.log(restricted);
     if (restricted){
         alert("Daily Free Trial Limit Reached, Login to Continue Listening");
         return;

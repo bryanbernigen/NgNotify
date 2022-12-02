@@ -164,7 +164,7 @@ function removeList() {
     }
 }
 function subscribe(id) {
-    console.log("test");
+    // console.log("test");
     let search = searchByID(id);
     // already subscribed
     if (search == true) {
@@ -175,12 +175,12 @@ function subscribe(id) {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                console.log("in");
+                // console.log("in");
                 parser = new DOMParser();
                 xmlDoc = parser.parseFromString(this.responseText, "text/xml");
                 let res = JSON.parse(this.responseText);
                 
-                console.log(res);
+                // console.log(res);
                 removeList();
                 window.location.reload();
                 // document.getElementById(listSingerCt).innerHTML = "";
@@ -310,7 +310,7 @@ function searchFilter() {
     event.preventDefault();
     var input = document.getElementById("querysong");
     var filter = input.value.toLowerCase();
-    console.log(filter);
+    // console.log(filter);
     var resultContainer = document.getElementById("listSingerCt");
     resultContainer.innerHTML = "";
 

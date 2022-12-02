@@ -30,7 +30,7 @@ function getUsers(){
     xhttp.onreadystatechange = function(){
         if(this.readyState==4 && this.status==200){
             users = JSON.parse(this.responseText);
-            console.log(users["data"]);
+            // console.log(users["data"]);
             appendData(users['data']);
         }
     };
