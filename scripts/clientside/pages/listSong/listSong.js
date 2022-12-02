@@ -92,7 +92,7 @@ function getPremiumSongs(content){
         xhttp.setRequestHeader("Content-Type", "application/json");
         xhttp.withCredentials = false;
         xhttp.send(JSON.stringify(data));
-        console.log(xhttp);
+        // console.log(xhttp);
     }
     else {
         cont = parseInt(content);
@@ -112,7 +112,7 @@ function getPremiumSongs(content){
         xhttp.setRequestHeader("Content-Type", "application/json");
         xhttp.withCredentials = false;
         xhttp.send(JSON.stringify(data));
-        console.log(xhttp);
+        // console.log(xhttp);
     }
 }
 
@@ -127,7 +127,7 @@ soundVolume = document.getElementById("timelineVol");
 repeatButton = document.getElementById("repeat");
 
 function appendData(songs) {
-    console.log(songs);
+    // console.log(songs);
     var div7 = document.getElementById("detAlbumList");
     let displayColumns = ['#', 'TITLE', 'SINGER', 'DURATION'];
     let columns = ['#', 'title', 'singer', 'duration'];
@@ -194,9 +194,6 @@ function appendData(songs) {
         td2.style.fontSize = "14px";
         td2.style.textAlign= "left";
         td2.style.padding = "16px";
-        td2.onclick = function() {
-            window.location.href = "../detailSong/detailSong.html?song_id=" + songs[i]["song_id"];
-        }
         tr.appendChild(td2);
 
         // Singer
@@ -280,7 +277,7 @@ function playMusic(num) {
 }
 
 function toggleAudioPlay () {
-    console.log(restricted);
+    // console.log(restricted);
     if (restricted){
         alert("Daily Free Trial Limit Reached, Login to Continue Listening");
         return;

@@ -14,7 +14,7 @@ function checkUniqueEmail(){
     xhttp.onreadystatechange = function(){
         if (this.readyState==4 && this.status==200 ){
             let res = JSON.parse(this.responseText);
-            console.log(res)
+            // console.log(res)
             if(res['status']){
                 //set border to #1ED760
                 document.getElementById('email').style.border = "2px solid #1ED760";
@@ -93,7 +93,7 @@ function checkUniqueUsername(){
     xhttp.onreadystatechange = function(){
         if (this.readyState==4 && this.status==200 ){
             let res = JSON.parse(this.responseText);
-            console.log(res)
+            // console.log(res)
             if(res['status']){
                 //set border to #1ED760
                 document.getElementById('uname').style.border = "2px solid #1ED760";
@@ -133,21 +133,22 @@ function register(){
             if(this.readyState==4){
                 if(this.status==200){
                     let res = JSON.parse(this.responseText);
-                    console.log(res)
+                    // console.log(res)
                     if(res['status']){
-                        console.log("register success");
-                        window.location.href = "http://localhost:8080/pages/login/login.html";
+                        // console.log("register success");
+                        // window.location.href = "http://localhost:8080/pages/login/login.html";
                         // TODO: tell user that they have successfully registered + redirect to login page
                         // redirect page shows a message saying that they have successfully registered
+                        login(document.getElementById("email").value, document.getElementById("password").value);
                     }
                     else{
-                        console.log("register failed");
+                        // console.log("register failed");
                         // TOOD : tell user that they have failed to register
                         failInfo();
                     }
                 }
                 else{
-                    console.log("register failed");
+                    // console.log("register failed");
                     // TOOD : tell user that they have failed to register
                     failInfo();
                 }
@@ -165,10 +166,43 @@ function register(){
         xhttp.send(JSON.stringify(data));
     }
     else{
-        console.log("register failed");
+        // console.log("register failed");
         // TODO : tell user that they have failed to register since they have not filled out the form correctly
         failInfo();
     }
+}
+
+function login(email, password){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function(){
+        if(this.readyState==4){
+            if(this.status==200){
+                let res = JSON.parse(this.responseText);
+                // console.log(res)
+                if(res['status']){
+                    // console.log("login success");
+                    window.location = "http://localhost:8080/pages/home/home.html";
+                }
+                else{
+                    // console.log("login failed");
+                    failInfo();
+                }
+            }
+            else{
+                // console.log("login failed");
+                failInfo();
+            }
+        }
+    };
+    let data = {
+        "email": email,
+        "password": password,
+    };
+    xhttp.open("POST","http://localhost:8000/api/auth/login",true);
+    xhttp.setRequestHeader("Accept", "application/json");
+    xhttp.setRequestHeader("Content-Type", "application/json");
+    xhttp.withCredentials = true;
+    xhttp.send(JSON.stringify(data));
 }
 
 function validateUsername() {

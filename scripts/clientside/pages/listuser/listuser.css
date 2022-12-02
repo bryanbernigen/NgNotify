@@ -218,7 +218,7 @@ hr {
     }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 800px) {
     .userTitle {
         font-size: 48px;
     }

@@ -2,7 +2,36 @@ var songs
 
 function initPage(){
     getSongs();
-    infoNavbar();
+    infoNavbarAdded();
+}
+
+function infoNavbarAdded(){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function(){
+        if(this.readyState==4 && this.status==200){
+            let res = JSON.parse(this.responseText);
+            uname = document.getElementById("uname");
+            if(res['status']){
+                if(res['data'].isAdmin){
+                    document.getElementById("uname").innerHTML = res['data'].username;
+                }else{
+                    document.getElementById("unameuwu").innerHTML = res['data'].username;
+                }
+                putNavbar(res['data'].isAdmin);
+            }
+            else {
+                uname.innerHTML = "Guest";
+                document.getElementById("loginout").innerHTML = "Login";
+                document.getElementById("subscribeButton").style.display = "none";
+                document.getElementById("premsongButton").style.display = "none";
+                putNavbar(false);
+            }
+        }
+    };
+    xhttp.open("GET","http://localhost:8000/api/auth/info",true);
+    xhttp.setRequestHeader("Accept", "application/json");
+    xhttp.withCredentials = true;
+    xhttp.send();
 }
 
 function loginout(){
@@ -192,7 +221,7 @@ function searchSong(){
 
 document.getElementById("querysong")
     .addEventListener("keyup", function(event) {
-    console.log("searching");
+    // console.log("searching");
     event.preventDefault();
     // If the user presses the "Enter" key on the keyboard
     if (event.keyCode == 13) {
