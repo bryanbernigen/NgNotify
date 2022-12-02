@@ -1,7 +1,7 @@
 <a name="readme-top"></a>
 <br />
 <div align="center">
-  <a href="https://gitlab.informatika.org/if3110-2022-k01-01-32/if-3110-2022-k-01-01-32">
+  <a href="https://gitlab.informatika.org/if3110-2022-k01-02-32/ngnotify-app">
     <img src="assets/ngnotify.png" alt="Logo">
   </a>
 
@@ -27,10 +27,12 @@
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
+        <li><a href="#dependencies">Dependencies</a></li>
         <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
+    <li><a href="#changes">Changes</a></li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#contributions">Contributions</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -67,6 +69,19 @@ Sebagai pesaing terbesar Search Engine Gatot Kaca untuk gelar aplikasi anak bang
 
 Tanpa Berlama-lama inilah cara menjalankan web app
 
+### Dependencies
+Agar Program dapat berjalan dengan baik, silahkan install juga repo-repo berikut:
+
+```
+https://gitlab.informatika.org/if3110-2022-k01-02-32/ngnotify-premium-app
+```
+```
+https://gitlab.informatika.org/if3110-2022-k01-02-32/ngnotify-rest-service
+```
+```
+https://gitlab.informatika.org/if3110-2022-k01-02-32/ngnotify-soap-service
+```
+
 ### Prerequisites
 
 * Docker
@@ -79,8 +94,7 @@ Tanpa Berlama-lama inilah cara menjalankan web app
     ```
 * Internet (karena Database online)
 * Kesabaran (karena akses data sering kali lemot - <i>maklum gratis</i>)
-* Pastikan akses sebelum tanggal 28 November 2022 (karena DB onlinenya hanya ada sampai tanggal tersebut)
-* Jika akses setelah tanggal 28, silahkan ubah konfigurasi database pada
+* Jika ingin mengubah database menjadi local, silahkan konfigurasi di
     ```sh
     scripts/serverside/app/constants/base.php
     ```
@@ -93,20 +107,22 @@ setelah itu silahkan setting sendiri databasenya dari file dump :smile:. Jika ti
 1. Clone Repo ini dengan menggunakan cmd pada directory yang diinginkan
     ```sh
     C:\Users\MerekLaptop> 
-    git clone https://gitlab.informatika.org/if3110-2022-k01-01-32/if-3110-2022-k-01-01-32/
+    git clone https://gitlab.informatika.org/if3110-2022-k01-02-32/ngnotify-app
     ```
 2. Buka Directory tempat file di clone
    ```sh
-   C:\Users\MerekLaptop> cd if-3110-2022-k-01-01-32
-   C:\Users\MerekLaptop\if-3110-2022-k-01-01-32>
+   C:\Users\MerekLaptop> cd ngnotify-app
+   C:\Users\MerekLaptop\ngnotify-app>
    ```
 3. Jalankan docker 
    ```sh
-   C:\Users\MerekLaptop\if-3110-2022-k-01-01-32>
+   C:\Users\MerekLaptop\ngnotify-app>
    docker-compose up -d
    ```
 4. buka http://localhost:8080 di ~chrome~ browser favorit kalian
-5. Ngnotify siap untuk dipakai :smile:
+5. Ngnotify siap untuk dipakai secara terbatas 
+6. Untuk menggunakan seluruh layanan web, jalankan seluruh (<a href="#dependencies">dependencies</a>) yang ada
+7. Jika dependencies sudah dijalankan, Ngnotify siap untuk dipakai secara full :smile:
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- USAGE EXAMPLES -->
@@ -117,7 +133,7 @@ setelah itu silahkan setting sendiri databasenya dari file dump :smile:. Jika ti
 
 2. Register
 <img src="assets/registerfailed.png" alt="Register Failed">
-<img src="assets/registerfailed.png" alt="Register Success">
+<img src="assets/registersuccess.png" alt="Register Success">
 
 3. Home
 <img src="assets/homeadmin.png" alt="Register Success">
@@ -147,7 +163,21 @@ setelah itu silahkan setting sendiri databasenya dari file dump :smile:. Jika ti
 9. List User
 <img src="assets/listuser.png" alt="List User 1">
 
+10. List Penyanyi Premium
+<img src="assets/listSinger.png" alt="List Singer 1">
+
+
+11. List Song
+<img src="assets/listSong.png" alt="List Song 1">
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Changes
+
+1. Penambahan link pada navbar ke fitur List Penyanyi Premium dan List Song Premium
+
+2. Pengubahan field pada halaman List User
+
 
 <!-- CONTRIBUTING -->
 ## Contributions
@@ -164,6 +194,8 @@ setelah itu silahkan setting sendiri databasenya dari file dump :smile:. Jika ti
 |login|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|
 |register|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|
 |searchSortFilter|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|
+|listSinger|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|
+|listSong|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|
 
 * Server-side(php)
 
@@ -175,6 +207,7 @@ setelah itu silahkan setting sendiri databasenya dari file dump :smile:. Jika ti
 |User DB and API|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|
 |Song DB and API|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|
 |Album DB and API|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|
+|Subscription DB and API|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|
 
 * both
 
